@@ -1,16 +1,18 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Text } from '@/shared/components/ui/Text';
+import { View, StyleSheet, Image } from 'react-native';
 import { colors } from '@/shared/theme/colors';
-import { PersonaId, PERSONAS } from '../mock';
+import { PersonaId } from '../mock';
+
+const PORTRAITS = {
+  cedric: require('../../../../assets/Branding/Cedric 2.png'),
+  elara: require('../../../../assets/Branding/Elara 2.png'),
+} as const;
 
 interface CoachAvatarProps {
   persona: PersonaId;
 }
 
 export function CoachAvatar({ persona }: CoachAvatarProps) {
-  const p = PERSONAS[persona];
-
   return (
     <View style={styles.container}>
       {/* Outer glow ring */}
@@ -19,7 +21,7 @@ export function CoachAvatar({ persona }: CoachAvatarProps) {
       <View style={styles.ring}>
         {/* Avatar circle */}
         <View style={styles.avatar}>
-          <Text style={styles.initials}>{p.initials}</Text>
+          <Image source={PORTRAITS[persona]} style={styles.avatarImage} resizeMode="cover" />
         </View>
       </View>
     </View>
@@ -58,14 +60,14 @@ const styles = StyleSheet.create({
     width: AVATAR_SIZE,
     height: AVATAR_SIZE,
     borderRadius: AVATAR_SIZE / 2,
+    overflow: 'hidden',
     backgroundColor: 'rgba(0, 212, 170, 0.15)',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  initials: {
-    fontSize: 28,
-    fontWeight: '300',
-    color: colors.accent,
-    letterSpacing: 1,
+  avatarImage: {
+    width: AVATAR_SIZE,
+    height: AVATAR_SIZE,
+    borderRadius: AVATAR_SIZE / 2,
   },
 });

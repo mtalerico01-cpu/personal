@@ -5,7 +5,21 @@ export const mockProgressData = {
     sevenDayAvgLbs: 202.8,
     weeklyChangeLbs: +0.6,
     monthlyChangeLbs: +2.1,
-    // 30-day sparkline data (relative values for bar chart)
+    history: [
+      { label: 'Apr 5', value: 198.2 },
+      { label: 'Apr 12', value: 199.1 },
+      { label: 'Apr 19', value: 200.0 },
+      { label: 'Apr 26', value: 201.2 },
+      { label: 'May 3', value: 201.5 },
+      { label: 'May 10', value: 202.3 },
+      { label: 'May 17', value: 202.9 },
+      { label: 'May 24', value: 203.0 },
+      { label: 'May 31', value: 203.8 },
+      { label: 'Jun 7', value: 203.4 },
+      { label: 'Jun 14', value: 204.1 },
+      { label: 'Jun 21', value: 203.4 },
+    ],
+    // 30-day sparkline data retained for compact summaries.
     sparkline: [
       198.2, 198.8, 199.1, 199.6, 200.0, 200.4, 200.1, 200.8, 201.2, 201.0,
       201.5, 201.9, 202.3, 202.0, 202.6, 202.4, 202.9, 203.1, 202.8, 203.2,
@@ -21,6 +35,20 @@ export const mockProgressData = {
     scoreChangeThisMonth: +18,
     aiInsight:
       'Strength is increasing faster than bodyweight, indicating productive training with minimal fat accumulation.',
+    history: [
+      { label: 'Apr 5', value: 732 },
+      { label: 'Apr 12', value: 738 },
+      { label: 'Apr 19', value: 741 },
+      { label: 'Apr 26', value: 750 },
+      { label: 'May 3', value: 755 },
+      { label: 'May 10', value: 759 },
+      { label: 'May 17', value: 764 },
+      { label: 'May 24', value: 769 },
+      { label: 'May 31', value: 773 },
+      { label: 'Jun 7', value: 776 },
+      { label: 'Jun 14', value: 779 },
+      { label: 'Jun 21', value: 782 },
+    ],
     lifts: [
       {
         id: 'bench',
@@ -58,11 +86,26 @@ export const mockProgressData = {
   },
 
   bodyMeasurements: [
-    { id: 'm1', name: 'Arms', value: null, unit: 'in' },
-    { id: 'm2', name: 'Chest', value: null, unit: 'in' },
-    { id: 'm3', name: 'Waist', value: null, unit: 'in' },
-    { id: 'm4', name: 'Legs', value: null, unit: 'in' },
-    { id: 'm5', name: 'Calves', value: null, unit: 'in' },
+    { id: 'm1', name: 'Arms', value: 15.4, unit: 'in' },
+    { id: 'm2', name: 'Chest', value: 43.2, unit: 'in' },
+    { id: 'm3', name: 'Waist', value: 33.8, unit: 'in' },
+    { id: 'm4', name: 'Legs', value: 24.6, unit: 'in' },
+    { id: 'm5', name: 'Calves', value: 15.8, unit: 'in' },
+  ],
+
+  bodyMeasurementHistory: [
+    { label: 'Apr 5', value: 35.4 },
+    { label: 'Apr 12', value: 35.2 },
+    { label: 'Apr 19', value: 35.0 },
+    { label: 'Apr 26', value: 34.8 },
+    { label: 'May 3', value: 34.7 },
+    { label: 'May 10', value: 34.5 },
+    { label: 'May 17', value: 34.4 },
+    { label: 'May 24', value: 34.2 },
+    { label: 'May 31', value: 34.1 },
+    { label: 'Jun 7', value: 34.0 },
+    { label: 'Jun 14', value: 33.9 },
+    { label: 'Jun 21', value: 33.8 },
   ],
 
   progressPhotos: [

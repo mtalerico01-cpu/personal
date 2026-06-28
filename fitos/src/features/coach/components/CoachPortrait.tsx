@@ -11,8 +11,8 @@ import { colors } from '@/shared/theme/colors';
 import { PersonaId, PERSONAS } from '../mock';
 
 const PORTRAITS = {
-  cedric: require('../../../../assets/Branding/Cedric.png'),
-  elara: require('../../../../assets/Branding/Elara.png'),
+  cedric: require('../../../../assets/Branding/Cedric 2.png'),
+  elara: require('../../../../assets/Branding/Elara 2.png'),
 } as const;
 
 interface CoachPortraitProps {

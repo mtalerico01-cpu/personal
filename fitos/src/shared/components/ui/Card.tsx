@@ -39,18 +39,23 @@ export function Card({
 
 const styles = StyleSheet.create({
   base: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.xl,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.border,
-    ...shadows.card,
+    backgroundColor: 'rgba(5, 8, 9, 0.66)',
+    borderRadius: radius['2xl'],
+    borderWidth: 1,
+    borderColor: 'rgba(243,243,243,0.14)',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.34,
+    shadowRadius: 24,
+    elevation: 5,
   },
   elevated: {
-    backgroundColor: colors.surfaceElevated,
+    backgroundColor: 'rgba(5, 8, 9, 0.76)',
+    borderColor: 'rgba(243,243,243,0.18)',
     ...shadows.elevated,
   },
   flat: {
-    backgroundColor: colors.surface,
+    backgroundColor: 'rgba(5, 8, 9, 0.42)',
     shadowOpacity: 0,
     elevation: 0,
   },

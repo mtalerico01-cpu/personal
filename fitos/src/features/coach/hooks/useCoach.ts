@@ -1,102 +1,48 @@
-import { useState, useCallback } from 'react';
-import {
-  PersonaId,
-  PERSONAS,
-  ChatMessage,
-  SUGGESTED_PROMPTS,
-  MOCK_RESPONSES,
-  DEFAULT_RESPONSE,
-} from '../mock';
-
-function getTimeOfDay(): string {
-  const hour = new Date().getHours();
-  if (hour < 12) return 'Good morning';
-  if (hour < 17) return 'Good afternoon';
-  return 'Good evening';
-}
-
-let _msgId = 1;
+/**
+ * useCoach — thin wrapper over coachStore.
+ * Kept for backward compatibility with coach.tsx and to expose
+ * derived values (greeting, showSuggestions) in one place.
+ */
+import { useEffect } from 'react';
+import { useCoachStore } from '../store/coachStore';
+import { PERSONAS } from '../mock';
+import { getDayPartForTimezone } from '../../ai/context/getDayPart';
+import { useUserStore } from '../../../store/userStore';
 
 export function useCoach() {
-  const [persona, setPersona] = useState<PersonaId>('cedric');
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [inputText, setInputText] = useState('');
-  const [isThinking, setIsThinking] = useState(false);
+  const store = useCoachStore();
+  const profile = useUserStore((s) => s.profile);
+  const name = profile?.name ?? 'there';
 
-  const currentPersona = PERSONAS[persona];
-  const greeting = currentPersona.greeting(getTimeOfDay(), 'Alex');
-  const showSuggestions = messages.length === 0;
+  // Load brief on first mount
+  useEffect(() => {
+    store.initBrief();
+  }, [store.personaId]);
 
-  const sendMessage = useCallback(async (text: string) => {
-    const trimmed = text.trim();
-    if (!trimmed) return;
-
-    const userMsg: ChatMessage = {
-      id: `msg-${_msgId++}`,
-      role: 'user',
-      text: trimmed,
-      timestamp: new Date(),
-    };
-
-    setMessages(prev => [...prev, userMsg]);
-    setInputText('');
-    setIsThinking(true);
-
-    await new Promise(resolve => setTimeout(resolve, 1200));
-
-    const response = MOCK_RESPONSES[trimmed] ?? DEFAULT_RESPONSE;
-    const coachMsg: ChatMessage = {
-      id: `msg-${_msgId++}`,
-      role: 'coach',
-      text: response.text,
-      timestamp: new Date(),
-      actionCard: response.actionCard,
-    };
-
-    setIsThinking(false);
-    setMessages(prev => [...prev, coachMsg]);
-  }, []);
-
-  const handlePromptTap = useCallback(
-    (text: string) => sendMessage(text),
-    [sendMessage]
-  );
-
-  const handleActionTap = useCallback((messageId: string, actionId: string) => {
-    const ack =
-      actionId === 'apply'
-        ? 'Done. I\u2019ve applied those changes to your nutrition goals.'
-        : actionId === 'log'
-        ? 'Logged. Added that meal to your log.'
-        : actionId === 'start'
-        ? 'Let\u2019s go. Opening your workout session.'
-        : 'Got it.';
-
-    const ackMsg: ChatMessage = {
-      id: `msg-${_msgId++}`,
-      role: 'coach',
-      text: ack,
-      timestamp: new Date(),
-    };
-    setMessages(prev => [...prev, ackMsg]);
-  }, []);
-
-  const clearChat = useCallback(() => setMessages([]), []);
+  const dayPart = getDayPartForTimezone('America/New_York');
+  const currentPersona = PERSONAS[store.personaId];
+  // old mock PERSONAS.greeting signature is (timeOfDay, userName)
+  const greeting = currentPersona?.greeting(dayPart, name) ?? '';
+  const showSuggestions = store.messages.length === 0;
 
   return {
-    persona,
-    setPersona,
+    persona: store.personaId,
+    setPersona: store.setPersona,
     currentPersona,
     greeting,
-    messages,
-    inputText,
-    setInputText,
-    isThinking,
+    messages: store.messages,
+    inputText: store.inputText,
+    setInputText: store.setInputText,
+    isThinking: store.isLoading,
+    isLoading: store.isLoading,
     showSuggestions,
-    suggestedPrompts: SUGGESTED_PROMPTS,
-    sendMessage,
-    handlePromptTap,
-    handleActionTap,
-    clearChat,
+    suggestedPrompts: store.suggestedPrompts,
+    proactiveBrief: store.proactiveBrief,
+    sendMessage: store.sendMessage,
+    handlePromptTap: store.sendMessage,
+    confirmAction: store.confirmAction,
+    cancelAction: store.cancelAction,
+    clearChat: store.clearChat,
   };
 }
+

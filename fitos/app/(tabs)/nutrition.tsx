@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Screen } from '../../src/shared/components/ui/Screen';
 import { SectionHeader } from '../../src/shared/components/ui/SectionHeader';
-import { AIInsightBanner } from '../../src/shared/components/ui/AIInsightBanner';
+import { PageHero } from '../../src/shared/components/ui/PageHero';
 import { MacroSummaryCard } from '../../src/features/nutrition/components/MacroSummaryCard';
 import { RemainingMacrosCard } from '../../src/features/nutrition/components/RemainingMacrosCard';
 import { FoodLoggerCard } from '../../src/features/nutrition/components/FoodLoggerCard';
@@ -29,7 +29,11 @@ export default function NutritionScreen() {
   return (
     <Screen scrollable horizontalPadding={spacing[4]}>
       <View style={styles.header}>
-        <SectionHeader title="Nutrition" />
+        <PageHero
+          eyebrow="Nutrition"
+          title="Fuel status"
+          detail="Macro targets, meal logging, and supplement consistency in one place."
+        />
       </View>
 
       <MacroSummaryCard

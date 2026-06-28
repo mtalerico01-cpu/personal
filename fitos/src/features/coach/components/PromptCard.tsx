@@ -18,7 +18,7 @@ export function PromptCard({ text, onPress }: PromptCardProps) {
 const styles = StyleSheet.create({
   card: {
     paddingHorizontal: 18,
-    paddingVertical: 13,
+    paddingVertical: 8,
     borderRadius: 14,
     borderWidth: 1,
     borderColor: colors.border,

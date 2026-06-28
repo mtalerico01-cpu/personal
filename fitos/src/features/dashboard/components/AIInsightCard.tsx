@@ -58,20 +58,21 @@ export function AIInsightCard({ brief }: AIInsightCardProps) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.xl,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.accentDim,
+    backgroundColor: 'rgba(5, 8, 9, 0.68)',
+    borderRadius: radius['2xl'],
+    borderWidth: 1,
+    borderColor: 'rgba(243,243,243,0.15)',
     overflow: 'hidden',
-    shadowColor: colors.accent,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.32,
+    shadowRadius: 24,
     elevation: 4,
   },
   accentBar: {
-    height: 2,
+    height: 3,
     backgroundColor: colors.accent,
+    opacity: 0.72,
   },
   content: {
     padding: spacing[4],
@@ -83,7 +84,9 @@ const styles = StyleSheet.create({
     marginBottom: spacing[3],
   },
   aiBadge: {
-    backgroundColor: colors.accentMuted,
+    backgroundColor: 'rgba(168,255,62,0.08)',
+    borderWidth: 1,
+    borderColor: 'rgba(168,255,62,0.14)',
     paddingHorizontal: spacing[2],
     paddingVertical: 3,
     borderRadius: radius.full,

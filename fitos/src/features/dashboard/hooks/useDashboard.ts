@@ -1,25 +1,26 @@
 /**
- * useDashboard — assembles all dashboard data from mock services.
+ * useDashboard — assembles all dashboard data from shared Zustand stores.
  *
- * In Phase 4, the mock imports will be replaced with TanStack Query hooks
- * that fetch from Supabase. The hook's return shape stays identical,
- * so all consuming components remain untouched.
+ * In Phase 4, mock imports will be replaced with TanStack Query hooks
+ * that fetch from Supabase. The hook's return shape stays identical.
  */
 
 import {
   mockUser,
-  mockNutritionLog,
   mockWeightTrend,
   mockTodayWorkout,
   mockAIDailyBrief,
   mockSteps,
 } from '../mock';
+import { useNutritionStore } from '../../../store/nutritionStore';
+import { useProgressStore } from '../../../store/progressStore';
 import { colors } from '../../../shared/theme';
 import type { KPICardData } from '../types';
 
 export function useDashboard() {
-  const { goals } = mockUser;
-  const { totalMacros } = mockNutritionLog;
+  const { goals, log } = useNutritionStore();
+  const { currentWeightLbs, weeklyChangeLbs } = useProgressStore();
+  const totalMacros = log.totalMacros;
 
   const kpiCards: KPICardData[] = [
     {
@@ -77,10 +78,10 @@ export function useDashboard() {
     {
       id: 'weight',
       label: 'Weight',
-      value: `${(mockWeightTrend.current * 2.20462).toFixed(1)}`,
+      value: `${currentWeightLbs.toFixed(1)}`,
       unit: 'lbs',
-      trend: mockWeightTrend.direction,
-      trendLabel: `${mockWeightTrend.weeklyChange > 0 ? '+' : ''}${(mockWeightTrend.weeklyChange * 2.20462).toFixed(1)} lbs this week`,
+      trend: weeklyChangeLbs < 0 ? 'down' : weeklyChangeLbs > 0 ? 'up' : 'stable',
+      trendLabel: `${weeklyChangeLbs > 0 ? '+' : ''}${weeklyChangeLbs.toFixed(1)} lbs this week`,
       accentColor: colors.weight,
       accentColorMuted: colors.weightMuted,
     },
@@ -103,7 +104,7 @@ export function useDashboard() {
     kpiCards,
     workout: mockTodayWorkout,
     aiDailyBrief: mockAIDailyBrief,
-    nutritionLog: mockNutritionLog,
+    nutritionLog: log,
     weightTrend: mockWeightTrend,
   };
 }

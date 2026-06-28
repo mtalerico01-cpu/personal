@@ -64,6 +64,7 @@ export function Screen({
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <View style={styles.depthGlow} />
       {content}
     </SafeAreaView>
   );
@@ -72,7 +73,18 @@ export function Screen({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: '#020404',
+    overflow: 'hidden',
+  },
+  depthGlow: {
+    position: 'absolute',
+    top: 92,
+    left: '18%',
+    width: 240,
+    height: 240,
+    borderRadius: 120,
+    backgroundColor: colors.accent,
+    opacity: 0.055,
   },
   scroll: {
     flex: 1,

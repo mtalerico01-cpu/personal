@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Screen } from '../../src/shared/components/ui/Screen';
-import { SectionHeader } from '../../src/shared/components/ui/SectionHeader';
+import { PageHero } from '../../src/shared/components/ui/PageHero';
 import { Text } from '../../src/shared/components/ui/Text';
 import { TodayWorkoutCard } from '../../src/features/training/components/TodayWorkoutCard';
 import { WorkoutGeneratorCard } from '../../src/features/training/components/WorkoutGeneratorCard';
@@ -9,7 +9,7 @@ import { ExerciseLoggerPreview } from '../../src/features/training/components/Ex
 import { CardioSummaryCard } from '../../src/features/training/components/CardioSummaryCard';
 import { useTraining } from '../../src/features/training/hooks/useTraining';
 import { colors } from '../../src/shared/theme/colors';
-import { spacing, radius } from '../../src/shared/theme/spacing';
+import { spacing } from '../../src/shared/theme/spacing';
 
 export default function TrainingScreen() {
   const {
@@ -26,7 +26,11 @@ export default function TrainingScreen() {
   return (
     <Screen scrollable horizontalPadding={spacing[4]}>
       <View style={styles.header}>
-        <SectionHeader title="Training" />
+        <PageHero
+          eyebrow="Training"
+          title="Session control"
+          detail="Plan strength work, generate sessions, and keep cardio targets visible."
+        />
       </View>
 
       {/* Strength / Cardio tab toggle */}
@@ -88,7 +92,8 @@ function TabButton({ label, active, onPress }: TabButtonProps) {
     >
       <Text
         variant="labelLarge"
-        color={active ? colors.background : colors.textTertiary}
+        color={active ? colors.accent : colors.textTertiary}
+        style={styles.tabText}
       >
         {label}
       </Text>
@@ -100,8 +105,10 @@ const styles = StyleSheet.create({
   header: { paddingTop: spacing[4], paddingBottom: spacing[2] },
   tabRow: {
     flexDirection: 'row',
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: radius.lg,
+    backgroundColor: 'rgba(5, 8, 9, 0.58)',
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: 'rgba(243,243,243,0.14)',
     padding: 3,
     gap: 3,
   },
@@ -109,10 +116,16 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: spacing[2],
     alignItems: 'center',
-    borderRadius: radius.md,
+    borderRadius: 18,
   },
   tabActive: {
-    backgroundColor: colors.accent,
+    backgroundColor: 'rgba(168,255,62,0.14)',
+    borderWidth: 1,
+    borderColor: 'rgba(168,255,62,0.18)',
+  },
+  tabText: {
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
   },
   gap: { height: spacing[4] },
 });

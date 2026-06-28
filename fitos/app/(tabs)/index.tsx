@@ -4,17 +4,31 @@ import { Screen } from '../../src/shared/components/ui/Screen';
 import { AIInsightCard } from '../../src/features/dashboard/components/AIInsightCard';
 import { KPICard } from '../../src/features/dashboard/components/KPICard';
 import { TrainingCard } from '../../src/features/dashboard/components/TrainingCard';
-import { DashboardHeader } from '../../src/features/dashboard/components/DashboardHeader';
+import { PageHero } from '../../src/shared/components/ui/PageHero';
 import { useDashboard } from '../../src/features/dashboard/hooks/useDashboard';
 import { spacing } from '../../src/shared/theme/spacing';
+
+function getGreeting(): string {
+  const hour = new Date().getHours();
+  if (hour < 12) return 'Good morning';
+  if (hour < 17) return 'Good afternoon';
+  return 'Good evening';
+}
 
 export default function DashboardScreen() {
   const { user, kpiCards, workout, aiDailyBrief } = useDashboard();
 
   return (
     <Screen scrollable horizontalPadding={spacing[4]}>
-      {/* Greeting header */}
-      <DashboardHeader name={user.name} />
+      <View style={styles.header}>
+        <PageHero
+          eyebrow="Today"
+          title={`${getGreeting()}, ${user.name}`}
+          detail="Your training, nutrition, and progress signals are synced."
+        />
+      </View>
+
+      <View style={styles.sectionSpacer} />
 
       {/* AI Daily Brief */}
       <AIInsightCard brief={aiDailyBrief} />
@@ -39,6 +53,9 @@ export default function DashboardScreen() {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    paddingTop: spacing[4],
+  },
   sectionSpacer: {
     height: spacing[4],
   },

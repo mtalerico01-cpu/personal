@@ -3,7 +3,8 @@ import { View, StyleSheet } from 'react-native';
 import { Screen } from '../../src/shared/components/ui/Screen';
 import { SectionHeader } from '../../src/shared/components/ui/SectionHeader';
 import { AIInsightBanner } from '../../src/shared/components/ui/AIInsightBanner';
-import { WeightTrendCard } from '../../src/features/progress/components/WeightTrendCard';
+import { PageHero } from '../../src/shared/components/ui/PageHero';
+import { ProgressMonitorCard } from '../../src/features/progress/components/ProgressMonitorCard';
 import { StrengthMetricCard } from '../../src/features/progress/components/StrengthMetricCard';
 import { StrengthScoreCard } from '../../src/features/progress/components/StrengthScoreCard';
 import { BodyMeasurementsCard } from '../../src/features/progress/components/BodyMeasurementsCard';
@@ -12,21 +13,29 @@ import { useProgress } from '../../src/features/progress/hooks/useProgress';
 import { spacing } from '../../src/shared/theme/spacing';
 
 export default function ProgressScreen() {
-  const { weight, aiWeightInsight, strength, bodyMeasurements, progressPhotos } = useProgress();
+  const { weight, aiWeightInsight, strength, bodyMeasurements, bodyMeasurementHistory, progressPhotos } = useProgress();
+  const loggedMeasurements = bodyMeasurements.filter((measurement) => measurement.value !== null).length;
 
   return (
     <Screen scrollable horizontalPadding={spacing[4]}>
       <View style={styles.header}>
-        <SectionHeader title="Progress" />
+        <PageHero
+          eyebrow="Progress"
+          title="Trend review"
+          detail="Weight, strength, measurements, and photos tuned for long-term signal."
+        />
       </View>
 
-      {/* Weight */}
-      <WeightTrendCard
-        currentLbs={weight.currentLbs}
-        goalLbs={weight.goalLbs}
-        sevenDayAvgLbs={weight.sevenDayAvgLbs}
-        weeklyChangeLbs={weight.weeklyChangeLbs}
-        sparkline={weight.sparkline}
+      <ProgressMonitorCard
+        weightSeries={weight.history}
+        weightCurrentLbs={weight.currentLbs}
+        weightGoalLbs={weight.goalLbs}
+        strengthScore={strength.score}
+        strengthChange={strength.scoreChangeThisMonth}
+        strengthSeries={strength.history}
+        bodySeries={bodyMeasurementHistory}
+        bodyLoggedCount={loggedMeasurements}
+        bodyTotalCount={bodyMeasurements.length}
       />
       <View style={styles.gap} />
       <AIInsightBanner text={aiWeightInsight} label="WEIGHT INSIGHT" />

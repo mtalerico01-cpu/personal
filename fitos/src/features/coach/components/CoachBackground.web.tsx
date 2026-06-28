@@ -1,143 +1,184 @@
-/**
- * CoachBackground — Web implementation
- *
- * Matches the AI Coach Landing Prototype reference images:
- * soft radial glow volumes at very low opacity, drifting imperceptibly slow.
- * The effect is NOT texture/noise — it is subtle luminance variation from
- * large semi-transparent gradient circles layered on a near-black base.
- * This is exactly how premium AI product landing pages achieve atmospheric depth.
+﻿/**
+ * CoachBackground -- Web implementation
+ * Uses the dark motion background video as a full-screen looping backdrop.
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withRepeat,
-  withSequence,
-  withTiming,
-  Easing,
-} from 'react-native-reanimated';
-import { LinearGradient } from 'expo-linear-gradient';
 
-// Use a fixed mobile-like canvas size so blobs are always on-screen
-// regardless of the browser window width.
-const W = 500;
-const H = 850;
-
-// ── Glow blob config ───────────────────────────────────────────────────────
-// Each blob is a large circle with a LinearGradient fill fading to transparent.
-// Keep inner opacity visible but not gaudy — subtle atmospheric depth.
-
-const BLOBS = [
-  // Upper-left warm fog — center visible at (25%, 20%)
-  { id: 'f1', size: 600, cx: W * 0.25,  cy: H * 0.20, inner: 'rgba(42,38,30,0.70)', outer: 'rgba(5,5,5,0.0)',    dx: 55,  dy: -25, dur: 52000 },
-  // Upper-right warm fog — center visible at (78%, 10%)
-  { id: 'f2', size: 560, cx: W * 0.78,  cy: H * 0.10, inner: 'rgba(38,35,26,0.65)', outer: 'rgba(5,5,5,0.0)',    dx: -60, dy: 45,  dur: 44000 },
-  // Mid-left depth — center at (20%, 55%)
-  { id: 'f3', size: 520, cx: W * 0.20,  cy: H * 0.55, inner: 'rgba(36,33,26,0.60)', outer: 'rgba(5,5,5,0.0)',    dx: 50,  dy: -55, dur: 38000 },
-  // Lower-right pool — center at (80%, 78%)
-  { id: 'f4', size: 580, cx: W * 0.80,  cy: H * 0.78, inner: 'rgba(34,31,24,0.65)', outer: 'rgba(5,5,5,0.0)',    dx: -40, dy: -35, dur: 60000 },
-  // Center-top AI green bloom — center at (50%, 15%)
-  { id: 'g1', size: 500, cx: W * 0.50,  cy: H * 0.15, inner: 'rgba(20,52,12,0.60)', outer: 'rgba(5,5,5,0.0)',    dx: 28,  dy: 22,  dur: 46000 },
-  // Secondary green wisp — center at (30%, 42%)
-  { id: 'g2', size: 360, cx: W * 0.30,  cy: H * 0.42, inner: 'rgba(16,40,10,0.50)', outer: 'rgba(5,5,5,0.0)',    dx: -30, dy: -28, dur: 34000 },
-  // Large background haze — center at (60%, 65%)
-  { id: 'f5', size: 640, cx: W * 0.60,  cy: H * 0.65, inner: 'rgba(38,35,28,0.60)', outer: 'rgba(5,5,5,0.0)',    dx: -22, dy: -45, dur: 70000 },
-] as const;
-
-type BlobConfig = (typeof BLOBS)[number];
-
-function GlowBlob({ blob }: { blob: BlobConfig }) {
-  const tx = useSharedValue(0);
-  const ty = useSharedValue(0);
-
-  useEffect(() => {
-    tx.value = withRepeat(
-      withSequence(
-        withTiming(blob.dx, { duration: blob.dur, easing: Easing.inOut(Easing.sin) }),
-        withTiming(0, { duration: blob.dur, easing: Easing.inOut(Easing.sin) })
-      ),
-      -1,
-      false
-    );
-    ty.value = withRepeat(
-      withSequence(
-        withTiming(blob.dy, { duration: blob.dur * 1.3, easing: Easing.inOut(Easing.sin) }),
-        withTiming(0, { duration: blob.dur * 1.3, easing: Easing.inOut(Easing.sin) })
-      ),
-      -1,
-      false
-    );
-  }, []);
-
-  const animStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: tx.value }, { translateY: ty.value }],
-  }));
-
-  const left = blob.cx - blob.size / 2;
-  const top  = blob.cy - blob.size / 2;
-
-  return (
-    <Animated.View
-      pointerEvents="none"
-      style={[
-        {
-          position: 'absolute',
-          width: blob.size,
-          height: blob.size,
-          borderRadius: blob.size / 2,
-          left,
-          top,
-          // @ts-ignore — web-only CSS: transforms the blob into real soft smoke volume
-          filter: `blur(${Math.round(blob.size * 0.14)}px)`,
-        },
-        animStyle,
-      ]}
-    >
-      <LinearGradient
-        colors={[blob.inner, blob.outer]}
-        style={{ width: blob.size, height: blob.size, borderRadius: blob.size / 2 }}
-      />
-    </Animated.View>
-  );
-}
+const MOTION_STYLE_ID = 'fitos-coach-background-motion';
+const VIDEO_SRC = '/videos/coach-background.mp4';
+const VIDEO_LOAD_DELAY_MS = 900;
+const VIDEO_TIMEOUT_MS = 6500;
 
 export function CoachBackground() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [shouldLoadVideo, setShouldLoadVideo] = React.useState(false);
+
+  useEffect(() => {
+    const connection = (navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    }).connection;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const shouldSkipVideo =
+      prefersReducedMotion ||
+      connection?.saveData ||
+      connection?.effectiveType === 'slow-2g' ||
+      connection?.effectiveType === '2g';
+
+    if (shouldSkipVideo) return;
+
+    const loadVideo = () => setShouldLoadVideo(true);
+    const idleCallback = 'requestIdleCallback' in window
+      ? window.requestIdleCallback(loadVideo, { timeout: 2200 })
+      : undefined;
+    const delayId = window.setTimeout(loadVideo, VIDEO_LOAD_DELAY_MS);
+
+    return () => {
+      window.clearTimeout(delayId);
+      if (idleCallback !== undefined && 'cancelIdleCallback' in window) {
+        window.cancelIdleCallback(idleCallback);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!shouldLoadVideo) return;
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playbackRate = 1.0;
+    video.src = VIDEO_SRC;
+
+    const play = () => {
+      if (!video.paused && video.readyState > 1) return;
+      video.play().catch(() => {});
+    };
+
+    const resume = () => play();
+
+    video.addEventListener('loadedmetadata', resume);
+    video.addEventListener('loadeddata', resume);
+    video.addEventListener('canplay', resume);
+    video.addEventListener('playing', resume);
+    document.addEventListener('pointerdown', play);
+    document.addEventListener('keydown', play);
+    window.addEventListener('focus', play);
+    document.addEventListener('visibilitychange', play);
+
+    video.load();
+    resume();
+
+    const intervalId = window.setInterval(resume, 1500);
+    const timeoutId = window.setTimeout(() => {
+      if (video.readyState < 2 || video.videoWidth === 0) {
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
+      }
+    }, VIDEO_TIMEOUT_MS);
+
+    return () => {
+      video.removeEventListener('loadedmetadata', resume);
+      video.removeEventListener('loadeddata', resume);
+      video.removeEventListener('canplay', resume);
+      video.removeEventListener('playing', resume);
+      document.removeEventListener('pointerdown', play);
+      document.removeEventListener('keydown', play);
+      window.removeEventListener('focus', play);
+      document.removeEventListener('visibilitychange', play);
+      window.clearInterval(intervalId);
+      window.clearTimeout(timeoutId);
+    };
+  }, [shouldLoadVideo]);
+
+  useEffect(() => {
+    if (document.getElementById(MOTION_STYLE_ID)) return;
+
+    const style = document.createElement('style');
+    style.id = MOTION_STYLE_ID;
+    style.textContent = `
+      @keyframes fitosCoachDrift {
+        0% { transform: translate3d(-3%, -2%, 0) scale(1.08); background-position: 0% 40%, 100% 55%, 50% 50%; }
+        50% { transform: translate3d(3%, 2%, 0) scale(1.14); background-position: 100% 58%, 0% 40%, 58% 48%; }
+        100% { transform: translate3d(-3%, -2%, 0) scale(1.08); background-position: 0% 40%, 100% 55%, 50% 50%; }
+      }
+      @keyframes fitosCoachPulse {
+        0%, 100% { opacity: 0.28; }
+        50% { opacity: 0.46; }
+      }
+    `;
+    document.head.appendChild(style);
+  }, []);
+
   return (
-    <View style={StyleSheet.absoluteFill} pointerEvents="none">
-      {/* Base */}
-      <View style={[StyleSheet.absoluteFill, { backgroundColor: '#050505' }]} />
-
-      {/* Atmospheric glow blobs */}
-      {BLOBS.map(b => <GlowBlob key={b.id} blob={b} />)}
-
-      {/* Top vignette — deepens the sense of looking into a portal */}
-      <LinearGradient
-        colors={['rgba(5,5,5,0.85)', 'rgba(5,5,5,0.0)']}
-        style={styles.vigTop}
-        pointerEvents="none"
+    <View style={styles.container} pointerEvents="none">
+      {/* @ts-ignore -- video element is web-only */}
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        muted
+        preload="metadata"
+        playsInline
+        style={videoStyle}
       />
-
-      {/* Bottom vignette */}
-      <LinearGradient
-        colors={['rgba(5,5,5,0.0)', 'rgba(5,5,5,0.92)']}
-        style={styles.vigBottom}
-        pointerEvents="none"
-      />
+      {/* @ts-ignore -- web-only animated fallback when the browser pauses background video */}
+      <div style={fallbackMotionStyle} />
+      {/* @ts-ignore -- radial gradient vignette: dark edges, clear center */}
+      <div style={vignetteStyle} />
     </View>
   );
 }
 
+// @ts-ignore
+const fallbackMotionStyle = {
+  position: 'absolute',
+  inset: '-8%',
+  zIndex: 0,
+  background:
+    'radial-gradient(ellipse at 28% 34%, rgba(168,255,62,0.26) 0%, rgba(168,255,62,0.08) 22%, transparent 48%), radial-gradient(ellipse at 70% 68%, rgba(124,175,92,0.20) 0%, rgba(124,175,92,0.07) 26%, transparent 54%), linear-gradient(115deg, rgba(255,255,255,0.03), transparent 42%, rgba(168,255,62,0.05) 72%, transparent 100%)',
+  backgroundSize: '140% 140%, 150% 150%, 180% 180%',
+  filter: 'blur(18px)',
+  mixBlendMode: 'screen',
+  pointerEvents: 'none',
+  animation: 'fitosCoachDrift 18s ease-in-out infinite, fitosCoachPulse 7s ease-in-out infinite',
+};
+
+// @ts-ignore
+const vignetteStyle = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  zIndex: 2,
+  width: '100%',
+  height: '100%',
+  background: 'radial-gradient(circle at 50% 38%, rgba(168,255,62,0.08) 0%, rgba(168,255,62,0.03) 22%, transparent 38%), radial-gradient(ellipse at center, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.20) 28%, rgba(0,0,0,0.58) 64%, rgba(0,0,0,0.90) 100%)',
+  pointerEvents: 'none',
+};
+
+// @ts-ignore
+const videoStyle = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  zIndex: 1,
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+  opacity: 0.72,
+  transition: 'opacity 900ms ease',
+  filter: 'brightness(1.18) contrast(1.05) saturate(1.08)',
+  mixBlendMode: 'screen',
+  pointerEvents: 'none',
+};
+
 const styles = StyleSheet.create({
-  vigTop: {
-    position: 'absolute',
-    top: 0, left: 0, right: 0,
-    height: 240,
-  },
-  vigBottom: {
-    position: 'absolute',
-    bottom: 0, left: 0, right: 0,
-    height: 240,
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    overflow: 'hidden',
+    backgroundColor: '#050505',
   },
 });
-

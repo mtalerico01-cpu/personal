@@ -22,6 +22,7 @@ export function AIInsightBanner({ text, label = 'AI INSIGHT' }: AIInsightBannerP
             {label}
           </Text>
         </View>
+        <View style={styles.statusDot} />
       </View>
       <Text variant="bodyLarge" color={colors.textSecondary} style={styles.text}>
         {text}
@@ -32,21 +33,41 @@ export function AIInsightBanner({ text, label = 'AI INSIGHT' }: AIInsightBannerP
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.accentMuted,
-    borderRadius: radius.xl,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.accentDim,
+    backgroundColor: 'rgba(5, 8, 9, 0.66)',
+    borderRadius: radius['2xl'],
+    borderWidth: 1,
+    borderLeftWidth: 2,
+    borderColor: 'rgba(243,243,243,0.14)',
+    borderLeftColor: 'rgba(168,255,62,0.45)',
     padding: spacing[4],
     gap: spacing[2],
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.3,
+    shadowRadius: 22,
+    elevation: 4,
   },
   labelRow: {
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   badge: {
-    backgroundColor: colors.surface,
+    backgroundColor: 'rgba(168,255,62,0.08)',
+    borderWidth: 1,
+    borderColor: 'rgba(168,255,62,0.14)',
     paddingHorizontal: spacing[2],
     paddingVertical: 3,
     borderRadius: radius.full,
+  },
+  statusDot: {
+    width: 7,
+    height: 7,
+    borderRadius: 3.5,
+    backgroundColor: colors.accent,
+    shadowColor: colors.accent,
+    shadowOpacity: 0.85,
+    shadowRadius: 8,
   },
   text: {
     lineHeight: 22,

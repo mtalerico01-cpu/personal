@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import {
-  mockTodayWorkout,
   mockEstimatedCalories,
   mockGeneratedWorkouts,
-  mockCardioData,
   type GeneratedWorkout,
 } from '../mock';
+import { useTrainingStore } from '../../../store/trainingStore';
 
 export type TrainingTab = 'strength' | 'cardio';
 
 export function useTraining() {
   const [activeTab, setActiveTab] = useState<TrainingTab>('strength');
   const [selectedDuration, setSelectedDuration] = useState<number | null>(null);
+
+  const { todayWorkout, cardio } = useTrainingStore();
 
   const generatedWorkout: GeneratedWorkout | null = selectedDuration
     ? mockGeneratedWorkouts[selectedDuration] ?? null
@@ -20,11 +21,11 @@ export function useTraining() {
   return {
     activeTab,
     setActiveTab,
-    todayWorkout: mockTodayWorkout,
+    todayWorkout,
     estimatedCalories: mockEstimatedCalories,
     selectedDuration,
     setSelectedDuration,
     generatedWorkout,
-    cardioData: mockCardioData,
+    cardioData: cardio,
   };
 }

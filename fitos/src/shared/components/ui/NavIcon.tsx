@@ -1,5 +1,5 @@
 import React from 'react';
-import Svg, { Path, Rect } from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
 
 interface NavIconProps {
   color: string;
@@ -15,6 +15,14 @@ export function CoachIcon({ color, size = 24 }: NavIconProps) {
         fill="none"
         stroke={color}
         strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="m11.565 7.298c.159-.088.238-.132.322-.149.074-.015.152-.015.226 0 .084.017.163.061.322.149l3.9 2.167c.168.093.252.14.313.206.054.059.095.128.12.204.028.086.028.182.028.374v3.502c0 .192 0 .288-.028.374-.025.076-.066.145-.12.204-.061.066-.145.113-.313.206l-3.9 2.167c-.159.088-.238.132-.322.149-.074.015-.152.015-.226 0-.084-.017-.163-.061-.322-.149l-3.9-2.167c-.168-.093-.252-.14-.313-.206-.054-.059-.095-.128-.12-.204-.028-.086-.028-.182-.028-.374v-3.502c0-.192 0-.288.028-.374.025-.076.066-.145.12-.204.061-.066.145-.113.313-.206z"
+        fill="none"
+        stroke={color}
+        strokeWidth={1.6}
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -53,21 +61,17 @@ export function NutritionIcon({ color, size = 24 }: NavIconProps) {
   );
 }
 
-/** Barbell with 2 weight plates per side — Training tab */
+/** Dumbbell — Training tab */
 export function TrainingIcon({ color, size = 24 }: NavIconProps) {
-  const plate = { fill: 'none' as const, stroke: color, strokeWidth: 2, strokeLinejoin: 'round' as const };
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      {/* Full bar */}
-      <Path d="M2 12h20" stroke={color} strokeWidth={2} strokeLinecap="round" />
-      {/* Left outer plate — taller */}
-      <Rect x="3" y="7" width="2" height="10" rx="0.5" {...plate} />
-      {/* Left inner plate — shorter */}
-      <Rect x="5" y="9" width="2" height="6" rx="0.5" {...plate} />
-      {/* Right inner plate */}
-      <Rect x="17" y="9" width="2" height="6" rx="0.5" {...plate} />
-      {/* Right outer plate */}
-      <Rect x="19" y="7" width="2" height="10" rx="0.5" {...plate} />
+      <Path
+        d="M8.5 15.5 15.5 8.5M5.5 18.5l-2-2 3-3 4 4-3 3-2-2ZM18.5 5.5l2 2-3 3-4-4 3-3 2 2ZM7 12l5 5M12 7l5 5"
+        stroke={color}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </Svg>
   );
 }
