@@ -3,21 +3,37 @@ import { View, StyleSheet, Platform } from 'react-native';
 import { Text } from '../../src/shared/components/ui/Text';
 import { colors } from '../../src/shared/theme/colors';
 import { radius } from '../../src/shared/theme/spacing';
+import {
+  CoachIcon,
+  DashboardIcon,
+  NutritionIcon,
+  TrainingIcon,
+  ProgressIcon,
+} from '../../src/shared/components/ui/NavIcon';
+import type { ComponentType } from 'react';
+
+interface NavIconProps {
+  color: string;
+  size?: number;
+}
 
 interface TabIconProps {
   label: string;
-  emoji: string;
+  Icon: ComponentType<NavIconProps>;
   focused: boolean;
 }
 
-function TabIcon({ label, emoji, focused }: TabIconProps) {
+function TabIcon({ label, Icon, focused }: TabIconProps) {
   return (
     <View style={[styles.tabItem, focused && styles.tabItemFocused]}>
-      <Text style={[styles.emoji, focused && styles.emojiFocused]}>{emoji}</Text>
+      <Icon
+        color={focused ? colors.tabBarActive : colors.tabBarInactive}
+        size={22}
+      />
       <Text
         variant="labelMedium"
         color={focused ? colors.tabBarActive : colors.tabBarInactive}
-        style={styles.tabLabel}
+        style={[styles.tabLabel, { opacity: focused ? 1 : 0.5 }]}
       >
         {label}
       </Text>
@@ -28,6 +44,7 @@ function TabIcon({ label, emoji, focused }: TabIconProps) {
 export default function TabLayout() {
   return (
     <Tabs
+      initialRouteName="coach"
       screenOptions={{
         headerShown: false,
         tabBarStyle: styles.tabBar,
@@ -35,10 +52,18 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
+        name="coach"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabIcon label="Coach" Icon={CoachIcon} focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="index"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon label="Today" emoji="⚡" focused={focused} />
+            <TabIcon label="Dashboard" Icon={DashboardIcon} focused={focused} />
           ),
         }}
       />
@@ -46,7 +71,7 @@ export default function TabLayout() {
         name="nutrition"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon label="Nutrition" emoji="🥗" focused={focused} />
+            <TabIcon label="Nutrition" Icon={NutritionIcon} focused={focused} />
           ),
         }}
       />
@@ -54,7 +79,7 @@ export default function TabLayout() {
         name="training"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon label="Training" emoji="🏋️" focused={focused} />
+            <TabIcon label="Training" Icon={TrainingIcon} focused={focused} />
           ),
         }}
       />
@@ -62,7 +87,7 @@ export default function TabLayout() {
         name="progress"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon label="Progress" emoji="📈" focused={focused} />
+            <TabIcon label="Progress" Icon={ProgressIcon} focused={focused} />
           ),
         }}
       />
@@ -85,18 +110,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: radius.lg,
-    gap: 2,
+    gap: 4,
   },
   tabItemFocused: {
     backgroundColor: colors.accentMuted,
-  },
-  emoji: {
-    fontSize: 18,
-    lineHeight: 22,
-    opacity: 0.5,
-  },
-  emojiFocused: {
-    opacity: 1,
   },
   tabLabel: {
     fontSize: 9,
