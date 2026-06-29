@@ -1,4 +1,4 @@
-import { generateSuggestedPrompts } from '../suggestions/generateSuggestedPrompts';
+import { generateFollowUpPromptsForTopic, generateSuggestedPrompts } from '../suggestions/generateSuggestedPrompts';
 import type { AIContext } from '../types';
 
 function makeCtx(overrides: {
@@ -81,5 +81,17 @@ describe('generateSuggestedPrompts', () => {
       expect(p.prompt).toBeTruthy();
       expect(p.category).toBeTruthy();
     }
+  });
+
+  it.each([
+    ['nutrition', 'nutrition'],
+    ['training', 'training'],
+    ['cardio', 'cardio'],
+    ['progress', 'progress'],
+  ] as const)('keeps %s follow-ups topic relevant', (topic, expectedPrimaryCategory) => {
+    const prompts = generateFollowUpPromptsForTopic(topic);
+    expect(prompts).toHaveLength(4);
+    expect(prompts[0].category).toBe(expectedPrimaryCategory);
+    expect(prompts.some((prompt) => prompt.label.toLowerCase().includes('change'))).toBe(true);
   });
 });

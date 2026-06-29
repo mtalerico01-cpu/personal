@@ -3,6 +3,7 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Card } from '../../../shared/components/ui/Card';
 import { Text } from '../../../shared/components/ui/Text';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing, radius } from '@/shared/theme/spacing';
 import type { WorkoutExercise } from '../../../types';
 
@@ -11,6 +12,7 @@ interface ExerciseLoggerPreviewProps {
 }
 
 export function ExerciseLoggerPreview({ exercises }: ExerciseLoggerPreviewProps) {
+  const theme = useActiveTheme();
   const [activeExercise, setActiveExercise] = useState(0);
   const exercise = exercises[activeExercise];
 
@@ -29,11 +31,15 @@ export function ExerciseLoggerPreview({ exercises }: ExerciseLoggerPreviewProps)
             style={[
               styles.pill,
               activeExercise === i && styles.pillActive,
+              {
+                borderColor: activeExercise === i ? theme.colors.border.persona : theme.colors.border.default,
+                backgroundColor: activeExercise === i ? theme.colors.persona.core : theme.colors.surface.subtle,
+              },
             ]}
           >
             <Text
               variant="caption"
-              color={activeExercise === i ? colors.background : colors.textTertiary}
+              color={activeExercise === i ? theme.colors.text.inverse : theme.colors.text.muted}
               numberOfLines={1}
             >
               {ex.exerciseName.split(' ')[0]}
@@ -60,25 +66,32 @@ export function ExerciseLoggerPreview({ exercises }: ExerciseLoggerPreviewProps)
           <Text variant="labelLarge" color={colors.textTertiary} style={styles.setNum}>
             {set.setNumber}
           </Text>
-          <View style={[styles.col, styles.inputBox]}>
+          <View style={[styles.col, styles.inputBox, { backgroundColor: theme.colors.surface.raised }]}> 
             <Text variant="bodyMedium" color={colors.textPrimary}>{set.weightKg}</Text>
           </View>
-          <View style={[styles.col, styles.inputBox]}>
+          <View style={[styles.col, styles.inputBox, { backgroundColor: theme.colors.surface.raised }]}> 
             <Text variant="bodyMedium" color={colors.textPrimary}>{set.reps}</Text>
           </View>
           <View style={styles.checkCol}>
-            <View style={[styles.checkbox, set.completed && styles.checkboxDone]}>
+            <View
+              style={[
+                styles.checkbox,
+                { borderColor: theme.colors.border.default },
+                set.completed && styles.checkboxDone,
+                set.completed && { backgroundColor: theme.colors.persona.core, borderColor: theme.colors.border.persona },
+              ]}
+            >
               {set.completed && (
-                <Text variant="caption" color={colors.background}>✓</Text>
+                <Text variant="caption" color={theme.colors.text.inverse}>✓</Text>
               )}
             </View>
           </View>
         </View>
       ))}
 
-      <TouchableOpacity style={styles.addSetButton}>
-        <Text variant="labelLarge" color={colors.accent}>+ Add Set</Text>
-      </TouchableOpacity>
+      <View style={styles.addSetButton}>
+        <Text variant="labelLarge" color={colors.textDisabled}>Add Set · Coming later</Text>
+      </View>
     </Card>
   );
 }
@@ -96,12 +109,9 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: radius.full,
     borderWidth: 1,
-    borderColor: colors.border,
     maxWidth: 90,
   },
   pillActive: {
-    backgroundColor: colors.training,
-    borderColor: colors.training,
   },
   exName: { marginBottom: spacing[3] },
   setHeader: {
@@ -122,7 +132,6 @@ const styles = StyleSheet.create({
   setNum: { width: 32 },
   col: { flex: 1, alignItems: 'center' },
   inputBox: {
-    backgroundColor: colors.surfaceElevated,
     paddingVertical: 6,
     borderRadius: radius.sm,
     marginHorizontal: 4,
@@ -133,13 +142,10 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: 6,
     borderWidth: 1.5,
-    borderColor: colors.border,
     alignItems: 'center',
     justifyContent: 'center',
   },
   checkboxDone: {
-    backgroundColor: colors.success,
-    borderColor: colors.success,
   },
   addSetButton: {
     marginTop: spacing[3],

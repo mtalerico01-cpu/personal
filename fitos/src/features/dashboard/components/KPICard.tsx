@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Card } from '../../../shared/components/ui/Card';
 import { Text } from '../../../shared/components/ui/Text';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing } from '@/shared/theme/spacing';
 import type { KPICardData } from '../types';
 
@@ -11,7 +12,8 @@ interface KPICardProps {
 }
 
 export function KPICard({ data }: KPICardProps) {
-  const { label, value, unit, progress, trendLabel, trend, accentColor, accentColorMuted } = data;
+  const theme = useActiveTheme();
+  const { label, value, unit, progress, trendLabel, trend } = data;
 
   return (
     <Card style={styles.card} padding={14}>
@@ -21,7 +23,7 @@ export function KPICard({ data }: KPICardProps) {
           {label.toUpperCase()}
         </Text>
         {trend && (
-          <View style={[styles.trendDot, { backgroundColor: trendColor(trend, accentColor) }]} />
+          <View style={[styles.trendDot, { backgroundColor: trendColor(trend, theme) }]} />
         )}
       </View>
 
@@ -39,13 +41,13 @@ export function KPICard({ data }: KPICardProps) {
 
       {/* Progress bar */}
       {progress !== undefined && (
-        <View style={styles.progressTrack}>
+        <View style={[styles.progressTrack, { backgroundColor: theme.colors.border.subtle }]}> 
           <View
             style={[
               styles.progressFill,
               {
                 width: `${Math.min(progress * 100, 100)}%`,
-                backgroundColor: accentColor,
+                backgroundColor: theme.colors.persona.core,
               },
             ]}
           />
@@ -62,10 +64,10 @@ export function KPICard({ data }: KPICardProps) {
   );
 }
 
-function trendColor(trend: 'up' | 'down' | 'stable', accentColor: string): string {
-  if (trend === 'up') return colors.success;
-  if (trend === 'down') return colors.error;
-  return accentColor;
+function trendColor(trend: 'up' | 'down' | 'stable', theme: ReturnType<typeof useActiveTheme>): string {
+  if (trend === 'up') return theme.colors.persona.core;
+  if (trend === 'down') return theme.colors.status.error;
+  return theme.colors.text.disabled;
 }
 
 const styles = StyleSheet.create({
@@ -94,7 +96,6 @@ const styles = StyleSheet.create({
   },
   progressTrack: {
     height: 3,
-    backgroundColor: colors.border,
     borderRadius: 2,
     overflow: 'hidden',
     marginBottom: spacing[2],

@@ -10,6 +10,16 @@ export interface CardioData {
   distanceMiles: number;
   cardioMinutesCompleted: number;
   cardioMinutesGoal: number;
+  activity: string;
+  intensity: string;
+  recommendation: string;
+  sessions: Array<{
+    id: string;
+    type: string;
+    durationMinutes: number;
+    calories: number;
+    distanceMiles: number;
+  }>;
 }
 
 interface TrainingState {
@@ -21,7 +31,9 @@ interface TrainingState {
   setTodayWorkout: (workout: WorkoutSession) => void;
   markWorkoutComplete: () => void;
   updateCardioGoal: (minutes: number) => void;
+  updateCardioPlan: (plan: Partial<Pick<CardioData, 'cardioMinutesGoal' | 'activity' | 'intensity'>>) => void;
   addCardioMinutes: (minutes: number) => void;
+  markCardioComplete: () => void;
   resetToMock: () => void;
 }
 
@@ -31,8 +43,12 @@ const initialCardio: CardioData = {
   activeCalories: mockCardioData.activeCalories,
   activeCaloriesGoal: mockCardioData.activeCaloriesGoal,
   distanceMiles: mockCardioData.distanceMiles,
-  cardioMinutesCompleted: 45,
-  cardioMinutesGoal: 45,
+  cardioMinutesCompleted: mockCardioData.cardioMinutesCompleted,
+  cardioMinutesGoal: mockCardioData.cardioMinutesGoal,
+  activity: mockCardioData.activity,
+  intensity: mockCardioData.intensity,
+  recommendation: mockCardioData.recommendation,
+  sessions: mockCardioData.sessions,
 };
 
 export const useTrainingStore = create<TrainingState>((set) => ({
@@ -49,11 +65,34 @@ export const useTrainingStore = create<TrainingState>((set) => ({
       cardio: { ...state.cardio, cardioMinutesGoal: minutes },
     })),
 
+  updateCardioPlan: (plan) =>
+    set((state) => ({
+      cardio: { ...state.cardio, ...plan },
+    })),
+
   addCardioMinutes: (minutes) =>
     set((state) => ({
       cardio: {
         ...state.cardio,
         cardioMinutesCompleted: state.cardio.cardioMinutesCompleted + minutes,
+      },
+    })),
+
+  markCardioComplete: () =>
+    set((state) => ({
+      cardio: {
+        ...state.cardio,
+        cardioMinutesCompleted: state.cardio.cardioMinutesGoal,
+        sessions: [
+          {
+            id: `cardio-${Date.now()}`,
+            type: state.cardio.activity,
+            durationMinutes: state.cardio.cardioMinutesGoal,
+            calories: Math.round(state.cardio.cardioMinutesGoal * 6),
+            distanceMiles: state.cardio.activity.toLowerCase().includes('walk') ? 1.6 : 0,
+          },
+          ...state.cardio.sessions.filter((session) => session.id !== 'planned-cardio'),
+        ],
       },
     })),
 

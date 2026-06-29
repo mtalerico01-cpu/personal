@@ -27,10 +27,10 @@ export function SuggestedPromptChip({ prompt, onPress }: Props) {
 const styles = StyleSheet.create({
   chip: {
     borderWidth: 1,
-    borderColor: colors.coachChipBorder,
+    borderColor: colors.semantic.border.subtle,
     borderRadius: radius.full,
     paddingHorizontal: spacing[3],
     paddingVertical: spacing[2],
-    backgroundColor: 'rgba(168,255,62,0.05)',
+    backgroundColor: colors.semantic.surface.subtle,
   },
 });

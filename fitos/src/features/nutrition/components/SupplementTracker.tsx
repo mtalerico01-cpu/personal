@@ -3,6 +3,7 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Card } from '../../../shared/components/ui/Card';
 import { Text } from '../../../shared/components/ui/Text';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing, radius } from '@/shared/theme/spacing';
 import type { Supplement } from '../mock';
 
@@ -12,6 +13,7 @@ interface SupplementTrackerProps {
 }
 
 export function SupplementTracker({ supplements, onToggle }: SupplementTrackerProps) {
+  const theme = useActiveTheme();
   const takenCount = supplements.filter((s) => s.taken).length;
 
   return (
@@ -20,7 +22,7 @@ export function SupplementTracker({ supplements, onToggle }: SupplementTrackerPr
         <Text variant="labelMedium" color={colors.textTertiary}>
           SUPPLEMENTS
         </Text>
-        <Text variant="labelMedium" color={colors.accent}>
+        <Text variant="labelMedium" color={theme.colors.persona.core}>
           {takenCount}/{supplements.length} taken
         </Text>
       </View>
@@ -44,6 +46,8 @@ interface SupplementPillProps {
 }
 
 function SupplementPill({ supplement, onToggle }: SupplementPillProps) {
+  const theme = useActiveTheme();
+
   return (
     <TouchableOpacity
       onPress={onToggle}
@@ -51,17 +55,21 @@ function SupplementPill({ supplement, onToggle }: SupplementPillProps) {
       style={[
         styles.pill,
         supplement.taken && styles.pillTaken,
+        {
+          borderColor: supplement.taken ? theme.colors.border.persona : theme.colors.border.default,
+          backgroundColor: supplement.taken ? theme.colors.persona.soft : theme.colors.surface.raised,
+        },
       ]}
     >
       <Text
         variant="labelMedium"
-        color={supplement.taken ? colors.success : colors.textTertiary}
+        color={supplement.taken ? theme.colors.persona.core : theme.colors.text.muted}
       >
         {supplement.taken ? '✓ ' : ''}{supplement.name}
       </Text>
       <Text
         variant="caption"
-        color={supplement.taken ? colors.success : colors.textDisabled}
+        color={supplement.taken ? theme.colors.persona.core : theme.colors.text.disabled}
       >
         {supplement.dose}
       </Text>
@@ -86,13 +94,9 @@ const styles = StyleSheet.create({
     paddingVertical: spacing[2],
     borderRadius: radius.full,
     borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surfaceElevated,
     alignItems: 'center',
     gap: 2,
   },
   pillTaken: {
-    borderColor: colors.successMuted,
-    backgroundColor: colors.successMuted,
   },
 });

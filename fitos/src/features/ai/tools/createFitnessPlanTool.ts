@@ -12,7 +12,7 @@ export interface CreateFitnessPlanResult {
 }
 
 export function createFitnessPlanTool(payload: Record<string, unknown>): CreateFitnessPlanResult {
-  const { mode, calorieGoal } = payload as CreateFitnessPlanPayload;
+  const { mode, calorieGoal } = payload as unknown as CreateFitnessPlanPayload;
 
   if (!['cut', 'bulk', 'maintain'].includes(mode)) {
     throw new Error('createFitnessPlanTool: mode must be cut, bulk, or maintain');

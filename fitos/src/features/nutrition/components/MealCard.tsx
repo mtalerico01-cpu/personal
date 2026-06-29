@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Card } from '../../../shared/components/ui/Card';
 import { Text } from '../../../shared/components/ui/Text';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing } from '@/shared/theme/spacing';
 import type { Meal } from '../../../types';
 
@@ -19,6 +20,8 @@ const mealTypeLabel: Record<Meal['type'], string> = {
 };
 
 export function MealCard({ meal, mealNumber }: MealCardProps) {
+  const theme = useActiveTheme();
+
   return (
     <Card padding={14}>
       <View style={styles.header}>
@@ -30,23 +33,23 @@ export function MealCard({ meal, mealNumber }: MealCardProps) {
             {meal.totalMacros.calories} kcal
           </Text>
         </View>
-        <TouchableOpacity style={styles.addButton} activeOpacity={0.7}>
-          <Text variant="labelLarge" color={colors.accent}>
-            + Add
+        <View style={styles.addButton}>
+          <Text variant="labelMedium" color={colors.textDisabled}>
+            Coming later
           </Text>
-        </TouchableOpacity>
+        </View>
       </View>
 
       {/* Macro pills */}
       <View style={styles.macroRow}>
-        <MacroPill value={meal.totalMacros.proteinGrams} label="P" color={colors.protein} />
-        <MacroPill value={meal.totalMacros.carbsGrams} label="C" color={colors.carbs} />
-        <MacroPill value={meal.totalMacros.fatGrams} label="F" color={colors.fat} />
+        <MacroPill value={meal.totalMacros.proteinGrams} label="P" color={theme.colors.status.info} />
+        <MacroPill value={meal.totalMacros.carbsGrams} label="C" color={theme.colors.persona.core} />
+        <MacroPill value={meal.totalMacros.fatGrams} label="F" color={theme.colors.status.warning} />
       </View>
 
       {/* Food entries */}
       {meal.entries.map((entry) => (
-        <View key={entry.id} style={styles.entryRow}>
+        <View key={entry.id} style={[styles.entryRow, { borderTopColor: theme.colors.border.subtle }]}> 
           <Text variant="bodyMedium" color={colors.textSecondary} numberOfLines={1} style={styles.entryName}>
             {entry.foodItem.name}
           </Text>
@@ -104,7 +107,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: spacing[2],
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: colors.border,
   },
   entryName: {
     flex: 1,

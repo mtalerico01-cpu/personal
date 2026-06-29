@@ -1,7 +1,8 @@
 import { create } from 'zustand';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { AIMessage, AIActionProposal, SuggestedPrompt } from '../../ai/types';
 import { buildAIContext } from '../../ai/context/buildAIContext';
-import { generateSuggestedPrompts, generateFollowUpPrompts } from '../../ai/suggestions/generateSuggestedPrompts';
+import { generateSuggestedPrompts, generateFollowUpPromptsForTopic } from '../../ai/suggestions/generateSuggestedPrompts';
 import { parseMockIntent } from '../../ai/intents/parseMockIntent';
 import { generateProactiveBrief, answerCoachPrompt } from '../../ai/services/mockAIService';
 import { executeAction } from '../../ai/tools/toolDispatcher';
@@ -20,6 +21,7 @@ export interface ChatMessage {
 
 interface CoachState {
   personaId: PersonaId;
+  hasSelectedPersona: boolean;
   messages: ChatMessage[];
   inputText: string;
   isLoading: boolean;
@@ -30,6 +32,7 @@ interface CoachState {
 
   // Actions
   setPersona: (id: PersonaId) => void;
+  completePersonaSelection: (id: PersonaId) => void;
   setInputText: (text: string) => void;
   initBrief: () => Promise<void>;
   sendMessage: (text: string) => Promise<void>;
@@ -41,8 +44,36 @@ interface CoachState {
 let _idCounter = 0;
 const newId = () => `chat-${++_idCounter}-${Date.now()}`;
 
-export const useCoachStore = create<CoachState>((set, get) => ({
+const memoryPreferenceStorage = (() => {
+  let store: Record<string, string> = {};
+  return {
+    getItem: (name: string) => Promise.resolve(store[name] ?? null),
+    setItem: (name: string, value: string) => {
+      store[name] = value;
+      return Promise.resolve();
+    },
+    removeItem: (name: string) => {
+      delete store[name];
+      return Promise.resolve();
+    },
+  };
+})();
+
+const coachPreferenceStorage = typeof window === 'undefined' ? memoryPreferenceStorage : AsyncStorage;
+const isDev = typeof __DEV__ !== 'undefined' && __DEV__;
+const preferenceStorageKey = 'fitos-coach-preferences';
+
+const isPersonaId = (value: unknown): value is PersonaId => value === 'cedric' || value === 'elara';
+
+function saveCoachPreferences(personaId: PersonaId, hasSelectedPersona: boolean) {
+  coachPreferenceStorage
+    .setItem(preferenceStorageKey, JSON.stringify({ personaId, hasSelectedPersona }))
+    .catch(() => undefined);
+}
+
+export const useCoachStore = create<CoachState>()((set, get) => ({
   personaId: 'cedric',
+  hasSelectedPersona: false,
   messages: [],
   inputText: '',
   isLoading: false,
@@ -52,8 +83,17 @@ export const useCoachStore = create<CoachState>((set, get) => ({
   pendingActionId: null,
 
   setPersona: (id) => {
-    set({ personaId: id });
+    if (isDev) console.log('[Coach] selected persona changed:', id);
+    set({ personaId: id, hasSelectedPersona: true });
+    saveCoachPreferences(id, true);
     // Regenerate brief with new persona
+    get().initBrief();
+  },
+
+  completePersonaSelection: (id) => {
+    if (isDev) console.log('[Coach] initial persona selected:', id);
+    set({ personaId: id, hasSelectedPersona: true });
+    saveCoachPreferences(id, true);
     get().initBrief();
   },
 
@@ -75,6 +115,7 @@ export const useCoachStore = create<CoachState>((set, get) => ({
 
   sendMessage: async (text) => {
     if (!text.trim()) return;
+    if (isDev) console.log('[Coach] message submitted:', text);
 
     const userMsg: ChatMessage = {
       id: newId(),
@@ -110,13 +151,15 @@ export const useCoachStore = create<CoachState>((set, get) => ({
       };
 
       const intent = parseMockIntent(text);
-      console.log('[Coach] Intent:', intent.type);
-      console.log('[Coach] Response:', response.summary?.substring(0, 80));
+      if (isDev) {
+        console.log('[Coach] detected intent:', intent.type);
+        console.log('[Coach] response topic:', response.topic ?? 'general');
+      }
 
       set((state) => ({
         messages: state.messages.filter((m) => m.id !== thinkingId).concat(coachMsg),
         isLoading: false,
-        suggestedPrompts: generateFollowUpPrompts(intent.type),
+        suggestedPrompts: generateFollowUpPromptsForTopic(response.topic ?? intent.topic),
       }));
     } catch {
       set((state) => ({
@@ -228,3 +271,16 @@ export const useCoachStore = create<CoachState>((set, get) => ({
     set({ messages: [], hasStartedChat: false, inputText: '', suggestedPrompts: prompts });
   },
 }));
+
+coachPreferenceStorage
+  .getItem(preferenceStorageKey)
+  .then((value) => {
+    if (!value) return;
+    const preferences = JSON.parse(value) as { personaId?: unknown; hasSelectedPersona?: unknown };
+    if (!isPersonaId(preferences.personaId)) return;
+    useCoachStore.setState({
+      personaId: preferences.personaId,
+      hasSelectedPersona: preferences.hasSelectedPersona === true,
+    });
+  })
+  .catch(() => undefined);

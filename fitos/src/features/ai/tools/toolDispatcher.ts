@@ -6,7 +6,7 @@ import { updateCardioGoalTool } from './updateCardioGoalTool';
 import { updateWeightGoalTool } from './updateWeightGoalTool';
 import { createFitnessPlanTool } from './createFitnessPlanTool';
 
-type ToolFn = (payload: Record<string, unknown>) => Record<string, unknown>;
+type ToolFn = (payload: Record<string, unknown>) => unknown;
 
 const TOOL_MAP: Partial<Record<AIActionType, ToolFn>> = {
   log_meal: logMealTool,

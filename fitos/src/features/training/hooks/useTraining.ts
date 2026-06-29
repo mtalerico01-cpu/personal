@@ -12,7 +12,7 @@ export function useTraining() {
   const [activeTab, setActiveTab] = useState<TrainingTab>('strength');
   const [selectedDuration, setSelectedDuration] = useState<number | null>(null);
 
-  const { todayWorkout, cardio } = useTrainingStore();
+  const { todayWorkout, cardio, markCardioComplete, updateCardioPlan } = useTrainingStore();
 
   const generatedWorkout: GeneratedWorkout | null = selectedDuration
     ? mockGeneratedWorkouts[selectedDuration] ?? null
@@ -27,5 +27,7 @@ export function useTraining() {
     setSelectedDuration,
     generatedWorkout,
     cardioData: cardio,
+    markCardioComplete,
+    updateCardioPlan,
   };
 }

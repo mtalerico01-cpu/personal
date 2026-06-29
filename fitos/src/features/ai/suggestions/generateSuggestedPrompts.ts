@@ -1,5 +1,4 @@
-import type { AIContext, SuggestedPrompt, PromptCategory } from '../types';
-import type { IntentType } from '../types';
+import type { AIContext, SuggestedPrompt, PromptCategory, CoachTopic, IntentType } from '../types';
 
 let _counter = 0;
 const uid = () => `prompt-${++_counter}-${Date.now()}`;
@@ -23,6 +22,8 @@ export function generateSuggestedPrompts(ctx: AIContext): SuggestedPrompt[] {
       label: 'Explain my weight',
       category: 'progress',
       prompt: 'Why did my weight change this week?',
+      intent: 'weight_explanation',
+      topic: 'progress',
     });
   }
 
@@ -33,6 +34,8 @@ export function generateSuggestedPrompts(ctx: AIContext): SuggestedPrompt[] {
       label: 'Hit protein target',
       category: 'nutrition',
       prompt: 'Help me finish my protein target for today.',
+      intent: 'meal_recommendation',
+      topic: 'nutrition',
     });
   }
 
@@ -43,6 +46,8 @@ export function generateSuggestedPrompts(ctx: AIContext): SuggestedPrompt[] {
       label: 'Build today\'s workout',
       category: 'training',
       prompt: `Build me a workout for today (${scheduledWorkoutName}).`,
+      intent: 'workout_generation',
+      topic: 'training',
     });
   }
 
@@ -71,13 +76,17 @@ export function generateSuggestedPrompts(ctx: AIContext): SuggestedPrompt[] {
         label: 'Check my macros',
         category: 'nutrition',
         prompt: 'How are my macros looking?',
+        intent: 'nutrition_status',
+        topic: 'nutrition',
       });
     if (prompts.length < 4 && !workoutDone)
       prompts.push({
         id: uid(),
         label: 'Cardio check',
-        category: 'training',
+        category: 'cardio',
         prompt: 'Should I do cardio today?',
+        intent: 'cardio_status',
+        topic: 'cardio',
       });
     if (prompts.length < 4)
       prompts.push({
@@ -85,6 +94,8 @@ export function generateSuggestedPrompts(ctx: AIContext): SuggestedPrompt[] {
         label: 'Next meal idea',
         category: 'nutrition',
         prompt: 'What should I eat next?',
+        intent: 'meal_recommendation',
+        topic: 'nutrition',
       });
   }
 
@@ -143,6 +154,8 @@ export function generateSuggestedPrompts(ctx: AIContext): SuggestedPrompt[] {
       label: 'Log a meal',
       category: 'nutrition',
       prompt: 'I want to log what I just ate.',
+      intent: 'meal_logging',
+      topic: 'nutrition',
     });
   }
 
@@ -152,6 +165,8 @@ export function generateSuggestedPrompts(ctx: AIContext): SuggestedPrompt[] {
       label: 'Meal suggestions',
       category: 'nutrition',
       prompt: 'Suggest a meal for me.',
+      intent: 'meal_recommendation',
+      topic: 'nutrition',
     });
   }
 
@@ -161,6 +176,8 @@ export function generateSuggestedPrompts(ctx: AIContext): SuggestedPrompt[] {
       label: 'Adjust calories',
       category: 'goals',
       prompt: 'I want to adjust my calorie target.',
+      intent: 'macro_adjustment',
+      topic: 'goals',
     });
   }
 
@@ -170,6 +187,8 @@ export function generateSuggestedPrompts(ctx: AIContext): SuggestedPrompt[] {
       label: 'Progress update',
       category: 'progress',
       prompt: 'Give me a progress update.',
+      intent: 'progress_review',
+      topic: 'progress',
     });
   }
 
@@ -182,9 +201,54 @@ interface FollowUp {
   label: string;
   category: PromptCategory;
   prompt: string;
+  intent?: IntentType;
+  topic?: CoachTopic;
 }
 
-const FOLLOW_UPS: Record<IntentType, FollowUp[]> = {
+const FOLLOW_UPS_BY_TOPIC: Record<CoachTopic, FollowUp[]> = {
+  nutrition: [
+    { label: 'What should I eat next?', category: 'nutrition', topic: 'nutrition', intent: 'meal_recommendation', prompt: 'What should I eat next?' },
+    { label: 'Help me finish protein', category: 'nutrition', topic: 'nutrition', intent: 'meal_recommendation', prompt: 'Help me finish my protein.' },
+    { label: 'Show remaining macros', category: 'nutrition', topic: 'nutrition', intent: 'nutrition_status', prompt: 'How are my macros looking today?' },
+    { label: 'Change nutrition goal', category: 'goals', topic: 'goals', intent: 'macro_adjustment', prompt: 'Change my nutrition goal.' },
+  ],
+  training: [
+    { label: 'Show today\'s workout', category: 'training', topic: 'training', intent: 'training_plan', prompt: 'What is my workout today?' },
+    { label: 'Make it 45 minutes', category: 'training', topic: 'training', intent: 'workout_generation', prompt: 'Build me a 45-minute workout.' },
+    { label: 'Replace an exercise', category: 'training', topic: 'training', intent: 'workout_adjustment', prompt: 'Replace an exercise in today\'s workout.' },
+    { label: 'Change training goal', category: 'goals', topic: 'goals', intent: 'goal_change', prompt: 'Change my training goal.' },
+  ],
+  cardio: [
+    { label: 'Recommend cardio', category: 'cardio', topic: 'cardio', intent: 'cardio_recommendation', prompt: 'What cardio should I do today?' },
+    { label: 'Review cardio plan', category: 'cardio', topic: 'cardio', intent: 'cardio_status', prompt: 'Review my cardio plan.' },
+    { label: 'Change duration', category: 'cardio', topic: 'cardio', intent: 'cardio_recommendation', prompt: 'Change the cardio duration.' },
+    { label: 'Change cardio goal', category: 'goals', topic: 'goals', intent: 'goal_change', prompt: 'Change my cardio goal.' },
+  ],
+  progress: [
+    { label: 'Explain weight change', category: 'progress', topic: 'progress', intent: 'weight_explanation', prompt: 'Why did my weight go up?' },
+    { label: 'Review weekly progress', category: 'progress', topic: 'progress', intent: 'progress_review', prompt: 'Review my weekly progress.' },
+    { label: 'Strength progress', category: 'progress', topic: 'progress', intent: 'progress_review', prompt: 'Review my strength progress.' },
+    { label: 'Change weight goal', category: 'goals', topic: 'goals', intent: 'goal_change', prompt: 'Change my weight goal.' },
+  ],
+  recovery: [
+    { label: 'Should I train hard?', category: 'recovery', topic: 'recovery', intent: 'recovery_status', prompt: 'Should I train hard today?' },
+    { label: 'Recover tonight', category: 'recovery', topic: 'recovery', intent: 'recovery_status', prompt: 'How should I recover tonight?' },
+    { label: 'Adjust workout', category: 'training', topic: 'training', intent: 'workout_adjustment', prompt: 'Adjust today\'s workout for recovery.' },
+  ],
+  goals: [
+    { label: 'Change nutrition goal', category: 'goals', topic: 'goals', intent: 'macro_adjustment', prompt: 'Change my nutrition goal.' },
+    { label: 'Change training goal', category: 'goals', topic: 'goals', intent: 'goal_change', prompt: 'Change my training goal.' },
+    { label: 'Change weight goal', category: 'goals', topic: 'goals', intent: 'goal_change', prompt: 'Change my weight goal.' },
+  ],
+  general: [
+    { label: 'Check macros', category: 'nutrition', topic: 'nutrition', intent: 'nutrition_status', prompt: 'How are my macros looking?' },
+    { label: 'Today\'s workout', category: 'training', topic: 'training', intent: 'training_plan', prompt: 'What is my workout today?' },
+    { label: 'Cardio plan', category: 'cardio', topic: 'cardio', intent: 'cardio_status', prompt: 'Review my cardio plan.' },
+    { label: 'Weekly progress', category: 'progress', topic: 'progress', intent: 'progress_review', prompt: 'Review my weekly progress.' },
+  ],
+};
+
+const FOLLOW_UPS: Partial<Record<IntentType, FollowUp[]>> = {
   log_meal: [
     { label: 'What should I eat next?', category: 'nutrition', prompt: 'What should I target for my next meal?' },
     { label: 'Calories left today', category: 'nutrition', prompt: 'How many calories do I have left for today?' },
@@ -294,11 +358,36 @@ const FOLLOW_UPS: Record<IntentType, FollowUp[]> = {
  * Shown as tappable chips after each coach response.
  */
 export function generateFollowUpPrompts(intentType: IntentType): SuggestedPrompt[] {
-  const followUps = FOLLOW_UPS[intentType] ?? FOLLOW_UPS.general;
+  const topic = topicForIntent(intentType);
+  const followUps = FOLLOW_UPS_BY_TOPIC[topic] ?? FOLLOW_UPS_BY_TOPIC.general;
   return followUps.slice(0, 4).map((f) => ({
     id: uid(),
     label: f.label,
     category: f.category,
     prompt: f.prompt,
+    intent: f.intent ?? intentType,
+    topic: f.topic ?? topic,
   }));
+}
+
+export function generateFollowUpPromptsForTopic(topic: CoachTopic): SuggestedPrompt[] {
+  const followUps = FOLLOW_UPS_BY_TOPIC[topic] ?? FOLLOW_UPS_BY_TOPIC.general;
+  return followUps.slice(0, 4).map((f) => ({
+    id: uid(),
+    label: f.label,
+    category: f.category,
+    prompt: f.prompt,
+    intent: f.intent ?? 'unknown',
+    topic: f.topic ?? topic,
+  }));
+}
+
+function topicForIntent(intentType: IntentType): CoachTopic {
+  if (['nutrition_status', 'meal_recommendation', 'meal_logging', 'protein_status', 'calorie_status', 'remaining_macros', 'log_meal', 'estimate_food'].includes(intentType)) return 'nutrition';
+  if (['training_plan', 'workout_generation', 'workout_adjustment', 'build_workout', 'change_workout'].includes(intentType)) return 'training';
+  if (['cardio_status', 'cardio_recommendation', 'cardio_review'].includes(intentType)) return 'cardio';
+  if (['weight_explanation', 'progress_review'].includes(intentType)) return 'progress';
+  if (intentType === 'recovery_status') return 'recovery';
+  if (['goal_change', 'macro_adjustment', 'adjust_calories', 'update_macros', 'change_goal', 'create_cut', 'create_bulk'].includes(intentType)) return 'goals';
+  return 'general';
 }

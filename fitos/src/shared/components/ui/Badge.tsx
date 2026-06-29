@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from './Text';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { radius, spacing } from '@/shared/theme/spacing';
 
 type BadgeVariant = 'success' | 'warning' | 'error' | 'accent' | 'neutral';
@@ -20,7 +21,15 @@ const variantColors: Record<BadgeVariant, { bg: string; text: string }> = {
 };
 
 export function Badge({ label, variant = 'neutral' }: BadgeProps) {
-  const { bg, text } = variantColors[variant];
+  const theme = useActiveTheme();
+  const dynamicColors: Record<BadgeVariant, { bg: string; text: string }> = {
+    success: { bg: `${theme.colors.status.success}22`, text: theme.colors.status.success },
+    warning: { bg: `${theme.colors.status.warning}22`, text: theme.colors.status.warning },
+    error: { bg: `${theme.colors.status.error}22`, text: theme.colors.status.error },
+    accent: { bg: theme.colors.persona.soft, text: theme.colors.persona.core },
+    neutral: { bg: theme.colors.surface.subtle, text: theme.colors.text.secondary },
+  };
+  const { bg, text } = dynamicColors[variant] ?? variantColors[variant];
   return (
     <View style={[styles.container, { backgroundColor: bg }]}>
       <Text variant="labelMedium" color={text}>

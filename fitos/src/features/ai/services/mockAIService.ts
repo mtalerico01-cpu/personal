@@ -234,6 +234,7 @@ export async function answerCoachPrompt(
   const intent = parseMockIntent(prompt);
 
   switch (intent.type) {
+    case 'meal_logging':
     case 'log_meal':
     case 'estimate_food': {
       const { message } = await estimateMeal(
@@ -242,8 +243,15 @@ export async function answerCoachPrompt(
       );
       return message;
     }
+    case 'nutrition_status':
+    case 'protein_status':
+    case 'calorie_status':
     case 'remaining_macros':
       return buildRemainingMacrosMessage(ctx);
+    case 'meal_recommendation':
+      return buildMealRecommendationMessage(ctx);
+    case 'macro_adjustment':
+    case 'calorie_adjustment':
     case 'adjust_calories':
     case 'update_macros': {
       const amount = (intent.extractedValues.amount as number) ?? 200;
@@ -254,22 +262,52 @@ export async function answerCoachPrompt(
       );
       return message;
     }
+    case 'diet_strategy_compare':
+      return buildDietStrategyCompareMessage(ctx);
+    case 'diet_strategy_recommend':
+      return buildDietStrategyRecommendationMessage(ctx);
+    case 'diet_plan_preview':
+      return buildDietPlanPreviewMessage(ctx, false);
+    case 'diet_plan_apply':
+      return buildDietPlanPreviewMessage(ctx, true);
+    case 'navigation':
+      return buildNavigationMessage(ctx, intent.extractedValues);
+    case 'training_plan':
+      return buildTrainingPlanMessage(ctx);
+    case 'workout_generation':
     case 'build_workout':
+    case 'workout_adjustment':
     case 'change_workout': {
       const duration = (intent.extractedValues.durationMinutes as number) ?? 45;
       const { message } = await generateWorkout(duration, ctx);
       return message;
     }
+    case 'exercise_replacement':
+    case 'training_plan_generation': {
+      const duration = (intent.extractedValues.durationMinutes as number) ?? 45;
+      const { message } = await generateWorkout(duration, ctx);
+      return message;
+    }
+    case 'cardio_status':
+    case 'cardio_recommendation':
     case 'cardio_review':
       return buildCardioMessage(ctx);
     case 'weight_explanation':
       return analyzeWeightChange(ctx);
     case 'progress_review':
       return buildProgressMessage(ctx);
+    case 'recovery_status':
+      return buildRecoveryMessage(ctx);
+    case 'tomorrow_plan':
     case 'plan_tomorrow':
       return buildPlanTomorrowMessage(ctx);
+    case 'daily_review':
     case 'review_day':
       return reviewDay(ctx);
+    case 'goal_change':
+    case 'goal_update':
+    case 'change_goal':
+      return buildWeightGoalMessage(ctx);
     case 'create_cut':
       return buildGoalMessage(ctx, 'cut');
     case 'create_bulk':
@@ -533,6 +571,8 @@ function buildRemainingMacrosMessage(ctx: AIContext): AIMessage {
   const calPct = Math.round((nutrition.caloriesConsumed / nutrition.calorieGoal) * 100);
 
   return msg(ctx, {
+    topic: 'nutrition',
+    intent: 'nutrition_status',
     title: isCedric(ctx) ? 'Macro Status' : 'Your macros right now',
     summary: isCedric(ctx)
       ? `${calPct}% of calorie goal reached. ${nutrition.caloriesRemaining} kcal remaining.`
@@ -555,12 +595,176 @@ function buildRemainingMacrosMessage(ctx: AIContext): AIMessage {
   });
 }
 
+function buildMealRecommendationMessage(ctx: AIContext): AIMessage {
+  const { nutrition } = ctx;
+  const meal = nutrition.proteinRemaining > 35
+    ? 'grilled chicken, rice, and a lower-fat vegetable side'
+    : 'Greek yogurt with fruit or a turkey sandwich';
+
+  return msg(ctx, {
+    topic: 'nutrition',
+    intent: 'meal_recommendation',
+    title: isCedric(ctx) ? 'Next Meal Target' : 'A good next meal',
+    summary: isCedric(ctx)
+      ? `${nutrition.caloriesRemaining} kcal remain: ${nutrition.proteinRemaining}g protein, ${nutrition.carbsRemaining}g carbs, ${nutrition.fatRemaining}g fat.`
+      : `You have ${nutrition.caloriesRemaining} calories left, with ${nutrition.proteinRemaining}g protein and ${nutrition.carbsRemaining}g carbs still open.`,
+    details: [
+      `Protein remaining: ${nutrition.proteinRemaining}g`,
+      `Carbs remaining: ${nutrition.carbsRemaining}g`,
+      `Fat remaining: ${nutrition.fatRemaining}g`,
+    ],
+    recommendation: isCedric(ctx)
+      ? `Use ${meal}. It closes the protein gap without pushing fats high.`
+      : `${meal} would fit nicely here and help you finish the day without forcing anything heavy.`,
+    confidence: 'high',
+  });
+}
+
+function buildDietStrategyCompareMessage(ctx: AIContext): AIMessage {
+  const strategies = [
+    'High-protein calorie-controlled: best default for body recomposition and appetite control.',
+    'Mediterranean: easiest long-term adherence, strong for health markers, moderate protein unless planned.',
+    'Lower-carbohydrate: useful for appetite control, but may reduce training performance if pushed too hard.',
+    'Flexible dieting: strongest fit when consistency and social flexibility matter most.',
+  ];
+
+  return msg(ctx, {
+    topic: 'nutrition',
+    intent: 'diet_strategy_compare',
+    title: isCedric(ctx) ? 'Diet Strategy Comparison' : 'Comparing diet approaches',
+    summary: isCedric(ctx)
+      ? 'For your current data, adherence and protein are higher leverage than a named diet label.'
+      : 'The best diet here is the one that protects protein, supports training, and feels repeatable enough to actually live with.',
+    details: strategies,
+    recommendation: isCedric(ctx)
+      ? 'Use a high-protein flexible plan unless you have a strong preference for Mediterranean structure.'
+      : 'I would start with a high-protein flexible plan, then borrow Mediterranean meal patterns when you want structure.',
+    confidence: 'high',
+  });
+}
+
+function buildDietStrategyRecommendationMessage(ctx: AIContext): AIMessage {
+  return msg(ctx, {
+    topic: 'nutrition',
+    intent: 'diet_strategy_recommend',
+    title: isCedric(ctx) ? 'Recommended Diet Strategy' : 'The diet I would choose for you',
+    summary: isCedric(ctx)
+      ? `Recommendation: high-protein flexible dieting at ${ctx.nutrition.calorieGoal} kcal.`
+      : 'I would use high-protein flexible dieting for you: enough structure to hit targets, enough freedom to stay consistent.',
+    details: [
+      `${ctx.nutrition.proteinGoal}g protein as the anchor`,
+      `${ctx.nutrition.calorieGoal} kcal daily target`,
+      'Carbs placed around training for performance',
+      'Mostly whole foods, with planned flexibility instead of all-or-nothing rules',
+    ],
+    recommendation: 'Ask me to preview the plan and I will show the target split before anything changes.',
+    confidence: 'high',
+  });
+}
+
+function buildDietPlanPreviewMessage(ctx: AIContext, includeAction: boolean): AIMessage {
+  const targetCalories = ctx.user.primaryGoal === 'lose'
+    ? Math.max(1500, ctx.nutrition.calorieGoal - 200)
+    : ctx.user.primaryGoal === 'gain'
+      ? ctx.nutrition.calorieGoal + 200
+      : ctx.nutrition.calorieGoal;
+  const proteinGoal = Math.max(ctx.nutrition.proteinGoal, Math.round(ctx.user.currentWeight * 0.85));
+  const carbGoal = Math.round((targetCalories * 0.43) / 4);
+  const fatGoal = Math.round((targetCalories * 0.25) / 9);
+
+  const actionProposal: AIActionProposal = {
+    id: actionId(),
+    type: 'update_macros',
+    title: 'Apply diet plan targets',
+    description: `${targetCalories} kcal, ${proteinGoal}g protein, ${carbGoal}g carbs, ${fatGoal}g fat`,
+    payload: {
+      calorieGoal: targetCalories,
+      proteinGoal,
+      carbGoal,
+      fatGoal,
+    },
+    requiresConfirmation: true,
+    status: 'proposed',
+  };
+
+  return msg(ctx, {
+    topic: 'nutrition',
+    intent: includeAction ? 'diet_plan_apply' : 'diet_plan_preview',
+    title: isCedric(ctx) ? 'Diet Plan Preview' : 'Diet plan preview',
+    summary: isCedric(ctx)
+      ? 'High-protein flexible plan. Conservative targets, training-compatible carbohydrate intake.'
+      : 'Here is the plan I would use: high protein, flexible food choices, and enough carbs to keep training productive.',
+    details: [
+      `Calories: ${ctx.nutrition.calorieGoal} -> ${targetCalories} kcal`,
+      `Protein: ${ctx.nutrition.proteinGoal}g -> ${proteinGoal}g`,
+      `Carbs: ${ctx.nutrition.carbGoal}g -> ${carbGoal}g`,
+      `Fat: ${ctx.nutrition.fatGoal}g -> ${fatGoal}g`,
+      'Meal pattern: 3-4 meals, each with a protein anchor',
+    ],
+    recommendation: includeAction
+      ? 'Confirm to apply these macro targets. This will not erase logged meals or training data.'
+      : 'Nothing changes yet. Ask me to apply this plan when you want these targets saved.',
+    confidence: 'high',
+    proposedActions: includeAction ? [actionProposal] : undefined,
+  });
+}
+
+function buildNavigationMessage(ctx: AIContext, values: Record<string, unknown>): AIMessage {
+  const route = typeof values.route === 'string' ? values.route : '/';
+  const label = typeof values.label === 'string' ? values.label : 'Dashboard';
+  const actionProposal: AIActionProposal = {
+    id: actionId(),
+    type: 'navigate',
+    title: `Open ${label}`,
+    description: `Move to the ${label} screen with this Coach context preserved.`,
+    payload: { route, label },
+    requiresConfirmation: true,
+    status: 'proposed',
+  };
+
+  return msg(ctx, {
+    topic: 'general',
+    intent: 'navigation',
+    title: isCedric(ctx) ? 'Navigation Ready' : `I can open ${label}`,
+    summary: isCedric(ctx)
+      ? `${label} is the correct screen for the next step.`
+      : `Yes. I can take you to ${label} and keep this conversation here when you come back.`,
+    details: [`Destination: ${label}`, 'Conversation and selected Coach stay intact.'],
+    recommendation: 'Confirm and I will open it.',
+    confidence: 'high',
+    proposedActions: [actionProposal],
+  });
+}
+
+function buildTrainingPlanMessage(ctx: AIContext): AIMessage {
+  const { training } = ctx;
+  return msg(ctx, {
+    topic: 'training',
+    intent: 'training_plan',
+    title: isCedric(ctx) ? 'Today\'s Training' : 'Today\'s workout',
+    summary: isCedric(ctx)
+      ? `${training.scheduledWorkoutName ?? 'Training'} is scheduled for ${training.durationMinutes ?? 60} minutes. Status: ${training.completed ? 'complete' : 'not logged'}.`
+      : `Today is ${training.scheduledWorkoutName ?? 'your planned workout'}, around ${training.durationMinutes ?? 60} minutes. It has not been logged yet.`,
+    details: [
+      `Focus: ${training.scheduledBodyParts.slice(0, 4).join(', ') || 'Full body'}`,
+      `Estimated calories: ${training.estimatedCalories ?? 420}`,
+      `Workout status: ${training.completed ? 'Complete' : 'Planned'}`,
+    ],
+    recommendation: isCedric(ctx)
+      ? 'Complete strength first, then finish cardio after if energy remains stable.'
+      : 'Get the strength work done first, then keep cardio easy afterward if you still feel good.',
+    confidence: 'high',
+  });
+}
+
 function buildCardioMessage(ctx: AIContext): AIMessage {
   const { training, recovery } = ctx;
   const stepPct = Math.round((recovery.steps / 10000) * 100);
   const cardioDone = training.cardioCompletedMinutes >= training.cardioGoalMinutes;
 
   return msg(ctx, {
+    topic: 'cardio',
+    intent: 'cardio_status',
     title: isCedric(ctx) ? 'Cardio & Activity' : 'Your activity today',
     summary: isCedric(ctx)
       ? `Steps: ${recovery.steps.toLocaleString()} (${stepPct}%). Cardio: ${training.cardioCompletedMinutes}/${training.cardioGoalMinutes} min.`
@@ -585,6 +789,8 @@ function buildProgressMessage(ctx: AIContext): AIMessage {
   const { progress } = ctx;
 
   return msg(ctx, {
+    topic: 'progress',
+    intent: 'progress_review',
     title: isCedric(ctx) ? 'Progress Report' : 'Your progress',
     summary: isCedric(ctx)
       ? `Weight is trending ${progress.weeklyWeightChange > 0 ? 'up' : 'down'}. Strength score: ${progress.strengthScore} (+${progress.strengthScoreChange} this month).`
@@ -606,6 +812,8 @@ function buildPlanTomorrowMessage(ctx: AIContext): AIMessage {
   const { time, nutrition, training } = ctx;
 
   return msg(ctx, {
+    topic: 'general',
+    intent: 'tomorrow_plan',
     title: isCedric(ctx) ? 'Tomorrow\'s Plan' : 'Planning tomorrow',
     summary: isCedric(ctx)
       ? `Calorie target: ${nutrition.calorieGoal} kcal. Training: ${training.scheduledWorkoutName ?? 'rest day'}.`
@@ -620,6 +828,59 @@ function buildPlanTomorrowMessage(ctx: AIContext): AIMessage {
       ? 'Prep your meals the night before to reduce friction with adherence.'
       : 'A little prep tonight will make tomorrow much easier — especially for nutrition.',
     confidence: 'medium',
+  });
+}
+
+function buildRecoveryMessage(ctx: AIContext): AIMessage {
+  const { recovery } = ctx;
+  return msg(ctx, {
+    topic: 'recovery',
+    intent: 'recovery_status',
+    title: isCedric(ctx) ? 'Recovery Status' : 'Recovery check',
+    summary: isCedric(ctx)
+      ? `Sleep: ${recovery.sleepHours}h. Quality: ${recovery.sleepQuality}. Steps: ${recovery.steps.toLocaleString()}.`
+      : `You slept ${recovery.sleepHours} hours and your recovery score is ${recovery.sleepQuality}. That's workable, but keep tonight calm.`,
+    details: [
+      `Sleep: ${recovery.sleepHours} hours`,
+      `Sleep quality: ${recovery.sleepQuality}`,
+      `Resting heart rate: ${recovery.restingHeartRate} bpm`,
+    ],
+    recommendation: isCedric(ctx)
+      ? 'Train as planned, but avoid adding extra volume today.'
+      : 'Follow the plan, and keep a little energy in reserve instead of forcing extra work.',
+    confidence: 'high',
+  });
+}
+
+function buildWeightGoalMessage(ctx: AIContext): AIMessage {
+  const target = ctx.progress.goalWeight + 2;
+  const actionProposal: AIActionProposal = {
+    id: actionId(),
+    type: 'update_weight_goal',
+    title: 'Update weight goal',
+    description: `${ctx.progress.goalWeight} lbs → ${target} lbs`,
+    payload: { goalWeightLbs: target },
+    requiresConfirmation: true,
+    status: 'proposed',
+  };
+
+  return msg(ctx, {
+    topic: 'goals',
+    intent: 'goal_change',
+    title: isCedric(ctx) ? 'Goal Adjustment' : 'Adjusting your goal',
+    summary: isCedric(ctx)
+      ? `Current goal: ${ctx.progress.goalWeight} lbs. Proposed goal: ${target} lbs.`
+      : `We can move your goal from ${ctx.progress.goalWeight} to ${target} lbs and keep the plan measured.`,
+    details: [
+      `Current weight: ${ctx.progress.currentWeight.toFixed(1)} lbs`,
+      `7-day average: ${ctx.progress.sevenDayAverage.toFixed(1)} lbs`,
+      `Weekly change: ${ctx.progress.weeklyWeightChange > 0 ? '+' : ''}${ctx.progress.weeklyWeightChange.toFixed(1)} lbs`,
+    ],
+    recommendation: isCedric(ctx)
+      ? 'Use small target changes. Keep nutrition stable until trend data changes.'
+      : 'A small goal change is easier to manage and gives us cleaner feedback from the trend.',
+    confidence: 'medium',
+    proposedActions: [actionProposal],
   });
 }
 
@@ -640,6 +901,8 @@ function buildGoalMessage(ctx: AIContext, mode: 'cut' | 'bulk'): AIMessage {
   };
 
   return msg(ctx, {
+    topic: 'goals',
+    intent: mode === 'cut' ? 'create_cut' : 'create_bulk',
     title: mode === 'cut' ? 'Starting a Cut' : 'Starting a Bulk',
     summary: isCedric(ctx)
       ? `Recommended ${mode} target: ${targetCalories} kcal. This creates a ${Math.abs(targetCalories - nutrition.calorieGoal)} kcal ${mode === 'cut' ? 'deficit' : 'surplus'}.`
@@ -659,13 +922,25 @@ function buildGoalMessage(ctx: AIContext, mode: 'cut' | 'bulk'): AIMessage {
 }
 
 function buildGeneralResponse(prompt: string, ctx: AIContext): AIMessage {
-  const persona = PERSONAS[ctx.persona.id];
+  const intent = parseMockIntent(prompt);
+  const choicesByTopic: Record<string, string[]> = {
+    nutrition: ['Show my remaining macros', 'What should I eat next?', 'Change my nutrition goal'],
+    training: ['Show today\'s workout', 'Build a 45-minute workout', 'Change my training goal'],
+    cardio: ['Review my cardio plan', 'Recommend cardio for today', 'Change my cardio goal'],
+    progress: ['Explain my weight trend', 'Review weekly progress', 'Change my weight goal'],
+    recovery: ['Should I train hard today?', 'How should I recover tonight?', 'Adjust today\'s workout'],
+    general: ['Check nutrition', 'Review training', 'Review progress'],
+  };
+  const choices = choicesByTopic[intent.topic] ?? choicesByTopic.general;
 
   return msg(ctx, {
+    topic: intent.topic,
+    intent: 'unknown',
     summary: isCedric(ctx)
-      ? `I don't have a specific answer for that, but based on your current data: calories are at ${ctx.nutrition.caloriesConsumed}/${ctx.nutrition.calorieGoal} kcal and weight is trending ${ctx.progress.weeklyWeightChange >= 0 ? 'up' : 'down'}.`
-      : `I'm not sure exactly what you mean, but I can tell you that you're doing well overall — ${ctx.nutrition.caloriesConsumed} of ${ctx.nutrition.calorieGoal} calories logged and your weight trend looks ${ctx.progress.weeklyWeightChange >= 0 ? 'positive' : 'good'}.`,
-    recommendation: persona.generalAck(),
+      ? `Clarify the target. Are you asking about ${choices.join(', ').toLowerCase()}?`
+      : `I want to answer the right thing. Are you asking about ${choices.join(', ').toLowerCase()}?`,
+    details: choices,
+    recommendation: 'Pick one of these and I will narrow the response.',
     confidence: 'low',
   });
 }

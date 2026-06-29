@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FitOS Mobile Preview</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --page: #eef3f6;
+        --frame: #111416;
+        --bezel: #050607;
+        --label: #65727c;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 24% 12%, rgba(110, 176, 213, 0.24), transparent 30%),
+          linear-gradient(135deg, #f8fbfc 0%, var(--page) 100%);
+        color: #20282e;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        display: grid;
+        place-items: center;
+        padding: 28px;
+      }
+
+      .stage {
+        display: grid;
+        gap: 14px;
+        justify-items: center;
+      }
+
+      .label {
+        color: var(--label);
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .phone {
+        width: 423px;
+        height: 882px;
+        padding: 15px;
+        border-radius: 48px;
+        background: linear-gradient(145deg, #1a1f23, var(--bezel));
+        box-shadow: 0 30px 90px rgba(28, 45, 57, 0.28), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      }
+
+      .screen {
+        position: relative;
+        width: 393px;
+        height: 852px;
+        overflow: hidden;
+        border-radius: 34px;
+        background: white;
+      }
+
+      .status-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 3;
+        height: 58px;
+        padding: 9px 24px 0;
+        background: linear-gradient(180deg, rgba(244, 249, 252, 0.94) 0%, rgba(244, 249, 252, 0.78) 68%, rgba(244, 249, 252, 0) 100%);
+        color: #162029;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0;
+        pointer-events: none;
+      }
+
+      .status-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 28px;
+      }
+
+      .dynamic-island {
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        width: 118px;
+        height: 32px;
+        transform: translateX(-50%);
+        border-radius: 18px;
+        background: rgba(3, 5, 6, 0.94);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 2px 8px rgba(0, 0, 0, 0.18);
+      }
+
+      .system-icons {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+
+      .signal {
+        display: flex;
+        align-items: flex-end;
+        gap: 2px;
+        height: 12px;
+      }
+
+      .signal span {
+        width: 3px;
+        border-radius: 2px;
+        background: currentColor;
+      }
+
+      .signal span:nth-child(1) { height: 4px; }
+      .signal span:nth-child(2) { height: 7px; }
+      .signal span:nth-child(3) { height: 10px; }
+
+      .wifi {
+        width: 15px;
+        height: 11px;
+        border: 2px solid currentColor;
+        border-bottom: 0;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-radius: 14px 14px 0 0;
+        position: relative;
+      }
+
+      .wifi::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -3px;
+        width: 4px;
+        height: 4px;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        background: currentColor;
+      }
+
+      .battery {
+        width: 25px;
+        height: 12px;
+        border: 1.8px solid currentColor;
+        border-radius: 4px;
+        padding: 2px;
+        position: relative;
+      }
+
+      .battery::before {
+        content: "";
+        display: block;
+        width: 72%;
+        height: 100%;
+        border-radius: 2px;
+        background: currentColor;
+      }
+
+      .battery::after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        right: -4px;
+        width: 2px;
+        height: 5px;
+        border-radius: 0 2px 2px 0;
+        background: currentColor;
+      }
+
+      .app-viewport {
+        position: absolute;
+        top: 48px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+        background: white;
+      }
+
+      iframe {
+        width: 393px;
+        height: 804px;
+        border: 0;
+        display: block;
+        background: white;
+      }
+
+      @media (max-height: 940px) {
+        body {
+          place-items: start center;
+          padding: 16px;
+        }
+
+        .phone {
+          transform: scale(0.88);
+          transform-origin: top center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="stage" aria-label="FitOS iPhone mobile preview">
+      <div class="label">iPhone 15 viewport · 393 x 852</div>
+      <div class="phone">
+        <div class="screen">
+          <div class="status-overlay" aria-hidden="true">
+            <div class="status-row">
+              <div>9:41</div>
+              <div class="dynamic-island"></div>
+              <div class="system-icons">
+                <div class="signal"><span></span><span></span><span></span></div>
+                <div class="wifi"></div>
+                <div class="battery"></div>
+              </div>
+            </div>
+          </div>
+          <div class="app-viewport">
+            <iframe title="FitOS app mobile viewport" src="http://localhost:8091/coach"></iframe>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

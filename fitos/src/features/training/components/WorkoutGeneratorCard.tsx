@@ -3,6 +3,7 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Card } from '../../../shared/components/ui/Card';
 import { Text } from '../../../shared/components/ui/Text';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing, radius } from '@/shared/theme/spacing';
 import type { GeneratedWorkout } from '../mock';
 
@@ -19,6 +20,8 @@ export function WorkoutGeneratorCard({
   onSelect,
   generated,
 }: WorkoutGeneratorCardProps) {
+  const theme = useActiveTheme();
+
   return (
     <Card padding={16}>
       <Text variant="labelMedium" color={colors.textTertiary} style={styles.label}>
@@ -37,17 +40,21 @@ export function WorkoutGeneratorCard({
             style={[
               styles.option,
               selected === min && styles.optionSelected,
+              {
+                borderColor: selected === min ? theme.colors.border.persona : theme.colors.border.default,
+                backgroundColor: selected === min ? theme.colors.persona.core : theme.colors.surface.raised,
+              },
             ]}
           >
             <Text
               variant="headingSmall"
-              color={selected === min ? colors.background : colors.textPrimary}
+              color={selected === min ? theme.colors.text.inverse : theme.colors.text.primary}
             >
               {min}
             </Text>
             <Text
               variant="caption"
-              color={selected === min ? colors.background : colors.textTertiary}
+              color={selected === min ? theme.colors.text.inverse : theme.colors.text.muted}
             >
               min
             </Text>
@@ -57,7 +64,7 @@ export function WorkoutGeneratorCard({
 
       {generated && (
         <View style={styles.generated}>
-          <Text variant="labelMedium" color={colors.accent} style={styles.generatedLabel}>
+          <Text variant="labelMedium" color={theme.colors.persona.core} style={styles.generatedLabel}>
             GENERATED WORKOUT — {generated.durationMinutes} MIN
           </Text>
           {generated.exercises.map((ex, i) => (
@@ -89,13 +96,8 @@ const styles = StyleSheet.create({
     paddingVertical: spacing[3],
     borderRadius: radius.lg,
     borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surfaceElevated,
   },
-  optionSelected: {
-    backgroundColor: colors.accent,
-    borderColor: colors.accent,
-  },
+  optionSelected: {},
   generated: {
     marginTop: spacing[4],
     gap: 0,

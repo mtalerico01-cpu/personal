@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from './Text';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { radius, spacing } from '@/shared/theme/spacing';
 
 interface PageHeroProps {
@@ -11,19 +12,30 @@ interface PageHeroProps {
 }
 
 export function PageHero({ eyebrow, title, detail }: PageHeroProps) {
+  const theme = useActiveTheme();
+
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          borderColor: theme.colors.border.subtle,
+          backgroundColor: theme.colors.surface.default,
+          shadowOpacity: theme.mode === 'dark' ? 0.2 : 0.07,
+        },
+      ]}
+    >
       <View style={styles.topRow}>
-        <View style={styles.dot} />
-        <Text variant="labelMedium" color={colors.accent} style={styles.eyebrow}>
+        <View style={[styles.rule, { backgroundColor: theme.colors.border.persona }]} />
+        <Text variant="labelMedium" color={theme.colors.persona.core} style={styles.eyebrow}>
           {eyebrow}
         </Text>
       </View>
-      <Text variant="headingLarge" color={colors.textPrimary} style={styles.title}>
+      <Text variant="headingLarge" color={theme.colors.text.primary} style={styles.title}>
         {title}
       </Text>
       {detail && (
-        <Text variant="bodyMedium" color={colors.textSecondary} style={styles.detail}>
+        <Text variant="bodyMedium" color={theme.colors.text.secondary} style={styles.detail}>
           {detail}
         </Text>
       )}
@@ -35,15 +47,13 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: radius['2xl'],
     borderWidth: 1,
-    borderColor: 'rgba(243,243,243,0.14)',
-    backgroundColor: 'rgba(5, 8, 9, 0.66)',
     paddingHorizontal: spacing[5],
     paddingVertical: spacing[5],
     shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.32,
-    shadowRadius: 24,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.2,
+    shadowRadius: 18,
+    elevation: 2,
   },
   topRow: {
     flexDirection: 'row',
@@ -51,17 +61,13 @@ const styles = StyleSheet.create({
     gap: spacing[2],
     marginBottom: spacing[2],
   },
-  dot: {
-    width: 7,
-    height: 7,
-    borderRadius: 3.5,
-    backgroundColor: colors.accent,
-    shadowColor: colors.accent,
-    shadowOpacity: 0.9,
-    shadowRadius: 8,
+  rule: {
+    width: 18,
+    height: 1,
+    borderRadius: 1,
   },
   eyebrow: {
-    letterSpacing: 2.2,
+    letterSpacing: 1.2,
     textTransform: 'uppercase',
   },
   title: {

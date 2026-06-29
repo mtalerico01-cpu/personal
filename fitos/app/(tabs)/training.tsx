@@ -3,15 +3,18 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Screen } from '../../src/shared/components/ui/Screen';
 import { PageHero } from '../../src/shared/components/ui/PageHero';
 import { Text } from '../../src/shared/components/ui/Text';
+import { CoachInsightHeader } from '../../src/features/coach/components/CoachInsightHeader';
 import { TodayWorkoutCard } from '../../src/features/training/components/TodayWorkoutCard';
 import { WorkoutGeneratorCard } from '../../src/features/training/components/WorkoutGeneratorCard';
 import { ExerciseLoggerPreview } from '../../src/features/training/components/ExerciseLoggerPreview';
 import { CardioSummaryCard } from '../../src/features/training/components/CardioSummaryCard';
 import { useTraining } from '../../src/features/training/hooks/useTraining';
 import { colors } from '../../src/shared/theme/colors';
+import { useActiveTheme } from '../../src/shared/theme/useActiveTheme';
 import { spacing } from '../../src/shared/theme/spacing';
 
 export default function TrainingScreen() {
+  const theme = useActiveTheme();
   const {
     activeTab,
     setActiveTab,
@@ -21,6 +24,8 @@ export default function TrainingScreen() {
     setSelectedDuration,
     generatedWorkout,
     cardioData,
+    markCardioComplete,
+    updateCardioPlan,
   } = useTraining();
 
   return (
@@ -33,8 +38,12 @@ export default function TrainingScreen() {
         />
       </View>
 
+      <CoachInsightHeader screen={activeTab === 'cardio' ? 'cardio' : 'training'} />
+
+      <View style={styles.gap} />
+
       {/* Strength / Cardio tab toggle */}
-      <View style={styles.tabRow}>
+      <View style={[styles.tabRow, { backgroundColor: theme.colors.surface.default, borderColor: theme.colors.border.subtle }]}> 
         <TabButton
           label="Strength"
           active={activeTab === 'strength'}
@@ -50,27 +59,42 @@ export default function TrainingScreen() {
       <View style={styles.gap} />
 
       {activeTab === 'strength' ? (
-        <>
-          <TodayWorkoutCard
-            workout={todayWorkout}
-            estimatedCalories={estimatedCalories}
-          />
-          <View style={styles.gap} />
+        todayWorkout ? (
+          <>
+            <TodayWorkoutCard
+              workout={todayWorkout}
+              estimatedCalories={estimatedCalories}
+            />
+            <View style={styles.gap} />
+            <WorkoutGeneratorCard
+              selected={selectedDuration}
+              onSelect={setSelectedDuration}
+              generated={generatedWorkout}
+            />
+            <View style={styles.gap} />
+            <ExerciseLoggerPreview exercises={todayWorkout.exercises} />
+          </>
+        ) : (
           <WorkoutGeneratorCard
             selected={selectedDuration}
             onSelect={setSelectedDuration}
             generated={generatedWorkout}
           />
-          <View style={styles.gap} />
-          <ExerciseLoggerPreview exercises={todayWorkout.exercises} />
-        </>
+        )
       ) : (
         <CardioSummaryCard
           steps={cardioData.steps}
           stepsGoal={cardioData.stepsGoal}
           activeCalories={cardioData.activeCalories}
           distanceMiles={cardioData.distanceMiles}
+          cardioMinutesCompleted={cardioData.cardioMinutesCompleted}
+          cardioMinutesGoal={cardioData.cardioMinutesGoal}
+          activity={cardioData.activity}
+          intensity={cardioData.intensity}
+          recommendation={cardioData.recommendation}
           sessions={cardioData.sessions}
+          onMarkComplete={markCardioComplete}
+          onEditPlan={() => updateCardioPlan({ cardioMinutesGoal: 30, activity: 'Outdoor Zone 2 walk', intensity: 'Easy to moderate' })}
         />
       )}
     </Screen>
@@ -84,15 +108,21 @@ interface TabButtonProps {
 }
 
 function TabButton({ label, active, onPress }: TabButtonProps) {
+  const theme = useActiveTheme();
+
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.75}
-      style={[styles.tab, active && styles.tabActive]}
+      style={[
+        styles.tab,
+        active && styles.tabActive,
+        active && { backgroundColor: theme.colors.persona.soft, borderColor: theme.colors.border.persona },
+      ]}
     >
       <Text
         variant="labelLarge"
-        color={active ? colors.accent : colors.textTertiary}
+        color={active ? theme.colors.persona.core : theme.colors.text.muted}
         style={styles.tabText}
       >
         {label}
@@ -105,10 +135,8 @@ const styles = StyleSheet.create({
   header: { paddingTop: spacing[4], paddingBottom: spacing[2] },
   tabRow: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(5, 8, 9, 0.58)',
     borderRadius: 24,
     borderWidth: 1,
-    borderColor: 'rgba(243,243,243,0.14)',
     padding: 3,
     gap: 3,
   },
@@ -119,12 +147,10 @@ const styles = StyleSheet.create({
     borderRadius: 18,
   },
   tabActive: {
-    backgroundColor: 'rgba(168,255,62,0.14)',
     borderWidth: 1,
-    borderColor: 'rgba(168,255,62,0.18)',
   },
   tabText: {
-    letterSpacing: 1.2,
+    letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
   gap: { height: spacing[4] },

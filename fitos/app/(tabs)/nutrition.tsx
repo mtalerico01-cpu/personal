@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Screen } from '../../src/shared/components/ui/Screen';
 import { SectionHeader } from '../../src/shared/components/ui/SectionHeader';
 import { PageHero } from '../../src/shared/components/ui/PageHero';
+import { CoachInsightHeader } from '../../src/features/coach/components/CoachInsightHeader';
 import { MacroSummaryCard } from '../../src/features/nutrition/components/MacroSummaryCard';
 import { RemainingMacrosCard } from '../../src/features/nutrition/components/RemainingMacrosCard';
 import { FoodLoggerCard } from '../../src/features/nutrition/components/FoodLoggerCard';
@@ -22,6 +23,7 @@ export default function NutritionScreen() {
     setFoodInput,
     aiEstimateVisible,
     estimateMacros,
+    addEstimatedFood,
     dismissAIEstimate,
     aiEstimate,
   } = useNutrition();
@@ -35,6 +37,10 @@ export default function NutritionScreen() {
           detail="Macro targets, meal logging, and supplement consistency in one place."
         />
       </View>
+
+      <CoachInsightHeader screen="nutrition" />
+
+      <View style={styles.gap} />
 
       <MacroSummaryCard
         calories={log.totalMacros.calories}
@@ -57,6 +63,7 @@ export default function NutritionScreen() {
         onEstimate={estimateMacros}
         estimateVisible={aiEstimateVisible}
         estimate={aiEstimate}
+        onAdd={addEstimatedFood}
         onDismiss={dismissAIEstimate}
       />
 

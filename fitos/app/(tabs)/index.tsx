@@ -5,6 +5,7 @@ import { AIInsightCard } from '../../src/features/dashboard/components/AIInsight
 import { KPICard } from '../../src/features/dashboard/components/KPICard';
 import { TrainingCard } from '../../src/features/dashboard/components/TrainingCard';
 import { PageHero } from '../../src/shared/components/ui/PageHero';
+import { CoachInsightHeader } from '../../src/features/coach/components/CoachInsightHeader';
 import { useDashboard } from '../../src/features/dashboard/hooks/useDashboard';
 import { spacing } from '../../src/shared/theme/spacing';
 
@@ -27,6 +28,10 @@ export default function DashboardScreen() {
           detail="Your training, nutrition, and progress signals are synced."
         />
       </View>
+
+      <View style={styles.sectionSpacer} />
+
+      <CoachInsightHeader screen="dashboard" />
 
       <View style={styles.sectionSpacer} />
 

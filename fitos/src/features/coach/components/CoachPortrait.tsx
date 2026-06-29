@@ -29,12 +29,12 @@ export function CoachPortrait({ persona, active, onPress }: CoachPortraitProps) 
   const ringOpacity = useSharedValue(active ? 1 : 0.15);
   const ringScale = useSharedValue(active ? 1 : 0.96);
   const avatarOpacity = useSharedValue(active ? 1 : 0.55);
-  const glowOpacity = useSharedValue(active ? 0.5 : 0);
+  const glowOpacity = useSharedValue(active ? 0.22 : 0);
 
   useEffect(() => {
     ringOpacity.value = withTiming(active ? 1 : 0.15, { duration: 500 });
     avatarOpacity.value = withTiming(active ? 1 : 0.55, { duration: 500 });
-    glowOpacity.value = withTiming(active ? 0.5 : 0, { duration: 500 });
+    glowOpacity.value = withTiming(active ? 0.22 : 0, { duration: 500 });
 
     if (active) {
       ringScale.value = withRepeat(
@@ -68,7 +68,7 @@ export function CoachPortrait({ persona, active, onPress }: CoachPortraitProps) 
       {/* Breathing outer glow */}
       <Animated.View style={[styles.glow, glowStyle]} />
 
-      {/* Neon ring + portrait */}
+      {/* Active ring + portrait */}
       <Animated.View style={[styles.ring, ringStyle]}>
         <Animated.View style={[styles.imageWrapper, avatarStyle]}>
           <Image
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     width: GLOW_SIZE,
     height: GLOW_SIZE,
     borderRadius: GLOW_SIZE / 2,
-    backgroundColor: 'rgba(168, 255, 62, 0.14)',
+    backgroundColor: colors.semantic.accent.glow,
     top: -(GLOW_SIZE - RING_SIZE) / 2,
   },
   ring: {
@@ -105,11 +105,11 @@ const styles = StyleSheet.create({
     height: RING_SIZE,
     borderRadius: RING_SIZE / 2,
     borderWidth: 1.5,
-    borderColor: colors.accent,
+    borderColor: colors.semantic.border.strong,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-    backgroundColor: colors.surface,
+    backgroundColor: colors.semantic.surface.raised,
   },
   imageWrapper: {
     width: AVATAR_SIZE,
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 11,
     fontWeight: '500',
-    letterSpacing: 2.5,
+    letterSpacing: 1.1,
     textTransform: 'uppercase',
   },
 });

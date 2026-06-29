@@ -5,7 +5,7 @@
  */
 import { useEffect } from 'react';
 import { useCoachStore } from '../store/coachStore';
-import { PERSONAS } from '../mock';
+import { PERSONAS } from '../../ai/personas/personas';
 import { getDayPartForTimezone } from '../../ai/context/getDayPart';
 import { useUserStore } from '../../../store/userStore';
 
@@ -21,13 +21,14 @@ export function useCoach() {
 
   const dayPart = getDayPartForTimezone('America/New_York');
   const currentPersona = PERSONAS[store.personaId];
-  // old mock PERSONAS.greeting signature is (timeOfDay, userName)
-  const greeting = currentPersona?.greeting(dayPart, name) ?? '';
+  const greeting = currentPersona?.greeting(name, dayPart) ?? '';
   const showSuggestions = store.messages.length === 0;
 
   return {
     persona: store.personaId,
     setPersona: store.setPersona,
+    completePersonaSelection: store.completePersonaSelection,
+    hasSelectedPersona: store.hasSelectedPersona,
     currentPersona,
     greeting,
     messages: store.messages,

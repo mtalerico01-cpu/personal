@@ -16,7 +16,7 @@ export const MOCK_BRIEFING: BriefingItem[] = [
 // 4 prompts only — minimal
 export const PRIMARY_PROMPTS = [
   { id: 'p1', text: 'What should I eat for dinner?' },
-  { id: 'p2', text: 'Explain today\u2019s weight.' },
+  { id: 'p2', text: 'Why did my weight go up?' },
   { id: 'p3', text: 'Review today\u2019s workout.' },
   { id: 'p4', text: 'Plan tomorrow.' },
 ];
@@ -62,11 +62,11 @@ export interface SuggestedPrompt {
 
 export const SUGGESTED_PROMPTS: SuggestedPrompt[] = [
   { id: '1', text: 'What should I eat next?', category: 'nutrition' },
-  { id: '2', text: 'How is my nutrition today?', category: 'nutrition' },
-  { id: '3', text: "What\u2019s my workout today?", category: 'training' },
+  { id: '2', text: 'How are my macros looking today?', category: 'nutrition' },
+  { id: '3', text: 'What is my workout today?', category: 'training' },
   { id: '4', text: 'Build me a workout', category: 'training' },
-  { id: '5', text: 'Am I on track with my bulk?', category: 'progress' },
-  { id: '6', text: 'Why did my weight change?', category: 'progress' },
+  { id: '5', text: 'Review my weekly progress.', category: 'progress' },
+  { id: '6', text: 'Why did my weight go up?', category: 'progress' },
   { id: '7', text: 'Log a meal for me', category: 'nutrition' },
   { id: '8', text: 'Adjust my macro goals', category: 'planning' },
   { id: '9', text: 'Review my week', category: 'progress' },

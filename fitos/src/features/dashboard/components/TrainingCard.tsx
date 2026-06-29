@@ -4,6 +4,7 @@ import { Card } from '../../../shared/components/ui/Card';
 import { Text } from '../../../shared/components/ui/Text';
 import { Badge } from '../../../shared/components/ui/Badge';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing, radius } from '@/shared/theme/spacing';
 import type { WorkoutSession } from '../../../types';
 
@@ -30,6 +31,7 @@ const statusLabel = (status: WorkoutSession['status']) => {
 };
 
 export function TrainingCard({ workout }: TrainingCardProps) {
+  const theme = useActiveTheme();
   const totalSets = workout.exercises.reduce(
     (sum, ex) => sum + ex.sets.length,
     0,
@@ -58,13 +60,13 @@ export function TrainingCard({ workout }: TrainingCardProps) {
 
       {/* Stats row */}
       <View style={styles.statsRow}>
-        <Stat label="Exercises" value={`${workout.exercises.length}`} color={colors.training} />
-        <View style={styles.statDivider} />
-        <Stat label="Sets" value={`${totalSets}`} color={colors.training} />
+        <Stat label="Exercises" value={`${workout.exercises.length}`} color={theme.colors.persona.core} />
+        <View style={[styles.statDivider, { backgroundColor: theme.colors.border.subtle }]} />
+        <Stat label="Sets" value={`${totalSets}`} color={theme.colors.persona.core} />
         {workout.durationMinutes && (
           <>
-            <View style={styles.statDivider} />
-            <Stat label="Est. Time" value={`${workout.durationMinutes}m`} color={colors.training} />
+            <View style={[styles.statDivider, { backgroundColor: theme.colors.border.subtle }]} />
+            <Stat label="Est. Time" value={`${workout.durationMinutes}m`} color={theme.colors.persona.core} />
           </>
         )}
       </View>
@@ -73,7 +75,7 @@ export function TrainingCard({ workout }: TrainingCardProps) {
       {muscleGroups.length > 0 && (
         <View style={styles.muscleRow}>
           {muscleGroups.map((group) => (
-            <View key={group} style={styles.muscleTag}>
+            <View key={group} style={[styles.muscleTag, { backgroundColor: theme.colors.persona.soft }]}> 
               <Text variant="caption" color={colors.textSecondary}>
                 {group}
               </Text>
@@ -133,7 +135,6 @@ const styles = StyleSheet.create({
   statDivider: {
     width: StyleSheet.hairlineWidth,
     height: 28,
-    backgroundColor: colors.border,
   },
   muscleRow: {
     flexDirection: 'row',
@@ -143,7 +144,6 @@ const styles = StyleSheet.create({
   muscleTag: {
     paddingHorizontal: spacing[2],
     paddingVertical: 3,
-    backgroundColor: colors.trainingMuted,
     borderRadius: radius.sm,
   },
 });

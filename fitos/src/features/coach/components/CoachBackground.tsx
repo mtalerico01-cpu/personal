@@ -1,0 +1,1 @@
+export { CoachBackground } from './CoachBackground.web';

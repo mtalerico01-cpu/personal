@@ -128,18 +128,23 @@ export const mockGeneratedWorkouts: Record<number, GeneratedWorkout> = {
 };
 
 export const mockCardioData = {
-  steps: 12453,
-  stepsGoal: 15000,
-  activeCalories: 634,
-  activeCaloriesGoal: 700,
-  distanceMiles: 5.2,
+  steps: 6420,
+  stepsGoal: 10000,
+  activeCalories: 320,
+  activeCaloriesGoal: 520,
+  distanceMiles: 2.4,
+  cardioMinutesCompleted: 0,
+  cardioMinutesGoal: 25,
+  activity: 'Incline treadmill walk',
+  intensity: 'Moderate intensity',
+  recommendation: 'Complete this after strength training or later this afternoon.',
   sessions: [
     {
-      id: 'c1',
-      type: 'Walking',
-      durationMinutes: 45,
-      calories: 210,
-      distanceMiles: 2.1,
+      id: 'planned-cardio',
+      type: 'Incline treadmill walk',
+      durationMinutes: 25,
+      calories: 150,
+      distanceMiles: 1.6,
     },
   ],
 };

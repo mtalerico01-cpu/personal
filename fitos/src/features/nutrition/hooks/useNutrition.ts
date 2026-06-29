@@ -6,10 +6,22 @@ export function useNutrition() {
   const [aiEstimateVisible, setAIEstimateVisible] = useState(false);
   const [foodInput, setFoodInput] = useState('');
 
-  const { log, goals, supplements, remaining, toggleSupplement } = useNutritionStore();
+  const { log, goals, supplements, remaining, toggleSupplement, addMealEntry } = useNutritionStore();
 
   const estimateMacros = () => {
     setAIEstimateVisible(true);
+  };
+
+  const addEstimatedFood = () => {
+    addMealEntry({
+      name: foodInput.trim() || mockAIFoodEstimate.description,
+      calories: mockAIFoodEstimate.calories,
+      proteinGrams: mockAIFoodEstimate.proteinGrams,
+      carbsGrams: mockAIFoodEstimate.carbsGrams,
+      fatGrams: mockAIFoodEstimate.fatGrams,
+    });
+    setFoodInput('');
+    setAIEstimateVisible(false);
   };
 
   return {
@@ -22,6 +34,7 @@ export function useNutrition() {
     setFoodInput,
     aiEstimateVisible,
     estimateMacros,
+    addEstimatedFood,
     dismissAIEstimate: () => setAIEstimateVisible(false),
     aiEstimate: mockAIFoodEstimate,
   };

@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 import { Canvas, Fill, Shader, Skia, useClock } from '@shopify/react-native-skia';
 import { useDerivedValue } from 'react-native-reanimated';
+import { useCoachStore } from '../store/coachStore';
 
 const { width: W, height: H } = Dimensions.get('window');
 
@@ -16,6 +17,7 @@ const { width: W, height: H } = Dimensions.get('window');
 const SMOKE_SKSL = `
 uniform float2 iResolution;
 uniform float  iTime;
+uniform float  iMode;
 
 float hash(float2 p) {
   p = fract(p * float2(127.1, 311.7));
@@ -73,14 +75,21 @@ half4 main(float2 fragCoord) {
   float wispy = pow(smoke, 0.6) * 0.5;
   float vol   = dense * 0.65 + wispy * 0.35;
 
-  float3 base = float3(0.020, 0.020, 0.020);
-  float3 body = float3(0.058, 0.054, 0.048);
-  float3 glow = float3(0.030, 0.072, 0.018);
+  float3 darkBase = float3(0.020, 0.020, 0.020);
+  float3 darkBody = float3(0.058, 0.054, 0.048);
+  float3 darkGlow = float3(0.030, 0.072, 0.018);
+  float3 lightBase = float3(0.945, 0.958, 0.965);
+  float3 lightBody = float3(0.840, 0.894, 0.925);
+  float3 lightGlow = float3(0.280, 0.620, 0.820);
+
+  float3 base = mix(darkBase, lightBase, iMode);
+  float3 body = mix(darkBody, lightBody, iMode);
+  float3 glow = mix(darkGlow, lightGlow, iMode);
 
   float3 col = mix(base, body, vol * 0.78);
 
   float greenMask = pow(fA * fB, 2.2);
-  col = mix(col, glow, greenMask * 0.18);
+  col = mix(col, glow, greenMask * mix(0.18, 0.10, iMode));
 
   float2 vUV = uv * 2.0 - 1.0;
   float  vig  = 1.0 - dot(vUV * float2(0.38, 0.48), vUV * float2(0.38, 0.48));
@@ -101,13 +110,15 @@ function getEffect() {
 }
 
 export function CoachBackground() {
+  const personaId = useCoachStore((state) => state.personaId);
   const effect = getEffect();
   const clock = useClock();
 
   const uniforms = useDerivedValue(() => ({
     iResolution: [W, H],
     iTime: clock.value,
-  }));
+    iMode: personaId === 'elara' ? 1 : 0,
+  }), [personaId]);
 
   if (!effect) return null;
 

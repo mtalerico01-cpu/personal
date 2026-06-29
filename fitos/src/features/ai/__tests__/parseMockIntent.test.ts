@@ -2,42 +2,36 @@ import { parseMockIntent } from '../intents/parseMockIntent';
 
 describe('parseMockIntent', () => {
   test.each([
-    // log_meal matches 'log', 'ate', 'had', 'eaten', 'track'
-    ['log some chicken', 'log_meal'],
-    ['I ate a burger', 'log_meal'],
-    ['I had rice', 'log_meal'],
-    ['track my salad', 'log_meal'],
+    ['log some chicken', 'meal_logging'],
+    ['I ate a burger', 'meal_logging'],
+    ['I had rice', 'meal_logging'],
+    ['track my salad', 'meal_logging'],
     // estimate_food matches 'estimate', 'how many calories', 'calories in', 'macros in'
     ['how many calories in this', 'estimate_food'],
     ['how many calories in a banana', 'estimate_food'],
     ['macros in chicken breast', 'estimate_food'],
-    // remaining_macros matches 'remaining', 'how am i doing', 'how are my macros'
-    ['how many calories remaining', 'estimate_food'],   // 'calories' triggers estimate_food first
-    ['how are my macros today', 'remaining_macros'],
-    ['how much is left today', 'remaining_macros'],
-    // build_workout matches 'generate', 'build', 'create'
-    ['build me a plan', 'build_workout'],
-    ['build me a workout', 'build_workout'],
-    // cardio_review matches 'cardio', 'steps', 'walk', 'run'
-    ['how much cardio do I need', 'cardio_review'],
+    ['how many calories remaining', 'calorie_status'],
+    ['how are my macros today', 'nutrition_status'],
+    ['how is my nutrition today?', 'nutrition_status'],
+    ['what do I have left today', 'nutrition_status'],
+    ['what should I eat next?', 'meal_recommendation'],
+    ['what should I target for my next meal?', 'meal_recommendation'],
+    ['build me a workout', 'workout_generation'],
+    ['what is my workout today?', 'training_plan'],
+    ['how much cardio do I need', 'cardio_status'],
+    ['what cardio should I do?', 'cardio_recommendation'],
     // weight_explanation matches 'explain my weight', 'why did my weight', 'gained weight'
     ['explain my weight change', 'weight_explanation'],
     ['why did my weight go up', 'weight_explanation'],
-    // adjust_calories
-    ['increase my calories by 200', 'adjust_calories'],
-    ['reduce calories please', 'adjust_calories'],
-    // plan_tomorrow
-    ['help me plan tomorrow', 'plan_tomorrow'],
-    // change_goal
-    ['change my goal weight', 'change_goal'],
-    // review_day
-    ['review my day', 'review_day'],
-    // create_cut
+    ['increase my calories by 200', 'macro_adjustment'],
+    ['reduce calories please', 'macro_adjustment'],
+    ['help me plan tomorrow', 'tomorrow_plan'],
+    ['change my goal weight', 'goal_change'],
+    ['review my day', 'daily_review'],
+    ['how am I doing today overall?', 'daily_review'],
     ['I want to cut', 'create_cut'],
-    // create_bulk
     ['I want to bulk', 'create_bulk'],
-    // general fallback
-    ['can you help me asdfghjkl', 'general'],
+    ['can you help me asdfghjkl', 'unknown'],
   ])('"%s" → %s', (input, expectedType) => {
     const result = parseMockIntent(input);
     expect(result.type).toBe(expectedType);
@@ -45,7 +39,13 @@ describe('parseMockIntent', () => {
 
   it('falls back to general with low confidence for unknown input', () => {
     const result = parseMockIntent('zzzxxx random noise 123');
-    expect(result.type).toBe('general');
+    expect(result.type).toBe('unknown');
     expect(result.confidence).toBe('low');
+  });
+
+  it('assigns likely topic for ambiguous topic keywords', () => {
+    const result = parseMockIntent('that cardio thing feels off');
+    expect(result.type).toBe('unknown');
+    expect(result.topic).toBe('cardio');
   });
 });

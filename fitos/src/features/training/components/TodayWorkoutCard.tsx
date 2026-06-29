@@ -4,6 +4,7 @@ import { Card } from '../../../shared/components/ui/Card';
 import { Badge } from '../../../shared/components/ui/Badge';
 import { Text } from '../../../shared/components/ui/Text';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing } from '@/shared/theme/spacing';
 import type { WorkoutSession } from '../../../types';
 
@@ -13,6 +14,7 @@ interface TodayWorkoutCardProps {
 }
 
 export function TodayWorkoutCard({ workout, estimatedCalories }: TodayWorkoutCardProps) {
+  const theme = useActiveTheme();
   const muscleGroups = [
     ...new Set(workout.exercises.flatMap((e) => e.muscleGroups)),
   ].slice(0, 4);
@@ -32,16 +34,16 @@ export function TodayWorkoutCard({ workout, estimatedCalories }: TodayWorkoutCar
       </View>
 
       <View style={styles.stats}>
-        <Stat label="Duration" value={`${workout.durationMinutes}m`} color={colors.training} />
-        <View style={styles.divider} />
-        <Stat label="Exercises" value={`${workout.exercises.length}`} color={colors.training} />
-        <View style={styles.divider} />
-        <Stat label="Est. Cal" value={`${estimatedCalories}`} color={colors.calories} />
+        <Stat label="Duration" value={`${workout.durationMinutes}m`} color={theme.colors.persona.core} />
+        <View style={[styles.divider, { backgroundColor: theme.colors.border.subtle }]} />
+        <Stat label="Exercises" value={`${workout.exercises.length}`} color={theme.colors.persona.core} />
+        <View style={[styles.divider, { backgroundColor: theme.colors.border.subtle }]} />
+        <Stat label="Est. Cal" value={`${estimatedCalories}`} color={theme.colors.status.info} />
       </View>
 
       <View style={styles.muscleRow}>
         {muscleGroups.map((g) => (
-          <View key={g} style={styles.muscleTag}>
+          <View key={g} style={[styles.muscleTag, { backgroundColor: theme.colors.persona.soft }]}> 
             <Text variant="caption" color={colors.textSecondary}>{g}</Text>
           </View>
         ))}
@@ -78,7 +80,6 @@ const styles = StyleSheet.create({
   divider: {
     width: StyleSheet.hairlineWidth,
     height: 28,
-    backgroundColor: colors.border,
   },
   muscleRow: {
     flexDirection: 'row',
@@ -88,7 +89,6 @@ const styles = StyleSheet.create({
   muscleTag: {
     paddingHorizontal: spacing[2],
     paddingVertical: 3,
-    backgroundColor: colors.trainingMuted,
     borderRadius: 6,
   },
 });

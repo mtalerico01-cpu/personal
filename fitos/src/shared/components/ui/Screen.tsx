@@ -9,6 +9,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing } from '@/shared/theme/spacing';
 
 interface ScreenProps {
@@ -30,6 +31,7 @@ export function Screen({
   refreshing = false,
   horizontalPadding = spacing[4],
 }: ScreenProps) {
+  const theme = useActiveTheme();
   const content = scrollable ? (
     <ScrollView
       style={styles.scroll}
@@ -43,7 +45,7 @@ export function Screen({
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            tintColor={colors.accent}
+            tintColor={theme.colors.persona.core}
           />
         ) : undefined
       }
@@ -63,8 +65,8 @@ export function Screen({
   );
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.depthGlow} />
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.colors.background.primary }]}>
+      <View style={[styles.depthGlow, { backgroundColor: theme.colors.persona.ambient }]} />
       {content}
     </SafeAreaView>
   );
@@ -73,7 +75,6 @@ export function Screen({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#020404',
     overflow: 'hidden',
   },
   depthGlow: {
@@ -83,8 +84,7 @@ const styles = StyleSheet.create({
     width: 240,
     height: 240,
     borderRadius: 120,
-    backgroundColor: colors.accent,
-    opacity: 0.055,
+    opacity: 0.026,
   },
   scroll: {
     flex: 1,

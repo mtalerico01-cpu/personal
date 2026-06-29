@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router';
 import { View, StyleSheet, Platform } from 'react-native';
 import { Text } from '../../src/shared/components/ui/Text';
 import { colors } from '../../src/shared/theme/colors';
+import { useActiveTheme } from '../../src/shared/theme/useActiveTheme';
 import { radius } from '../../src/shared/theme/spacing';
 import {
   CoachIcon,
@@ -24,15 +25,27 @@ interface TabIconProps {
 }
 
 function TabIcon({ label, Icon, focused }: TabIconProps) {
+  const theme = useActiveTheme();
+  const activeColor = theme.colors.persona.core;
+  const inactiveColor = theme.colors.text.muted;
+
   return (
-    <View style={[styles.tabItem, focused && styles.tabItemFocused]}>
+    <View
+      style={[
+        styles.tabItem,
+        focused && {
+          backgroundColor: theme.colors.surface.selected,
+          borderColor: theme.colors.border.subtle,
+        },
+      ]}
+    >
       <Icon
-        color={focused ? colors.tabBarActive : colors.tabBarInactive}
+        color={focused ? activeColor : inactiveColor}
         size={22}
       />
       <Text
         variant="labelMedium"
-        color={focused ? colors.tabBarActive : colors.tabBarInactive}
+        color={focused ? activeColor : inactiveColor}
         style={[styles.tabLabel, { opacity: focused ? 1 : 0.5 }]}
       >
         {label}
@@ -42,12 +55,20 @@ function TabIcon({ label, Icon, focused }: TabIconProps) {
 }
 
 export default function TabLayout() {
+  const theme = useActiveTheme();
+
   return (
     <Tabs
       initialRouteName="coach"
       screenOptions={{
         headerShown: false,
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: [
+          styles.tabBar,
+          {
+            backgroundColor: theme.colors.background.secondary,
+            borderTopColor: theme.colors.border.subtle,
+          },
+        ],
         tabBarShowLabel: false,
       }}
     >
@@ -97,8 +118,6 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: colors.tabBarBackground,
-    borderTopColor: colors.tabBarBorder,
     borderTopWidth: StyleSheet.hairlineWidth,
     height: Platform.OS === 'ios' ? 88 : 64,
     paddingBottom: Platform.OS === 'ios' ? 28 : 8,
@@ -112,9 +131,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     gap: 4,
   },
-  tabItemFocused: {
-    backgroundColor: colors.accentMuted,
-  },
+  tabItemFocused: {},
   tabLabel: {
     fontSize: 9,
     letterSpacing: 0.4,

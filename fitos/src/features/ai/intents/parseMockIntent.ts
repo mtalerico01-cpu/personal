@@ -1,77 +1,21 @@
-import type { ParsedIntent, IntentType } from '../types';
+import type { CoachTopic, ParsedIntent, IntentType } from '../types';
 
 interface IntentPattern {
   type: IntentType;
-  keywords: string[];
+  topic: CoachTopic;
+  confidence?: ParsedIntent['confidence'];
+  patterns: RegExp[];
   extractors?: Array<(text: string) => Record<string, unknown>>;
 }
 
-const PATTERNS: IntentPattern[] = [
-  {
-    type: 'log_meal',
-    keywords: ['log', 'ate', 'had', 'eaten', 'just had', 'just ate', 'add meal', 'add food', 'track'],
-  },
-  {
-    type: 'estimate_food',
-    keywords: ['estimate', 'how many calories', 'macros in', 'nutrition in', 'calories in', 'how much protein'],
-  },
-  {
-    type: 'remaining_macros',
-    keywords: ['remaining', 'left', 'how am i doing', 'macros', 'calories left', 'protein left', 'how are my macros'],
-  },
-  {
-    type: 'adjust_calories',
-    keywords: ['increase my calories', 'decrease my calories', 'change my calories', 'calorie target', 'add calories', 'reduce calories', 'cut calories', 'bump calories'],
-  },
-  {
-    type: 'update_macros',
-    keywords: ['update my macros', 'change my macros', 'adjust my macros', 'macro goals', 'protein goal', 'carb goal', 'fat goal'],
-  },
-  {
-    type: 'build_workout',
-    keywords: ['build', 'generate', 'create', 'make me a workout', 'workout plan', "today's workout", 'plan my workout'],
-  },
-  {
-    type: 'change_workout',
-    keywords: ['change my workout', 'different workout', 'swap workout', 'modify workout', 'edit workout'],
-  },
-  {
-    type: 'cardio_review',
-    keywords: ['cardio', 'steps', 'walk', 'run', 'do i need cardio', 'active calories', 'cardio today'],
-  },
-  {
-    type: 'weight_explanation',
-    keywords: ['weight change', 'why did my weight', 'explain my weight', 'weight up', 'weight down', 'weight increase', 'weight decrease', 'gained weight', 'lost weight'],
-  },
-  {
-    type: 'progress_review',
-    keywords: ['progress', 'how am i progressing', 'progress update', 'gains', 'strength', 'how am i doing overall'],
-  },
-  {
-    type: 'plan_tomorrow',
-    keywords: ['tomorrow', 'plan tomorrow', 'prepare for tomorrow', "tomorrow's plan"],
-  },
-  {
-    type: 'change_goal',
-    keywords: ['change my goal', 'update my goal', 'goal weight', 'new goal', 'change goal'],
-  },
-  {
-    type: 'create_cut',
-    keywords: ['cut', 'lose weight', 'calorie deficit', 'lose fat', 'start cutting', 'cutting phase'],
-  },
-  {
-    type: 'create_bulk',
-    keywords: ['bulk', 'gain weight', 'gain muscle', 'calorie surplus', 'start bulking', 'bulking phase'],
-  },
-  {
-    type: 'maintenance_plan',
-    keywords: ['maintenance', 'maintain weight', 'stay at this weight', 'maintenance calories'],
-  },
-  {
-    type: 'review_day',
-    keywords: ['review my day', 'how did i do', 'daily summary', 'end of day', 'day review', 'recap'],
-  },
-];
+function normalizePrompt(prompt: string): string {
+  return prompt
+    .toLowerCase()
+    .replace(/[’']/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 
 /**
  * Extracts a calorie number from a prompt string.
@@ -94,41 +38,212 @@ function extractWorkoutDuration(text: string): Record<string, unknown> {
   return { durationMinutes: [30, 45, 60, 90].includes(durationMinutes) ? durationMinutes : 45 };
 }
 
+function extractFoodDescription(text: string): Record<string, unknown> {
+  const foodDescription = text
+    .replace(/^(i\s+)?(just\s+)?(had|ate|eaten|log|add|track|estimate)\s*/i, '')
+    .replace(/^(a|an|some)\s+/i, '')
+    .trim();
+  return { foodDescription: foodDescription || 'unspecified food' };
+}
+
+function extractNavigationTarget(text: string): Record<string, unknown> {
+  if (/nutrition|macro|meal|food/.test(text)) return { route: '/nutrition', label: 'Nutrition' };
+  if (/training|workout|exercise|lift/.test(text)) return { route: '/training', label: 'Training' };
+  if (/progress|weight|trend|strength/.test(text)) return { route: '/progress', label: 'Progress' };
+  if (/dashboard|home|today|overview/.test(text)) return { route: '/', label: 'Dashboard' };
+  if (/coach|chat/.test(text)) return { route: '/coach', label: 'Coach' };
+  return { route: '/', label: 'Dashboard' };
+}
+
+const PATTERNS: IntentPattern[] = [
+  {
+    type: 'navigation',
+    topic: 'general',
+    patterns: [/(open|go to|take me to|show me|navigate).*\b(nutrition|training|workout|progress|dashboard|home|coach)\b/],
+    extractors: [extractNavigationTarget],
+  },
+  {
+    type: 'diet_strategy_compare',
+    topic: 'nutrition',
+    patterns: [/compare.*diet/, /diet.*compare/, /keto.*mediterranean|mediterranean.*keto/, /which diet/, /diet strategy/],
+  },
+  {
+    type: 'diet_plan_apply',
+    topic: 'nutrition',
+    patterns: [/apply.*diet/, /diet.*apply/, /apply.*plan/, /start.*diet/, /use.*diet plan/, /save.*diet plan/],
+  },
+  {
+    type: 'diet_plan_preview',
+    topic: 'nutrition',
+    patterns: [/preview.*diet/, /show.*diet plan/, /meal plan/, /plan.*diet/],
+  },
+  {
+    type: 'diet_strategy_recommend',
+    topic: 'nutrition',
+    patterns: [/recommend.*diet/, /best diet/, /what diet should i/, /nutrition strategy/],
+  },
+  {
+    type: 'meal_logging',
+    topic: 'nutrition',
+    patterns: [/\b(log|add|track)\b.*\b(meal|food|ate|had|chicken|rice|shake|burger|burrito|salad)\b/, /\bi (just )?(ate|had)\b/],
+    extractors: [extractFoodDescription],
+  },
+  {
+    type: 'meal_recommendation',
+    topic: 'nutrition',
+    patterns: [/what should i eat/, /recommend.*meal/, /meal fits.*macro/, /help me finish.*protein/, /eat for dinner/, /next meal/, /protein target/],
+  },
+  {
+    type: 'protein_status',
+    topic: 'nutrition',
+    patterns: [/protein.*(left|remaining|status|target|short)/, /how much protein/],
+  },
+  {
+    type: 'calorie_status',
+    topic: 'nutrition',
+    patterns: [/calories?.*(left|remaining|status)/, /how many calories.*(left|remaining)/],
+  },
+  {
+    type: 'nutrition_status',
+    topic: 'nutrition',
+    patterns: [/how.*macros/, /macros?.*looking/, /how.*nutrition/, /nutrition.*today/, /what.*left today/, /nutrition targets? remain/, /on track.*food/, /remaining macros/],
+  },
+  {
+    type: 'meal_recommendation',
+    topic: 'nutrition',
+    patterns: [/what should i eat/, /eat next/, /next meal/, /target.*next meal/, /meal target/, /recommend.*meal/],
+  },
+  {
+    type: 'macro_adjustment',
+    topic: 'goals',
+    patterns: [/increase.*calor/, /decrease.*calor/, /reduc.*calor/, /change.*calor/, /lower.*carb/, /update.*protein/, /adjust.*macro/, /change.*nutrition goal/],
+    extractors: [extractCalorieChange],
+  },
+  {
+    type: 'exercise_replacement',
+    topic: 'training',
+    patterns: [/replace.*exercise/, /swap.*exercise/, /different exercise/],
+    extractors: [extractWorkoutDuration],
+  },
+  {
+    type: 'training_plan',
+    topic: 'training',
+    patterns: [/what.*workout today/, /what am i training/, /show.*today.*workout/, /review.*workout/, /today.*training/],
+  },
+  {
+    type: 'workout_generation',
+    topic: 'training',
+    patterns: [/build.*workout/, /create.*workout/, /give me.*workout/, /make.*training plan/, /generate.*workout/, /quick workout/],
+    extractors: [extractWorkoutDuration],
+  },
+  {
+    type: 'training_plan_generation',
+    topic: 'training',
+    patterns: [/make.*training plan/, /build.*training plan/, /generate.*training plan/],
+    extractors: [extractWorkoutDuration],
+  },
+  {
+    type: 'workout_adjustment',
+    topic: 'training',
+    patterns: [/change.*workout/, /modify.*workout/, /replace.*exercise/, /shorter workout/, /different workout/, /edit workout/],
+    extractors: [extractWorkoutDuration],
+  },
+  {
+    type: 'cardio_status',
+    topic: 'cardio',
+    patterns: [/cardio.*looking/, /do i need cardio/, /cardio.*need/, /completed.*cardio/, /review.*cardio/, /how is my cardio/, /cardio plan/],
+  },
+  {
+    type: 'cardio_recommendation',
+    topic: 'cardio',
+    patterns: [/what cardio should i do/, /recommend.*cardio/, /build.*cardio/, /cardio routine/],
+  },
+  {
+    type: 'weight_explanation',
+    topic: 'progress',
+    patterns: [/why.*weight.*(up|down|change)/, /explain.*weight/, /weight trend/, /gaining too quickly/, /weight.*on track/, /gained weight|lost weight/],
+  },
+  {
+    type: 'progress_review',
+    topic: 'progress',
+    patterns: [/how.*progress/, /review.*weekly progress/, /progress review/, /strength progress/, /progress update/, /how am i doing overall/],
+  },
+  {
+    type: 'recovery_status',
+    topic: 'recovery',
+    patterns: [/recovery/, /sleep/, /train hard today/, /recover tonight/, /rest day/],
+  },
+  {
+    type: 'tomorrow_plan',
+    topic: 'general',
+    patterns: [/tomorrow/, /plan tomorrow/, /prepare for tomorrow/],
+  },
+  {
+    type: 'daily_review',
+    topic: 'general',
+    patterns: [/review my day/, /daily summary/, /day review/, /how did i do/, /how am i doing.*today/, /goals today/, /priorities today/],
+  },
+  {
+    type: 'goal_change',
+    topic: 'goals',
+    patterns: [/change.*goal/, /update.*goal/, /goal weight/, /training goal/, /weight goal/, /fitness goal/],
+  },
+  {
+    type: 'estimate_food',
+    topic: 'nutrition',
+    patterns: [/estimate/, /calories in/, /macros in/, /nutrition in/],
+    extractors: [extractFoodDescription],
+  },
+  {
+    type: 'create_cut',
+    topic: 'goals',
+    patterns: [/\bcut\b/, /lose weight/, /calorie deficit/, /lose fat/, /cutting phase/],
+  },
+  {
+    type: 'create_bulk',
+    topic: 'goals',
+    patterns: [/\bbulk\b/, /gain weight/, /gain muscle/, /calorie surplus/, /bulking phase/],
+  },
+];
+
+function likelyTopic(text: string): CoachTopic {
+  if (/protein|calor|macro|meal|food|eat|carb|fat/.test(text)) return 'nutrition';
+  if (/workout|train|exercise|set|rep|lift/.test(text)) return 'training';
+  if (/cardio|walk|run|step|zone/.test(text)) return 'cardio';
+  if (/weight|progress|trend|strength/.test(text)) return 'progress';
+  if (/sleep|recover|recovery|rest/.test(text)) return 'recovery';
+  if (/goal|target|plan/.test(text)) return 'goals';
+  return 'general';
+}
+
 /**
  * Parses a user prompt into a structured intent using keyword matching.
  * Modular — replace the body with an actual LLM call in Phase 4.
  */
 export function parseMockIntent(prompt: string): ParsedIntent {
-  const lower = prompt.toLowerCase().trim();
+  const lower = normalizePrompt(prompt);
 
   for (const pattern of PATTERNS) {
-    const matched = pattern.keywords.some((kw) => lower.includes(kw));
+    const matched = pattern.patterns.some((regex) => regex.test(lower));
     if (matched) {
-      let extractedValues: Record<string, unknown> = {};
-
-      if (pattern.type === 'adjust_calories' || pattern.type === 'update_macros') {
-        extractedValues = extractCalorieChange(lower);
-      }
-      if (pattern.type === 'build_workout' || pattern.type === 'change_workout') {
-        extractedValues = extractWorkoutDuration(lower);
-      }
-      if (pattern.type === 'log_meal' || pattern.type === 'estimate_food') {
-        // Extract food description after keywords
-        const foodMatch = lower.replace(/^(i (just )?(had|ate|eaten)|log|ate|add|track|estimate)\s*/i, '').trim();
-        extractedValues = { foodDescription: foodMatch || 'unspecified food' };
-      }
+      const extractedValues = Object.assign(
+        {},
+        ...(pattern.extractors ?? []).map((extract) => extract(lower))
+      );
 
       return {
         type: pattern.type,
-        confidence: 'high',
+        topic: pattern.topic,
+        confidence: pattern.confidence ?? 'high',
         extractedValues,
       };
     }
   }
 
   return {
-    type: 'general',
-    confidence: 'low',
+    type: 'unknown',
+    topic: likelyTopic(lower),
+    confidence: likelyTopic(lower) === 'general' ? 'low' : 'medium',
     extractedValues: {},
   };
 }

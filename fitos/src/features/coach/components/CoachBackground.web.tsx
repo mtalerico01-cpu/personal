@@ -4,15 +4,23 @@
  */
 import React, { useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { useCoachStore } from '../store/coachStore';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 
 const MOTION_STYLE_ID = 'fitos-coach-background-motion';
-const VIDEO_SRC = '/videos/coach-background.mp4';
+const VIDEO_SRC_BY_PERSONA = {
+  cedric: '/branding/backgrounds/cedric-intelligence-loop.mp4',
+  elara: '/branding/backgrounds/elara-intelligence-loop.mp4',
+} as const;
 const VIDEO_LOAD_DELAY_MS = 900;
 const VIDEO_TIMEOUT_MS = 6500;
 
 export function CoachBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const personaId = useCoachStore((state) => state.personaId);
+  const theme = useActiveTheme();
   const [shouldLoadVideo, setShouldLoadVideo] = React.useState(false);
+  const videoSrc = VIDEO_SRC_BY_PERSONA[personaId];
 
   useEffect(() => {
     const connection = (navigator as Navigator & {
@@ -50,7 +58,7 @@ export function CoachBackground() {
     video.muted = true;
     video.defaultMuted = true;
     video.playbackRate = 1.0;
-    video.src = VIDEO_SRC;
+    video.src = videoSrc;
 
     const play = () => {
       if (!video.paused && video.readyState > 1) return;
@@ -92,7 +100,7 @@ export function CoachBackground() {
       window.clearInterval(intervalId);
       window.clearTimeout(timeoutId);
     };
-  }, [shouldLoadVideo]);
+  }, [shouldLoadVideo, videoSrc]);
 
   useEffect(() => {
     if (document.getElementById(MOTION_STYLE_ID)) return;
@@ -126,41 +134,66 @@ export function CoachBackground() {
         style={videoStyle}
       />
       {/* @ts-ignore -- web-only animated fallback when the browser pauses background video */}
-      <div style={fallbackMotionStyle} />
+      <div style={personaId === 'cedric' ? cedricFallbackMotionStyle : elaraFallbackMotionStyle} />
       {/* @ts-ignore -- radial gradient vignette: dark edges, clear center */}
-      <div style={vignetteStyle} />
+      <div style={personaId === 'cedric' ? cedricVignetteStyle : elaraVignetteStyle} />
+      <View style={[styles.baseWash, { backgroundColor: theme.colors.background.primary }]} />
     </View>
   );
 }
 
 // @ts-ignore
-const fallbackMotionStyle = {
+const cedricFallbackMotionStyle = {
   position: 'absolute',
   inset: '-8%',
   zIndex: 0,
-  background:
-    'radial-gradient(ellipse at 28% 34%, rgba(168,255,62,0.26) 0%, rgba(168,255,62,0.08) 22%, transparent 48%), radial-gradient(ellipse at 70% 68%, rgba(124,175,92,0.20) 0%, rgba(124,175,92,0.07) 26%, transparent 54%), linear-gradient(115deg, rgba(255,255,255,0.03), transparent 42%, rgba(168,255,62,0.05) 72%, transparent 100%)',
-  backgroundSize: '140% 140%, 150% 150%, 180% 180%',
+  backgroundImage:
+    'radial-gradient(ellipse at 28% 34%, rgba(181,255,73,0.13) 0%, rgba(181,255,73,0.035) 24%, transparent 50%), radial-gradient(ellipse at 70% 68%, rgba(152,217,74,0.10) 0%, rgba(152,217,74,0.035) 28%, transparent 56%), linear-gradient(115deg, rgba(255,255,255,0.025), transparent 44%, rgba(181,255,73,0.025) 74%, transparent 100%)',
   filter: 'blur(18px)',
   mixBlendMode: 'screen',
   pointerEvents: 'none',
-  animation: 'fitosCoachDrift 18s ease-in-out infinite, fitosCoachPulse 7s ease-in-out infinite',
+  animation: 'fitosCoachDrift 24s ease-in-out infinite, fitosCoachPulse 10s ease-in-out infinite',
 };
 
 // @ts-ignore
-const vignetteStyle = {
+const elaraFallbackMotionStyle = {
+  position: 'absolute',
+  inset: '-8%',
+  zIndex: 0,
+  backgroundImage:
+    'radial-gradient(ellipse at 30% 28%, rgba(120,190,235,0.30) 0%, rgba(120,190,235,0.12) 26%, transparent 54%), radial-gradient(ellipse at 72% 68%, rgba(255,255,255,0.95) 0%, rgba(220,238,248,0.54) 30%, transparent 58%), linear-gradient(118deg, rgba(255,255,255,0.62), rgba(238,242,244,0.24) 44%, rgba(120,190,235,0.12) 74%, transparent 100%)',
+  filter: 'blur(18px)',
+  mixBlendMode: 'normal',
+  pointerEvents: 'none',
+  animation: 'fitosCoachDrift 26s ease-in-out infinite, fitosCoachPulse 12s ease-in-out infinite',
+};
+
+// @ts-ignore
+const cedricVignetteStyle = {
   position: 'absolute',
   top: 0,
   left: 0,
   zIndex: 2,
   width: '100%',
   height: '100%',
-  background: 'radial-gradient(circle at 50% 38%, rgba(168,255,62,0.08) 0%, rgba(168,255,62,0.03) 22%, transparent 38%), radial-gradient(ellipse at center, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.20) 28%, rgba(0,0,0,0.58) 64%, rgba(0,0,0,0.90) 100%)',
+  backgroundImage: 'radial-gradient(circle at 50% 38%, rgba(181,255,73,0.045) 0%, rgba(181,255,73,0.018) 24%, transparent 42%), radial-gradient(ellipse at center, rgba(8,10,9,0.02) 0%, rgba(8,10,9,0.24) 30%, rgba(8,10,9,0.62) 66%, rgba(8,10,9,0.94) 100%)',
   pointerEvents: 'none',
 };
 
 // @ts-ignore
-const videoStyle = {
+const elaraVignetteStyle = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  zIndex: 2,
+  width: '100%',
+  height: '100%',
+  backgroundImage: 'radial-gradient(circle at 50% 35%, rgba(120,190,235,0.16) 0%, rgba(255,255,255,0.42) 28%, transparent 54%), radial-gradient(ellipse at center, rgba(245,247,248,0.05) 0%, rgba(245,247,248,0.20) 35%, rgba(238,242,244,0.70) 100%)',
+  pointerEvents: 'none',
+};
+
+// @ts-ignore
+const videoStyle: React.CSSProperties = {
   position: 'absolute',
   top: 0,
   left: 0,
@@ -168,17 +201,28 @@ const videoStyle = {
   width: '100%',
   height: '100%',
   objectFit: 'cover',
-  opacity: 0.72,
+  opacity: 0.58,
   transition: 'opacity 900ms ease',
-  filter: 'brightness(1.18) contrast(1.05) saturate(1.08)',
+  filter: 'brightness(1.08) contrast(1.02) saturate(0.88)',
   mixBlendMode: 'screen',
   pointerEvents: 'none',
 };
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
     overflow: 'hidden',
-    backgroundColor: '#050505',
+  },
+  baseWash: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: -1,
   },
 });

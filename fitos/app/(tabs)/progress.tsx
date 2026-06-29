@@ -4,6 +4,7 @@ import { Screen } from '../../src/shared/components/ui/Screen';
 import { SectionHeader } from '../../src/shared/components/ui/SectionHeader';
 import { AIInsightBanner } from '../../src/shared/components/ui/AIInsightBanner';
 import { PageHero } from '../../src/shared/components/ui/PageHero';
+import { CoachInsightHeader } from '../../src/features/coach/components/CoachInsightHeader';
 import { ProgressMonitorCard } from '../../src/features/progress/components/ProgressMonitorCard';
 import { StrengthMetricCard } from '../../src/features/progress/components/StrengthMetricCard';
 import { StrengthScoreCard } from '../../src/features/progress/components/StrengthScoreCard';
@@ -25,6 +26,10 @@ export default function ProgressScreen() {
           detail="Weight, strength, measurements, and photos tuned for long-term signal."
         />
       </View>
+
+      <CoachInsightHeader screen="progress" />
+
+      <View style={styles.gap} />
 
       <ProgressMonitorCard
         weightSeries={weight.history}

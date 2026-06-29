@@ -19,7 +19,7 @@ export const PERSONAS: Record<'cedric' | 'elara', Persona> = {
   cedric: {
     id: 'cedric',
     name: 'Cedric',
-    role: 'AI Performance Coach',
+    role: 'AI Fitness Coach',
     tone: 'analytical, direct, evidence-oriented',
     initials: 'C',
 

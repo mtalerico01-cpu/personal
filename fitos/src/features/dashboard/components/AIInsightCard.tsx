@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text } from '../../../shared/components/ui/Text';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing, radius } from '@/shared/theme/spacing';
 import type { AIDailyBrief } from '../../../types';
 
@@ -11,21 +12,31 @@ interface AIInsightCardProps {
 
 export function AIInsightCard({ brief }: AIInsightCardProps) {
   const [expanded, setExpanded] = useState(false);
+  const theme = useActiveTheme();
 
   return (
     <TouchableOpacity
       onPress={() => setExpanded((prev) => !prev)}
       activeOpacity={0.85}
     >
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: theme.colors.surface.default,
+            borderColor: theme.colors.border.subtle,
+            shadowOpacity: theme.mode === 'dark' ? 0.2 : 0.07,
+          },
+        ]}
+      >
         {/* Top accent bar */}
-        <View style={styles.accentBar} />
+        <View style={[styles.accentBar, { backgroundColor: theme.colors.persona.core }]} />
 
         <View style={styles.content}>
           {/* AI label */}
           <View style={styles.labelRow}>
-            <View style={styles.aiBadge}>
-              <Text variant="labelMedium" color={colors.accent}>
+            <View style={[styles.aiBadge, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default }]}> 
+              <Text variant="labelMedium" color={theme.colors.persona.core}>
                 AI COACH
               </Text>
             </View>
@@ -58,21 +69,18 @@ export function AIInsightCard({ brief }: AIInsightCardProps) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(5, 8, 9, 0.68)',
     borderRadius: radius['2xl'],
     borderWidth: 1,
-    borderColor: 'rgba(243,243,243,0.15)',
     overflow: 'hidden',
     shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.32,
-    shadowRadius: 24,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.2,
+    shadowRadius: 18,
+    elevation: 2,
   },
   accentBar: {
-    height: 3,
-    backgroundColor: colors.accent,
-    opacity: 0.72,
+    height: 2,
+    opacity: 0.44,
   },
   content: {
     padding: spacing[4],
@@ -84,9 +92,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing[3],
   },
   aiBadge: {
-    backgroundColor: 'rgba(168,255,62,0.08)',
     borderWidth: 1,
-    borderColor: 'rgba(168,255,62,0.14)',
     paddingHorizontal: spacing[2],
     paddingVertical: 3,
     borderRadius: radius.full,

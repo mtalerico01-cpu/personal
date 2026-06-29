@@ -8,6 +8,7 @@ import {
 import { Card } from '../../../shared/components/ui/Card';
 import { Text } from '../../../shared/components/ui/Text';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing, radius } from '@/shared/theme/spacing';
 import type { MockAIFoodEstimate } from '../mock';
 
@@ -17,6 +18,7 @@ interface FoodLoggerCardProps {
   onEstimate: () => void;
   estimateVisible: boolean;
   estimate: MockAIFoodEstimate;
+  onAdd: () => void;
   onDismiss: () => void;
 }
 
@@ -26,8 +28,11 @@ export function FoodLoggerCard({
   onEstimate,
   estimateVisible,
   estimate,
+  onAdd,
   onDismiss,
 }: FoodLoggerCardProps) {
+  const theme = useActiveTheme();
+
   return (
     <Card padding={16}>
       <Text variant="labelMedium" color={colors.textTertiary} style={styles.label}>
@@ -38,23 +43,30 @@ export function FoodLoggerCard({
         value={input}
         onChangeText={onInputChange}
         placeholder="Describe what you ate..."
-        placeholderTextColor={colors.textTertiary}
+        placeholderTextColor={theme.colors.text.muted}
         multiline
-        style={styles.input}
+        style={[
+          styles.input,
+          {
+            backgroundColor: theme.colors.surface.raised,
+            borderColor: theme.colors.border.default,
+            color: theme.colors.text.primary,
+          },
+        ]}
       />
 
       <TouchableOpacity
-        style={styles.estimateButton}
+        style={[styles.estimateButton, { backgroundColor: theme.colors.persona.core }]}
         onPress={onEstimate}
         activeOpacity={0.8}
       >
-        <Text variant="labelLarge" color={colors.background}>
+        <Text variant="labelLarge" color={theme.colors.text.inverse}>
           Estimate Macros
         </Text>
       </TouchableOpacity>
 
       {estimateVisible && (
-        <View style={styles.resultCard}>
+        <View style={[styles.resultCard, { backgroundColor: theme.colors.surface.raised, borderColor: theme.colors.border.default }]}> 
           <View style={styles.resultHeader}>
             <View style={styles.confidenceBadge}>
               <Text variant="labelMedium" color={colors.warning}>
@@ -73,14 +85,14 @@ export function FoodLoggerCard({
           </Text>
 
           <View style={styles.macroChips}>
-            <MacroChip value={estimate.calories} unit="kcal" label="Calories" color={colors.calories} />
-            <MacroChip value={estimate.proteinGrams} unit="g" label="Protein" color={colors.protein} />
-            <MacroChip value={estimate.carbsGrams} unit="g" label="Carbs" color={colors.carbs} />
-            <MacroChip value={estimate.fatGrams} unit="g" label="Fat" color={colors.fat} />
+            <MacroChip value={estimate.calories} unit="kcal" label="Calories" color={theme.colors.persona.core} />
+            <MacroChip value={estimate.proteinGrams} unit="g" label="Protein" color={theme.colors.status.info} />
+            <MacroChip value={estimate.carbsGrams} unit="g" label="Carbs" color={theme.colors.text.secondary} />
+            <MacroChip value={estimate.fatGrams} unit="g" label="Fat" color={theme.colors.status.warning} />
           </View>
 
-          <TouchableOpacity style={styles.addButton} activeOpacity={0.8}>
-            <Text variant="labelLarge" color={colors.accent}>
+          <TouchableOpacity style={[styles.addButton, { borderTopColor: theme.colors.border.default }]} onPress={onAdd} activeOpacity={0.8}>
+            <Text variant="labelLarge" color={theme.colors.persona.core}>
               + Add to Log
             </Text>
           </TouchableOpacity>
@@ -118,29 +130,23 @@ const styles = StyleSheet.create({
     marginBottom: spacing[3],
   },
   input: {
-    backgroundColor: colors.surfaceElevated,
     borderRadius: radius.lg,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.border,
     padding: spacing[3],
-    color: colors.textPrimary,
     fontSize: 15,
     minHeight: 72,
     textAlignVertical: 'top',
     marginBottom: spacing[3],
   },
   estimateButton: {
-    backgroundColor: colors.accent,
     borderRadius: radius.lg,
     paddingVertical: spacing[3],
     alignItems: 'center',
   },
   resultCard: {
     marginTop: spacing[4],
-    backgroundColor: colors.surfaceElevated,
     borderRadius: radius.lg,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.border,
     padding: spacing[4],
     gap: spacing[3],
   },
@@ -170,7 +176,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: spacing[2],
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: colors.border,
     marginTop: spacing[1],
   },
 });

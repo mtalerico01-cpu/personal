@@ -6,6 +6,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from './Text';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing, radius } from '@/shared/theme/spacing';
 
 interface AIInsightBannerProps {
@@ -14,17 +15,29 @@ interface AIInsightBannerProps {
 }
 
 export function AIInsightBanner({ text, label = 'AI INSIGHT' }: AIInsightBannerProps) {
+  const theme = useActiveTheme();
+
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: theme.colors.surface.default,
+          borderColor: theme.colors.border.subtle,
+          borderLeftColor: theme.colors.border.persona,
+          shadowOpacity: theme.mode === 'dark' ? 0.18 : 0.07,
+        },
+      ]}
+    >
       <View style={styles.labelRow}>
-        <View style={styles.badge}>
-          <Text variant="labelMedium" color={colors.accent}>
+        <View style={[styles.badge, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default }]}> 
+          <Text variant="labelMedium" color={theme.colors.persona.core}>
             {label}
           </Text>
         </View>
-        <View style={styles.statusDot} />
+        <View style={[styles.statusDot, { backgroundColor: theme.colors.persona.core }]} />
       </View>
-      <Text variant="bodyLarge" color={colors.textSecondary} style={styles.text}>
+      <Text variant="bodyLarge" color={theme.colors.text.secondary} style={styles.text}>
         {text}
       </Text>
     </View>
@@ -33,19 +46,16 @@ export function AIInsightBanner({ text, label = 'AI INSIGHT' }: AIInsightBannerP
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(5, 8, 9, 0.66)',
     borderRadius: radius['2xl'],
     borderWidth: 1,
     borderLeftWidth: 2,
-    borderColor: 'rgba(243,243,243,0.14)',
-    borderLeftColor: 'rgba(168,255,62,0.45)',
     padding: spacing[4],
     gap: spacing[2],
     shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.3,
-    shadowRadius: 22,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.18,
+    shadowRadius: 18,
+    elevation: 2,
   },
   labelRow: {
     flexDirection: 'row',
@@ -53,9 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   badge: {
-    backgroundColor: 'rgba(168,255,62,0.08)',
     borderWidth: 1,
-    borderColor: 'rgba(168,255,62,0.14)',
     paddingHorizontal: spacing[2],
     paddingVertical: 3,
     borderRadius: radius.full,
@@ -64,10 +72,6 @@ const styles = StyleSheet.create({
     width: 7,
     height: 7,
     borderRadius: 3.5,
-    backgroundColor: colors.accent,
-    shadowColor: colors.accent,
-    shadowOpacity: 0.85,
-    shadowRadius: 8,
   },
   text: {
     lineHeight: 22,

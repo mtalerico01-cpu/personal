@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text as RNText, TextStyle, StyleSheet, StyleProp } from 'react-native';
-import { colors } from '@/shared/theme/colors';
+import { Text as RNText, TextStyle, StyleProp } from 'react-native';
+import { cedricTheme, colors } from '@/shared/theme/colors';
 import { typography } from '@/shared/theme/typography';
 import type { TypographyToken } from '@/shared/theme/typography';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 
 interface TextProps {
   children: React.ReactNode;
@@ -15,16 +16,50 @@ interface TextProps {
 export function Text({
   children,
   variant = 'bodyMedium',
-  color = colors.textPrimary,
+  color,
   style,
   numberOfLines,
 }: TextProps) {
+  const theme = useActiveTheme();
+  const resolvedColor = resolveThemeColor(color, theme.colors.text.primary, theme);
+
   return (
     <RNText
-      style={[typography[variant], { color }, style]}
+      style={[typography[variant], { color: resolvedColor }, style]}
       numberOfLines={numberOfLines}
     >
       {children}
     </RNText>
   );
+}
+
+function resolveThemeColor(color: string | undefined, fallback: string, theme: ReturnType<typeof useActiveTheme>) {
+  if (!color) return fallback;
+
+  const cedric = cedricTheme.colors;
+  const tokenMap: Record<string, string> = {
+    [colors.textPrimary]: theme.colors.text.primary,
+    [colors.textSecondary]: theme.colors.text.secondary,
+    [colors.textTertiary]: theme.colors.text.muted,
+    [colors.textDisabled]: theme.colors.text.disabled,
+    [colors.background]: theme.colors.background.primary,
+    [colors.accent]: theme.colors.persona.core,
+    [colors.accentMuted]: theme.colors.persona.soft,
+    [colors.success]: theme.colors.status.success,
+    [colors.warning]: theme.colors.status.warning,
+    [colors.error]: theme.colors.status.error,
+    [cedric.text.primary]: theme.colors.text.primary,
+    [cedric.text.secondary]: theme.colors.text.secondary,
+    [cedric.text.muted]: theme.colors.text.muted,
+    [cedric.text.disabled]: theme.colors.text.disabled,
+    [cedric.text.inverse]: theme.colors.text.inverse,
+    [cedric.accent.primary]: theme.colors.persona.core,
+    [cedric.accent.soft]: theme.colors.persona.core,
+    [cedric.status.success]: theme.colors.status.success,
+    [cedric.status.warning]: theme.colors.status.warning,
+    [cedric.status.error]: theme.colors.status.error,
+    [cedric.status.info]: theme.colors.status.info,
+  };
+
+  return tokenMap[color] ?? color;
 }

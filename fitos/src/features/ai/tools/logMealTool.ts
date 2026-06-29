@@ -20,7 +20,7 @@ export interface LogMealResult {
  * Validates and applies a confirmed meal log to the nutrition store.
  */
 export function logMealTool(payload: Record<string, unknown>): LogMealResult {
-  const { name, calories, proteinGrams, carbsGrams, fatGrams } = payload as LogMealPayload;
+  const { name, calories, proteinGrams, carbsGrams, fatGrams } = payload as unknown as LogMealPayload;
 
   if (!name || typeof calories !== 'number' || calories <= 0) {
     throw new Error('logMealTool: invalid payload');

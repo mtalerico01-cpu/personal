@@ -14,7 +14,7 @@ export interface UpdateMacroGoalsResult {
 }
 
 export function updateMacroGoalsTool(payload: Record<string, unknown>): UpdateMacroGoalsResult {
-  const { calorieGoal, proteinGoal, carbGoal, fatGoal } = payload as UpdateMacroGoalsPayload;
+  const { calorieGoal, proteinGoal, carbGoal, fatGoal } = payload as unknown as UpdateMacroGoalsPayload;
 
   if (!calorieGoal || calorieGoal < 1200 || calorieGoal > 6000) {
     throw new Error('updateMacroGoalsTool: calorie goal out of safe range (1200–6000)');

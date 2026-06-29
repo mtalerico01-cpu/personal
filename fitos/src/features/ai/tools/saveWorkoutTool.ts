@@ -15,7 +15,7 @@ export interface SaveWorkoutResult {
 }
 
 export function saveWorkoutTool(payload: Record<string, unknown>): SaveWorkoutResult {
-  const { name, durationMinutes, exercises, estimatedCalories } = payload as SaveWorkoutPayload;
+  const { name, durationMinutes, exercises, estimatedCalories } = payload as unknown as SaveWorkoutPayload;
 
   if (!name || !exercises || exercises.length === 0) {
     throw new Error('saveWorkoutTool: invalid payload — name and exercises required');

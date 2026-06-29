@@ -6,6 +6,7 @@ import {
   StyleProp,
 } from 'react-native';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { radius, shadows } from '@/shared/theme/spacing';
 
 interface CardProps {
@@ -22,12 +23,20 @@ export function Card({
   variant = 'default',
   padding = 16,
 }: CardProps) {
+  const theme = useActiveTheme();
+  const variantStyle =
+    variant === 'elevated'
+      ? { backgroundColor: theme.colors.surface.raised, borderColor: theme.colors.border.default }
+      : variant === 'flat'
+        ? { backgroundColor: theme.colors.surface.subtle, shadowOpacity: 0, elevation: 0 }
+        : { backgroundColor: theme.colors.surface.default, borderColor: theme.colors.border.subtle };
+
   return (
     <View
       style={[
         styles.base,
         variant === 'elevated' && styles.elevated,
-        variant === 'flat' && styles.flat,
+        variantStyle,
         { padding },
         style,
       ]}
@@ -39,24 +48,15 @@ export function Card({
 
 const styles = StyleSheet.create({
   base: {
-    backgroundColor: 'rgba(5, 8, 9, 0.66)',
     borderRadius: radius['2xl'],
     borderWidth: 1,
-    borderColor: 'rgba(243,243,243,0.14)',
     shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.34,
-    shadowRadius: 24,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.22,
+    shadowRadius: 18,
+    elevation: 3,
   },
   elevated: {
-    backgroundColor: 'rgba(5, 8, 9, 0.76)',
-    borderColor: 'rgba(243,243,243,0.18)',
     ...shadows.elevated,
-  },
-  flat: {
-    backgroundColor: 'rgba(5, 8, 9, 0.42)',
-    shadowOpacity: 0,
-    elevation: 0,
   },
 });

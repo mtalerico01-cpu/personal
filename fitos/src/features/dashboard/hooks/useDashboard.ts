@@ -10,17 +10,19 @@ import {
   mockWeightTrend,
   mockTodayWorkout,
   mockAIDailyBrief,
-  mockSteps,
 } from '../mock';
 import { useNutritionStore } from '../../../store/nutritionStore';
 import { useProgressStore } from '../../../store/progressStore';
+import { useTrainingStore } from '../../../store/trainingStore';
 import { colors } from '../../../shared/theme';
 import type { KPICardData } from '../types';
 
 export function useDashboard() {
   const { goals, log } = useNutritionStore();
   const { currentWeightLbs, weeklyChangeLbs } = useProgressStore();
+  const { todayWorkout, cardio } = useTrainingStore();
   const totalMacros = log.totalMacros;
+  const workout = todayWorkout ?? mockTodayWorkout;
 
   const kpiCards: KPICardData[] = [
     {
@@ -88,12 +90,12 @@ export function useDashboard() {
     {
       id: 'steps',
       label: 'Steps',
-      value: mockSteps.today.toLocaleString(),
-      current: mockSteps.today,
-      goal: mockSteps.goal,
-      progress: Math.min(mockSteps.today / mockSteps.goal, 1),
-      trend: mockSteps.today >= mockSteps.goal ? 'up' : 'stable',
-      trendLabel: `${mockSteps.goal.toLocaleString()} goal`,
+      value: cardio.steps.toLocaleString(),
+      current: cardio.steps,
+      goal: cardio.stepsGoal,
+      progress: Math.min(cardio.steps / cardio.stepsGoal, 1),
+      trend: cardio.steps >= cardio.stepsGoal ? 'up' : 'stable',
+      trendLabel: `${cardio.stepsGoal.toLocaleString()} goal`,
       accentColor: colors.steps,
       accentColorMuted: colors.stepsMuted,
     },
@@ -102,7 +104,7 @@ export function useDashboard() {
   return {
     user: mockUser,
     kpiCards,
-    workout: mockTodayWorkout,
+    workout,
     aiDailyBrief: mockAIDailyBrief,
     nutritionLog: log,
     weightTrend: mockWeightTrend,

@@ -18,7 +18,7 @@ export function buildAIContext(personaId: 'cedric' | 'elara'): AIContext {
   const progressState = useProgressStore.getState();
 
   const profile = userState.profile;
-  const timezone = profile?.timezone ?? 'America/New_York';
+  const timezone = 'America/New_York';
   const dayPart = getDayPartForTimezone(timezone);
   const persona = PERSONAS[personaId];
 
@@ -33,11 +33,11 @@ export function buildAIContext(personaId: 'cedric' | 'elara'): AIContext {
     user: {
       id: profile?.id ?? 'user-1',
       name: profile?.name ?? 'Alex',
-      age: profile?.age ?? 28,
-      heightInches: profile?.heightCm ? Math.round(profile.heightCm / 2.54) : 70,
+      age: 28,
+      heightInches: 70,
       currentWeight: progressState.currentWeightLbs,
       goalWeight: progressState.goalWeightLbs,
-      primaryGoal: (profile?.goal as AIContext['user']['primaryGoal']) ?? 'gain',
+      primaryGoal: 'gain',
       trainingExperience: 'intermediate',
       timezone,
       preferredDiet: 'standard',

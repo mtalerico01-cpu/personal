@@ -8,6 +8,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { PersonaId, PERSONAS } from '../mock';
 
 interface MicButtonProps {
@@ -17,31 +18,32 @@ interface MicButtonProps {
 }
 
 export function MicButton({ persona, onPress, isListening = false }: MicButtonProps) {
+  const theme = useActiveTheme();
   const scale = useSharedValue(1);
-  const glowOpacity = useSharedValue(0.3);
-  const barsOpacity = useSharedValue(0.35);
+  const glowOpacity = useSharedValue(0.14);
+  const barsOpacity = useSharedValue(0.22);
 
   useEffect(() => {
     scale.value = withRepeat(
       withSequence(
-        withTiming(1.06, { duration: 2600 }),
-        withTiming(1.0, { duration: 2600 })
+        withTiming(1.025, { duration: 3200 }),
+        withTiming(1.0, { duration: 3200 })
       ),
       -1,
       false
     );
     glowOpacity.value = withRepeat(
       withSequence(
-        withTiming(0.55, { duration: 2600 }),
-        withTiming(0.20, { duration: 2600 })
+        withTiming(0.24, { duration: 3200 }),
+        withTiming(0.08, { duration: 3200 })
       ),
       -1,
       false
     );
     barsOpacity.value = withRepeat(
       withSequence(
-        withTiming(0.75, { duration: 2200 }),
-        withTiming(0.28, { duration: 2200 })
+        withTiming(0.45, { duration: 3000 }),
+        withTiming(0.18, { duration: 3000 })
       ),
       -1,
       false
@@ -61,24 +63,33 @@ export function MicButton({ persona, onPress, isListening = false }: MicButtonPr
   return (
     <View style={styles.container}>
       {/* Breathing glow behind button */}
-      <Animated.View style={[styles.glow, glowStyle]} />
+      <Animated.View style={[styles.glow, { backgroundColor: theme.colors.persona.soft }, glowStyle]} />
 
       <View style={styles.micRow}>
         <Animated.View style={[styles.audioLines, styles.audioLinesLeft, barsStyle]}>
           {AUDIO_BARS.map((height, index) => (
-            <View key={`left-${index}`} style={[styles.audioBar, { height }]} />
+            <View key={`left-${index}`} style={[styles.audioBar, { height, backgroundColor: theme.colors.text.muted }]} />
           ))}
         </Animated.View>
 
         <TouchableOpacity onPress={onPress} activeOpacity={0.85} accessibilityRole="button" accessibilityLabel={`Talk to ${PERSONAS[persona].name}`}>
-          <Animated.View style={[styles.outerRing, outerStyle]}>
-            <View style={styles.innerCircle}>
+          <Animated.View
+            style={[
+              styles.outerRing,
+              {
+                borderColor: theme.colors.border.persona,
+                backgroundColor: theme.colors.persona.soft,
+              },
+              outerStyle,
+            ]}
+          >
+            <View style={[styles.innerCircle, { backgroundColor: theme.colors.surface.raised }]}> 
               {/* @ts-ignore -- inline SVG mic icon, web-safe */}
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="9" y="2" width="6" height="11" rx="3" stroke={colors.accent} strokeWidth="2"/>
-                <path d="M5 11a7 7 0 0 0 14 0" stroke={colors.accent} strokeWidth="2" strokeLinecap="round"/>
-                <line x1="12" y1="18" x2="12" y2="22" stroke={colors.accent} strokeWidth="2" strokeLinecap="round"/>
-                <line x1="9" y1="22" x2="15" y2="22" stroke={colors.accent} strokeWidth="2" strokeLinecap="round"/>
+                <rect x="9" y="2" width="6" height="11" rx="3" stroke={theme.colors.persona.core} strokeWidth="2"/>
+                <path d="M5 11a7 7 0 0 0 14 0" stroke={theme.colors.persona.core} strokeWidth="2" strokeLinecap="round"/>
+                <line x1="12" y1="18" x2="12" y2="22" stroke={theme.colors.persona.core} strokeWidth="2" strokeLinecap="round"/>
+                <line x1="9" y1="22" x2="15" y2="22" stroke={theme.colors.persona.core} strokeWidth="2" strokeLinecap="round"/>
               </svg>
             </View>
           </Animated.View>
@@ -86,12 +97,12 @@ export function MicButton({ persona, onPress, isListening = false }: MicButtonPr
 
         <Animated.View style={[styles.audioLines, barsStyle]}>
           {AUDIO_BARS.map((height, index) => (
-            <View key={`right-${index}`} style={[styles.audioBar, { height }]} />
+            <View key={`right-${index}`} style={[styles.audioBar, { height, backgroundColor: theme.colors.text.muted }]} />
           ))}
         </Animated.View>
       </View>
 
-      <Text style={styles.label}>
+      <Text style={[styles.label, { color: theme.colors.text.muted }]}> 
         Tap to talk to {PERSONAS[persona].name}
       </Text>
     </View>
@@ -126,34 +137,31 @@ const styles = StyleSheet.create({
   audioBar: {
     width: 2,
     borderRadius: 1,
-    backgroundColor: colors.accent,
-    shadowColor: colors.accent,
-    shadowOpacity: 0.7,
-    shadowRadius: 8,
+    backgroundColor: colors.semantic.text.muted,
   },
   glow: {
     position: 'absolute',
     width: 94,
     height: 94,
     borderRadius: 47,
-    backgroundColor: 'rgba(168, 255, 62, 0.18)',
+    backgroundColor: colors.semantic.accent.glow,
     top: -10,
   },
   outerRing: {
     width: 72,
     height: 72,
     borderRadius: 36,
-    borderWidth: 2,
-    borderColor: colors.accent,
+    borderWidth: 1,
+    borderColor: colors.semantic.border.strong,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(168, 255, 62, 0.08)',
+    backgroundColor: colors.semantic.surface.selected,
   },
   innerCircle: {
     width: 54,
     height: 54,
     borderRadius: 27,
-    backgroundColor: 'rgba(168, 255, 62, 0.1)',
+    backgroundColor: colors.semantic.surface.raised,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -161,7 +169,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '300',
     color: colors.textTertiary,
-    letterSpacing: 1.2,
+    letterSpacing: 0.4,
     textAlign: 'center',
   },
 });

@@ -4,6 +4,7 @@ import Svg, { Circle, Defs, LinearGradient, Path, Stop } from 'react-native-svg'
 import { Card } from '../../../shared/components/ui/Card';
 import { Text } from '../../../shared/components/ui/Text';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { radius, spacing } from '@/shared/theme/spacing';
 
 type MetricKey = 'weight' | 'strength' | 'body';
@@ -41,6 +42,7 @@ export function ProgressMonitorCard({
   bodyLoggedCount,
   bodyTotalCount,
 }: ProgressMonitorCardProps) {
+  const theme = useActiveTheme();
   const [metric, setMetric] = useState<MetricKey>('weight');
   const [chartFrameWidth, setChartFrameWidth] = useState(0);
 
@@ -80,7 +82,7 @@ export function ProgressMonitorCard({
     <Card padding={16}>
       <View style={styles.headerRow}>
         <View>
-          <Text variant="labelMedium" color={colors.accent} style={styles.eyebrow}>
+          <Text variant="labelMedium" color={theme.colors.persona.core} style={styles.eyebrow}>
             PROGRESS MONITOR
           </Text>
           <Text variant="headingMedium" color={colors.textPrimary}>
@@ -93,23 +95,29 @@ export function ProgressMonitorCard({
         </View>
       </View>
 
-      <View style={styles.contextRow}>
+      <View style={[styles.contextRow, { borderTopColor: theme.colors.border.subtle }]}> 
         <View style={styles.timeframeRow}>
           <Text variant="caption" color={colors.textTertiary}>TIMEFRAME</Text>
           <Text variant="labelMedium" color={colors.textSecondary}>{CHART_GRAIN}</Text>
         </View>
-        <View style={styles.axisUnitPill}>
-          <Text variant="labelMedium" color={colors.accent}>{selected.unit}</Text>
+        <View style={[styles.axisUnitPill, { backgroundColor: theme.colors.persona.soft, borderColor: theme.colors.border.persona }]}> 
+          <Text variant="labelMedium" color={theme.colors.persona.core}>{selected.unit}</Text>
         </View>
       </View>
 
-      <View style={styles.tabs}>
+      <View style={[styles.tabs, { borderColor: theme.colors.border.subtle, backgroundColor: theme.colors.surface.default }]}> 
         <MetricTab label="Weight" active={metric === 'weight'} onPress={() => setMetric('weight')} />
         <MetricTab label="Strength" active={metric === 'strength'} onPress={() => setMetric('strength')} />
         <MetricTab label="Waist" active={metric === 'body'} onPress={() => setMetric('body')} />
       </View>
 
-      <View style={styles.chartFrame} onLayout={handleChartLayout}>
+      <View
+        style={[
+          styles.chartFrame,
+          { borderColor: theme.colors.border.subtle, backgroundColor: theme.colors.surface.default },
+        ]}
+        onLayout={handleChartLayout}
+      >
         {chartFrameWidth > 0 && (
           <SimpleTrendChart
             data={chartData}
@@ -129,9 +137,19 @@ interface MetricTabProps {
 }
 
 function MetricTab({ label, active, onPress }: MetricTabProps) {
+  const theme = useActiveTheme();
+
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.78} style={[styles.tab, active && styles.tabActive]}>
-      <Text variant="labelMedium" color={active ? colors.accent : colors.textTertiary} style={styles.tabText}>
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.78}
+      style={[
+        styles.tab,
+        active && styles.tabActive,
+        active && { backgroundColor: theme.colors.persona.soft, borderColor: theme.colors.border.persona },
+      ]}
+    >
+      <Text variant="labelMedium" color={active ? theme.colors.persona.core : theme.colors.text.muted} style={styles.tabText}>
         {label}
       </Text>
     </TouchableOpacity>
@@ -139,6 +157,7 @@ function MetricTab({ label, active, onPress }: MetricTabProps) {
 }
 
 function SimpleTrendChart({ data, axis, width }: { data: ChartPoint[]; axis: AxisConfig; width: number }) {
+  const theme = useActiveTheme();
   const points = getChartPoints(data, axis, width);
   const path = points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ');
   const areaPath = `${path} L ${width} ${PLOT_HEIGHT} L 0 ${PLOT_HEIGHT} Z`;
@@ -158,17 +177,17 @@ function SimpleTrendChart({ data, axis, width }: { data: ChartPoint[]; axis: Axi
         <Svg width={width} height={PLOT_HEIGHT}>
           <Defs>
             <LinearGradient id="progressFill" x1="0" y1="0" x2="0" y2="1">
-              <Stop offset="0" stopColor={colors.accent} stopOpacity="0.18" />
-              <Stop offset="1" stopColor={colors.accent} stopOpacity="0.02" />
+              <Stop offset="0" stopColor={theme.colors.persona.core} stopOpacity="0.11" />
+              <Stop offset="1" stopColor={theme.colors.persona.core} stopOpacity="0.01" />
             </LinearGradient>
           </Defs>
-          <Path d={`M 0 1 H ${width}`} stroke="rgba(243,243,243,0.08)" strokeWidth={1} />
-          <Path d={`M 0 ${PLOT_HEIGHT / 2} H ${width}`} stroke="rgba(243,243,243,0.08)" strokeWidth={1} />
-          <Path d={`M 0 ${PLOT_HEIGHT - 1} H ${width}`} stroke="rgba(243,243,243,0.12)" strokeWidth={1} />
+          <Path d={`M 0 1 H ${width}`} stroke={theme.colors.border.subtle} strokeWidth={1} />
+          <Path d={`M 0 ${PLOT_HEIGHT / 2} H ${width}`} stroke={theme.colors.border.subtle} strokeWidth={1} />
+          <Path d={`M 0 ${PLOT_HEIGHT - 1} H ${width}`} stroke={theme.colors.border.default} strokeWidth={1} />
           <Path d={areaPath} fill="url(#progressFill)" />
-          <Path d={path} fill="none" stroke="rgba(168,255,62,0.32)" strokeWidth={8} strokeLinecap="round" strokeLinejoin="round" />
-          <Path d={path} fill="none" stroke={colors.accent} strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
-          <Circle cx={latest.x} cy={latest.y} r={4.5} fill={colors.accent} />
+          <Path d={path} fill="none" stroke={theme.colors.persona.soft} strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" />
+          <Path d={path} fill="none" stroke={theme.colors.persona.core} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" />
+          <Circle cx={latest.x} cy={latest.y} r={4} fill={theme.colors.persona.core} />
         </Svg>
         <View style={styles.xAxisLabels}>
           <Text variant="caption" color={colors.textSecondary} style={styles.axisText}>{data[0]?.label}</Text>
@@ -229,7 +248,7 @@ const styles = StyleSheet.create({
     gap: spacing[3],
   },
   eyebrow: {
-    letterSpacing: 2,
+    letterSpacing: 1.2,
     textTransform: 'uppercase',
     marginBottom: spacing[1],
   },
@@ -242,7 +261,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderTopWidth: 1,
-    borderTopColor: 'rgba(243,243,243,0.08)',
     marginTop: spacing[3],
     paddingTop: spacing[2],
   },
@@ -254,8 +272,8 @@ const styles = StyleSheet.create({
   axisUnitPill: {
     borderRadius: radius.full,
     borderWidth: 1,
-    borderColor: 'rgba(168,255,62,0.18)',
-    backgroundColor: 'rgba(168,255,62,0.08)',
+    borderColor: colors.semantic.border.default,
+    backgroundColor: colors.semantic.surface.selected,
     paddingHorizontal: spacing[3],
     paddingVertical: 5,
   },
@@ -265,8 +283,6 @@ const styles = StyleSheet.create({
     padding: 3,
     borderRadius: 18,
     borderWidth: 1,
-    borderColor: 'rgba(243,243,243,0.12)',
-    backgroundColor: 'rgba(255,255,255,0.03)',
     gap: 3,
   },
   tab: {
@@ -276,12 +292,10 @@ const styles = StyleSheet.create({
     borderRadius: 14,
   },
   tabActive: {
-    backgroundColor: 'rgba(168,255,62,0.12)',
     borderWidth: 1,
-    borderColor: 'rgba(168,255,62,0.18)',
   },
   tabText: {
-    letterSpacing: 1.1,
+    letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
   chartFrame: {
@@ -289,8 +303,6 @@ const styles = StyleSheet.create({
     marginTop: spacing[3],
     borderRadius: radius.xl,
     borderWidth: 1,
-    borderColor: 'rgba(243,243,243,0.08)',
-    backgroundColor: 'rgba(0,0,0,0.18)',
     overflow: 'hidden',
     paddingHorizontal: spacing[3],
     paddingTop: spacing[3],
@@ -314,7 +326,7 @@ const styles = StyleSheet.create({
     marginTop: spacing[2],
   },
   axisText: {
-    color: 'rgba(243,243,243,0.74)',
+    color: colors.semantic.text.secondary,
     fontSize: 13,
     fontWeight: '600',
   },

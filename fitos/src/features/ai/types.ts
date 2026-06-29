@@ -32,6 +32,8 @@ export interface AIMessage {
   id: string;
   personaId: 'cedric' | 'elara';
   createdAt: string;
+  topic?: CoachTopic;
+  intent?: IntentType;
   title?: string;
   summary: string;
   details?: string[];
@@ -45,15 +47,20 @@ export interface AIMessage {
 export type PromptCategory =
   | 'nutrition'
   | 'training'
+  | 'cardio'
   | 'progress'
+  | 'recovery'
   | 'goals'
-  | 'planning';
+  | 'planning'
+  | 'general';
 
 export interface SuggestedPrompt {
   id: string;
   label: string;
   category: PromptCategory;
   prompt: string;
+  intent?: IntentType;
+  topic?: CoachTopic;
 }
 
 // ─── AI Context ──────────────────────────────────────────────────────────────
@@ -183,7 +190,45 @@ export interface MacroProposal {
 
 // ─── Intent ──────────────────────────────────────────────────────────────────
 
+export type CoachTopic =
+  | 'nutrition'
+  | 'training'
+  | 'cardio'
+  | 'progress'
+  | 'recovery'
+  | 'goals'
+  | 'general';
+
 export type IntentType =
+  | 'daily_review'
+  | 'nutrition_status'
+  | 'meal_recommendation'
+  | 'meal_logging'
+  | 'protein_status'
+  | 'calorie_status'
+  | 'macro_adjustment'
+  | 'calorie_adjustment'
+  | 'diet_strategy_compare'
+  | 'diet_strategy_recommend'
+  | 'diet_plan_preview'
+  | 'diet_plan_apply'
+  | 'training_plan'
+  | 'workout_generation'
+  | 'workout_adjustment'
+  | 'exercise_replacement'
+  | 'training_plan_generation'
+  | 'cardio_status'
+  | 'cardio_recommendation'
+  | 'cardio_goal_update'
+  | 'recovery_status'
+  | 'weight_explanation'
+  | 'progress_review'
+  | 'goal_change'
+  | 'goal_update'
+  | 'navigation'
+  | 'clarification'
+  | 'tomorrow_plan'
+  | 'unknown'
   | 'log_meal'
   | 'estimate_food'
   | 'remaining_macros'
@@ -204,6 +249,7 @@ export type IntentType =
 
 export interface ParsedIntent {
   type: IntentType;
+  topic: CoachTopic;
   confidence: ConfidenceLevel;
   extractedValues: Record<string, unknown>;
 }

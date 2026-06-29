@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Card } from '../../../shared/components/ui/Card';
 import { Text } from '../../../shared/components/ui/Text';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing, radius } from '@/shared/theme/spacing';
 
 interface Measurement {
@@ -17,6 +18,8 @@ interface BodyMeasurementsCardProps {
 }
 
 export function BodyMeasurementsCard({ measurements }: BodyMeasurementsCardProps) {
+  const theme = useActiveTheme();
+
   return (
     <Card padding={16}>
       <Text variant="labelMedium" color={colors.textTertiary} style={styles.label}>
@@ -24,18 +27,18 @@ export function BodyMeasurementsCard({ measurements }: BodyMeasurementsCardProps
       </Text>
       <View style={styles.grid}>
         {measurements.map((m) => (
-          <TouchableOpacity key={m.id} style={styles.cell} activeOpacity={0.7}>
+          <View key={m.id} style={[styles.cell, { backgroundColor: theme.colors.surface.raised }]}> 
             <Text variant="caption" color={colors.textTertiary}>{m.name.toUpperCase()}</Text>
             {m.value !== null ? (
               <Text variant="headingSmall" color={colors.textPrimary}>
                 {m.value}{m.unit}
               </Text>
             ) : (
-              <View style={styles.emptySlot}>
-                <Text variant="caption" color={colors.textDisabled}>+ Log</Text>
+              <View style={[styles.emptySlot, { borderColor: theme.colors.border.default }]}> 
+                <Text variant="caption" color={colors.textDisabled}>Coming later</Text>
               </View>
             )}
-          </TouchableOpacity>
+          </View>
         ))}
       </View>
     </Card>
@@ -54,13 +57,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     paddingVertical: spacing[3],
-    backgroundColor: colors.surfaceElevated,
     borderRadius: radius.lg,
     gap: spacing[1],
   },
   emptySlot: {
     borderWidth: 1,
-    borderColor: colors.border,
     borderStyle: 'dashed',
     borderRadius: radius.sm,
     paddingHorizontal: spacing[2],

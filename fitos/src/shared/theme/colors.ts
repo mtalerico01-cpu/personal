@@ -1,74 +1,230 @@
-/**
- * FitOS Design System — Color Tokens
- *
- * Five colors. No exceptions.
- * Background · Surface · Text · Neon Green · Amber
- * Restraint is the premium.
+export type PersonaId = 'cedric' | 'elara';
+export type AppearanceMode = 'dark' | 'light';
+
+export interface FitOSTheme {
+  mode: AppearanceMode;
+  colors: {
+    background: {
+      primary: string;
+      secondary: string;
+      elevated: string;
+      overlay: string;
+    };
+    surface: {
+      default: string;
+      raised: string;
+      subtle: string;
+      selected: string;
+      translucent: string;
+    };
+    border: {
+      subtle: string;
+      default: string;
+      strong: string;
+      persona: string;
+      accent: string;
+    };
+    text: {
+      primary: string;
+      secondary: string;
+      muted: string;
+      disabled: string;
+      inverse: string;
+    };
+    persona: {
+      core: string;
+      soft: string;
+      ambient: string;
+      deep: string;
+    };
+    accent: {
+      primary: string;
+      soft: string;
+      muted: string;
+      glow: string;
+    };
+    status: {
+      success: string;
+      warning: string;
+      error: string;
+      info: string;
+    };
+  };
+}
+
+export const cedricTheme: FitOSTheme = {
+  mode: 'dark',
+  colors: {
+    background: {
+      primary: '#070908',
+      secondary: '#0C0F0D',
+      elevated: '#111512',
+      overlay: 'rgba(7,9,8,0.88)',
+    },
+    surface: {
+      default: 'rgba(16,20,17,0.88)',
+      raised: 'rgba(21,26,22,0.92)',
+      subtle: 'rgba(12,15,13,0.78)',
+      selected: 'rgba(168,233,91,0.10)',
+      translucent: 'rgba(16,20,17,0.72)',
+    },
+    border: {
+      subtle: 'rgba(255,255,255,0.07)',
+      default: 'rgba(255,255,255,0.11)',
+      strong: 'rgba(255,255,255,0.17)',
+      persona: 'rgba(168,233,91,0.36)',
+      accent: 'rgba(168,233,91,0.34)',
+    },
+    text: {
+      primary: '#F4F6F4',
+      secondary: '#A8AEA9',
+      muted: '#747B75',
+      disabled: '#505651',
+      inverse: '#080A09',
+    },
+    persona: {
+      core: '#A8E95B',
+      soft: 'rgba(168,233,91,0.22)',
+      ambient: 'rgba(113,170,67,0.10)',
+      deep: '#182015',
+    },
+    accent: {
+      primary: '#A8E95B',
+      soft: '#98D94A',
+      muted: 'rgba(168,233,91,0.10)',
+      glow: 'rgba(168,233,91,0.12)',
+    },
+    status: {
+      success: '#79D88B',
+      warning: '#D9B96E',
+      error: '#E07C7C',
+      info: '#7FA9D8',
+    },
+  },
+};
+
+export const elaraTheme: FitOSTheme = {
+  mode: 'light',
+  colors: {
+    background: {
+      primary: '#F5F7F8',
+      secondary: '#EEF2F4',
+      elevated: '#FFFFFF',
+      overlay: 'rgba(245,247,248,0.88)',
+    },
+    surface: {
+      default: 'rgba(255,255,255,0.88)',
+      raised: 'rgba(255,255,255,0.96)',
+      subtle: 'rgba(236,241,244,0.82)',
+      selected: 'rgba(120,190,235,0.13)',
+      translucent: 'rgba(255,255,255,0.74)',
+    },
+    border: {
+      subtle: 'rgba(22,36,46,0.08)',
+      default: 'rgba(22,36,46,0.12)',
+      strong: 'rgba(22,36,46,0.18)',
+      persona: 'rgba(120,190,235,0.42)',
+      accent: 'rgba(120,190,235,0.42)',
+    },
+    text: {
+      primary: '#182127',
+      secondary: '#52616A',
+      muted: '#7B8991',
+      disabled: '#A9B3B9',
+      inverse: '#FFFFFF',
+    },
+    persona: {
+      core: '#5EADD9',
+      soft: 'rgba(120,190,235,0.22)',
+      ambient: 'rgba(120,190,235,0.12)',
+      deep: '#DCEEF8',
+    },
+    accent: {
+      primary: '#5EADD9',
+      soft: '#78BEEB',
+      muted: 'rgba(120,190,235,0.13)',
+      glow: 'rgba(120,190,235,0.16)',
+    },
+    status: {
+      success: '#4F93C2',
+      warning: '#B6842D',
+      error: '#C85F5F',
+      info: '#4F93C2',
+    },
+  },
+};
+
+export const themesByPersona = {
+  cedric: cedricTheme,
+  elara: elaraTheme,
+} satisfies Record<PersonaId, FitOSTheme>;
+
+export function getThemeForPersona(personaId: PersonaId): FitOSTheme {
+  return themesByPersona[personaId];
+}
+
+export const semanticColors = cedricTheme.colors;
+
+/*
+ * Compatibility aliases. New code should prefer useActiveTheme() and theme.colors.*.
+ * These remain Cedric-dark defaults for older components until they are migrated.
  */
-
 export const colors = {
-  // ─── Backgrounds ───────────────────────────────────────────────────────────
-  background: '#050505',
-  surface: '#111111',
-  surfaceElevated: '#161616',
-  surfaceHigh: '#1D1D1D',
+  semantic: semanticColors,
 
-  // ─── Borders ───────────────────────────────────────────────────────────────
-  border: 'rgba(243, 243, 243, 0.06)',
-  borderStrong: 'rgba(243, 243, 243, 0.10)',
+  background: semanticColors.background.primary,
+  surface: semanticColors.surface.default,
+  surfaceElevated: semanticColors.surface.raised,
+  surfaceHigh: semanticColors.surface.selected,
 
-  // ─── Text ──────────────────────────────────────────────────────────────────
-  textPrimary: '#F3F3F3',
-  textSecondary: 'rgba(243, 243, 243, 0.52)',
-  textTertiary: 'rgba(243, 243, 243, 0.26)',
-  textDisabled: 'rgba(243, 243, 243, 0.14)',
+  border: semanticColors.border.subtle,
+  borderStrong: semanticColors.border.default,
 
-  // ─── Accent — Neon Performance Green ───────────────────────────────────────
-  accent: '#A8FF3E',
-  accentMuted: 'rgba(168, 255, 62, 0.10)',
-  accentDim: 'rgba(168, 255, 62, 0.18)',
+  textPrimary: semanticColors.text.primary,
+  textSecondary: semanticColors.text.secondary,
+  textTertiary: semanticColors.text.muted,
+  textDisabled: semanticColors.text.disabled,
 
-  // ─── Neon states ───────────────────────────────────────────────────────────
-  neonGreen: '#A8FF3E',
-  neonGreenMuted: 'rgba(168, 255, 62, 0.10)',
-  neonRed: '#FF3B30',
-  neonRedMuted: 'rgba(255, 59, 48, 0.10)',
+  accent: semanticColors.accent.primary,
+  accentMuted: semanticColors.accent.muted,
+  accentDim: semanticColors.border.accent,
 
-  // ─── Semantic ──────────────────────────────────────────────────────────────
-  success: '#A8FF3E',
-  successMuted: 'rgba(168, 255, 62, 0.10)',
-  warning: '#F5A623',
-  warningMuted: 'rgba(245, 166, 35, 0.12)',
-  error: '#FF3B30',
-  errorMuted: 'rgba(255, 59, 48, 0.10)',
+  neonGreen: semanticColors.accent.primary,
+  neonGreenMuted: semanticColors.accent.muted,
+  neonRed: semanticColors.status.error,
+  neonRedMuted: 'rgba(224,124,124,0.12)',
 
-  // ─── Macro / Metric — all unified to accent ────────────────────────────────
-  calories: '#A8FF3E',
-  caloriesMuted: 'rgba(168, 255, 62, 0.10)',
-  protein: '#A8FF3E',
-  proteinMuted: 'rgba(168, 255, 62, 0.10)',
-  carbs: '#A8FF3E',
-  carbsMuted: 'rgba(168, 255, 62, 0.10)',
-  fat: '#A8FF3E',
-  fatMuted: 'rgba(168, 255, 62, 0.10)',
-  weight: '#A8FF3E',
-  weightMuted: 'rgba(168, 255, 62, 0.10)',
-  steps: '#A8FF3E',
-  stepsMuted: 'rgba(168, 255, 62, 0.10)',
-  training: '#A8FF3E',
-  trainingMuted: 'rgba(168, 255, 62, 0.10)',
+  success: semanticColors.status.success,
+  successMuted: 'rgba(121,216,139,0.12)',
+  warning: semanticColors.status.warning,
+  warningMuted: 'rgba(217,185,110,0.12)',
+  error: semanticColors.status.error,
+  errorMuted: 'rgba(224,124,124,0.12)',
 
-  // ─── Coach Screen ──────────────────────────────────────────────────────────
-  coachGlow: 'rgba(168, 255, 62, 0.12)',
-  coachGlowStrong: 'rgba(168, 255, 62, 0.06)',
-  coachRing: '#A8FF3E',
-  coachChipBorder: 'rgba(168, 255, 62, 0.18)',
+  calories: semanticColors.accent.soft,
+  caloriesMuted: semanticColors.accent.muted,
+  protein: semanticColors.status.success,
+  proteinMuted: 'rgba(121,216,139,0.12)',
+  carbs: semanticColors.status.info,
+  carbsMuted: 'rgba(127,169,216,0.12)',
+  fat: semanticColors.status.warning,
+  fatMuted: 'rgba(217,185,110,0.12)',
+  weight: semanticColors.accent.soft,
+  weightMuted: semanticColors.accent.muted,
+  steps: semanticColors.status.info,
+  stepsMuted: 'rgba(127,169,216,0.12)',
+  training: semanticColors.status.success,
+  trainingMuted: 'rgba(121,216,139,0.12)',
 
-  // ─── Tab Bar ───────────────────────────────────────────────────────────────
-  tabBarBackground: '#070707',
-  tabBarBorder: 'rgba(243, 243, 243, 0.04)',
-  tabBarActive: '#A8FF3E',
-  tabBarInactive: 'rgba(243, 243, 243, 0.26)',
+  coachGlow: semanticColors.accent.glow,
+  coachGlowStrong: 'rgba(181,255,73,0.06)',
+  coachRing: semanticColors.accent.soft,
+  coachChipBorder: 'rgba(255,255,255,0.12)',
+
+  tabBarBackground: semanticColors.background.secondary,
+  tabBarBorder: 'rgba(255,255,255,0.06)',
+  tabBarActive: semanticColors.text.primary,
+  tabBarInactive: semanticColors.text.muted,
 } as const;
 
 export type ColorToken = keyof typeof colors;

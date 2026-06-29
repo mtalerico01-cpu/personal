@@ -4,6 +4,7 @@ import { Card } from '../../../shared/components/ui/Card';
 import { Text } from '../../../shared/components/ui/Text';
 import { MacroProgressBar } from '../../../shared/components/ui/MacroProgressBar';
 import { colors } from '@/shared/theme/colors';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing } from '@/shared/theme/spacing';
 
 interface MacroSummaryCardProps {
@@ -27,7 +28,9 @@ export function MacroSummaryCard({
   fat,
   fatGoal,
 }: MacroSummaryCardProps) {
+  const theme = useActiveTheme();
   const calPercent = Math.round((calories / calorieGoal) * 100);
+  const macroColors = getMacroThemeColors(theme);
 
   return (
     <Card padding={20}>
@@ -47,11 +50,11 @@ export function MacroSummaryCard({
           </View>
         </View>
         <View style={styles.ringContainer}>
-          <CircleProgress percent={calPercent} color={colors.calories} size={64} />
+          <CircleProgress percent={calPercent} color={theme.colors.persona.core} size={64} />
         </View>
       </View>
 
-      <View style={styles.divider} />
+      <View style={[styles.divider, { backgroundColor: theme.colors.border.subtle }]} />
 
       {/* Macro bars */}
       <View style={styles.macrosContainer}>
@@ -59,22 +62,22 @@ export function MacroSummaryCard({
           label="Protein"
           current={protein}
           goal={proteinGoal}
-          color={colors.protein}
-          colorMuted={colors.proteinMuted}
+          color={macroColors.protein}
+          colorMuted={macroColors.proteinMuted}
         />
         <MacroProgressBar
           label="Carbs"
           current={carbs}
           goal={carbsGoal}
-          color={colors.carbs}
-          colorMuted={colors.carbsMuted}
+          color={macroColors.carbs}
+          colorMuted={macroColors.carbsMuted}
         />
         <MacroProgressBar
           label="Fat"
           current={fat}
           goal={fatGoal}
-          color={colors.fat}
-          colorMuted={colors.fatMuted}
+          color={macroColors.fat}
+          colorMuted={macroColors.fatMuted}
         />
       </View>
     </Card>
@@ -89,19 +92,20 @@ interface CircleProgressProps {
 }
 
 function CircleProgress({ percent, color, size }: CircleProgressProps) {
+  const theme = useActiveTheme();
   const clampedPercent = Math.min(percent, 100);
   const strokeWidth = 6;
   const innerSize = size - strokeWidth * 2;
 
   return (
-    <View style={[styles.ring, { width: size, height: size, borderColor: colors.border }]}>
+    <View style={[styles.ring, { width: size, height: size, borderColor: theme.colors.border.default }]}>
       <View
         style={[
           styles.ringFill,
           {
             width: innerSize,
             height: innerSize,
-            backgroundColor: colors.surface,
+            backgroundColor: theme.colors.surface.default,
           },
         ]}
       >
@@ -123,6 +127,28 @@ function CircleProgress({ percent, color, size }: CircleProgressProps) {
       />
     </View>
   );
+}
+
+function getMacroThemeColors(theme: ReturnType<typeof useActiveTheme>) {
+  if (theme.mode === 'dark') {
+    return {
+      protein: colors.protein,
+      proteinMuted: colors.proteinMuted,
+      carbs: colors.carbs,
+      carbsMuted: colors.carbsMuted,
+      fat: colors.fat,
+      fatMuted: colors.fatMuted,
+    };
+  }
+
+  return {
+    protein: theme.colors.status.info,
+    proteinMuted: 'rgba(94,173,217,0.16)',
+    carbs: theme.colors.persona.core,
+    carbsMuted: theme.colors.persona.soft,
+    fat: theme.colors.status.warning,
+    fatMuted: 'rgba(180,132,73,0.16)',
+  };
 }
 
 const styles = StyleSheet.create({
@@ -168,7 +194,6 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: colors.border,
     marginVertical: spacing[4],
   },
   macrosContainer: {
