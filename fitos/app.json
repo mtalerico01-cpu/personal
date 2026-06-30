@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "FitOS",
+    "name": "Form Theory",
     "slug": "fitos",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "fitos",
-    "userInterfaceStyle": "dark",
+    "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.fitos.app"

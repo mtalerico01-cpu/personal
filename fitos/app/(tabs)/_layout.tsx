@@ -35,7 +35,7 @@ function TabIcon({ label, Icon, focused }: TabIconProps) {
         styles.tabItem,
         focused && {
           backgroundColor: theme.colors.surface.selected,
-          borderColor: theme.colors.border.subtle,
+          borderColor: theme.colors.border.persona,
         },
       ]}
     >
@@ -129,11 +129,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: 'transparent',
     gap: 4,
   },
   tabItemFocused: {},
   tabLabel: {
     fontSize: 9,
-    letterSpacing: 0.4,
+    letterSpacing: 0.9,
+    textTransform: 'uppercase',
   },
 });

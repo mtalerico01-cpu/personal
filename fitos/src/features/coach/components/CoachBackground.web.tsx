@@ -4,23 +4,17 @@
  */
 import React, { useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useCoachStore } from '../store/coachStore';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 
-const MOTION_STYLE_ID = 'fitos-coach-background-motion';
-const VIDEO_SRC_BY_PERSONA = {
-  cedric: '/branding/backgrounds/cedric-intelligence-loop.mp4',
-  elara: '/branding/backgrounds/elara-intelligence-loop.mp4',
-} as const;
+const MOTION_STYLE_ID = 'form-theory-coach-background-motion';
+const VIDEO_SRC = '/videos/coach-background.mp4';
 const VIDEO_LOAD_DELAY_MS = 900;
 const VIDEO_TIMEOUT_MS = 6500;
 
 export function CoachBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const personaId = useCoachStore((state) => state.personaId);
   const theme = useActiveTheme();
   const [shouldLoadVideo, setShouldLoadVideo] = React.useState(false);
-  const videoSrc = VIDEO_SRC_BY_PERSONA[personaId];
 
   useEffect(() => {
     const connection = (navigator as Navigator & {
@@ -58,7 +52,7 @@ export function CoachBackground() {
     video.muted = true;
     video.defaultMuted = true;
     video.playbackRate = 1.0;
-    video.src = videoSrc;
+    video.src = VIDEO_SRC;
 
     const play = () => {
       if (!video.paused && video.readyState > 1) return;
@@ -100,7 +94,7 @@ export function CoachBackground() {
       window.clearInterval(intervalId);
       window.clearTimeout(timeoutId);
     };
-  }, [shouldLoadVideo, videoSrc]);
+  }, [shouldLoadVideo]);
 
   useEffect(() => {
     if (document.getElementById(MOTION_STYLE_ID)) return;
@@ -108,12 +102,12 @@ export function CoachBackground() {
     const style = document.createElement('style');
     style.id = MOTION_STYLE_ID;
     style.textContent = `
-      @keyframes fitosCoachDrift {
+      @keyframes formTheoryCoachDrift {
         0% { transform: translate3d(-3%, -2%, 0) scale(1.08); background-position: 0% 40%, 100% 55%, 50% 50%; }
         50% { transform: translate3d(3%, 2%, 0) scale(1.14); background-position: 100% 58%, 0% 40%, 58% 48%; }
         100% { transform: translate3d(-3%, -2%, 0) scale(1.08); background-position: 0% 40%, 100% 55%, 50% 50%; }
       }
-      @keyframes fitosCoachPulse {
+      @keyframes formTheoryCoachPulse {
         0%, 100% { opacity: 0.28; }
         50% { opacity: 0.46; }
       }
@@ -134,16 +128,16 @@ export function CoachBackground() {
         style={videoStyle}
       />
       {/* @ts-ignore -- web-only animated fallback when the browser pauses background video */}
-      <div style={personaId === 'cedric' ? cedricFallbackMotionStyle : elaraFallbackMotionStyle} />
+      <div style={theme.mode === 'dark' ? darkFallbackMotionStyle : lightFallbackMotionStyle} />
       {/* @ts-ignore -- radial gradient vignette: dark edges, clear center */}
-      <div style={personaId === 'cedric' ? cedricVignetteStyle : elaraVignetteStyle} />
+      <div style={theme.mode === 'dark' ? darkVignetteStyle : lightVignetteStyle} />
       <View style={[styles.baseWash, { backgroundColor: theme.colors.background.primary }]} />
     </View>
   );
 }
 
 // @ts-ignore
-const cedricFallbackMotionStyle = {
+const darkFallbackMotionStyle = {
   position: 'absolute',
   inset: '-8%',
   zIndex: 0,
@@ -152,11 +146,11 @@ const cedricFallbackMotionStyle = {
   filter: 'blur(18px)',
   mixBlendMode: 'screen',
   pointerEvents: 'none',
-  animation: 'fitosCoachDrift 24s ease-in-out infinite, fitosCoachPulse 10s ease-in-out infinite',
+  animation: 'formTheoryCoachDrift 24s ease-in-out infinite, formTheoryCoachPulse 10s ease-in-out infinite',
 };
 
 // @ts-ignore
-const elaraFallbackMotionStyle = {
+const lightFallbackMotionStyle = {
   position: 'absolute',
   inset: '-8%',
   zIndex: 0,
@@ -165,11 +159,11 @@ const elaraFallbackMotionStyle = {
   filter: 'blur(18px)',
   mixBlendMode: 'normal',
   pointerEvents: 'none',
-  animation: 'fitosCoachDrift 26s ease-in-out infinite, fitosCoachPulse 12s ease-in-out infinite',
+  animation: 'formTheoryCoachDrift 26s ease-in-out infinite, formTheoryCoachPulse 12s ease-in-out infinite',
 };
 
 // @ts-ignore
-const cedricVignetteStyle = {
+const darkVignetteStyle = {
   position: 'absolute',
   top: 0,
   left: 0,
@@ -181,7 +175,7 @@ const cedricVignetteStyle = {
 };
 
 // @ts-ignore
-const elaraVignetteStyle = {
+const lightVignetteStyle = {
   position: 'absolute',
   top: 0,
   left: 0,

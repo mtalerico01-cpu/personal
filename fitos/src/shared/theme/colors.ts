@@ -1,7 +1,9 @@
-export type PersonaId = 'cedric' | 'elara';
 export type AppearanceMode = 'dark' | 'light';
+export type AppearancePreference = AppearanceMode | 'system';
 
-export interface FitOSTheme {
+import { formTheoryPalette } from '@/branding/visualSystem';
+
+export interface FormTheoryTheme {
   mode: AppearanceMode;
   colors: {
     background: {
@@ -37,6 +39,12 @@ export interface FitOSTheme {
       ambient: string;
       deep: string;
     };
+    brand: {
+      core: string;
+      soft: string;
+      ambient: string;
+      deep: string;
+    };
     accent: {
       primary: string;
       soft: string;
@@ -52,122 +60,133 @@ export interface FitOSTheme {
   };
 }
 
-export const cedricTheme: FitOSTheme = {
+const darkBrand = {
+  core: formTheoryPalette.lime,
+  soft: 'rgba(167,255,0,0.16)',
+  ambient: 'rgba(167,255,0,0.08)',
+  deep: '#1D2A10',
+};
+
+const lightBrand = {
+  core: formTheoryPalette.limePressed,
+  soft: 'rgba(167,255,0,0.18)',
+  ambient: 'rgba(167,255,0,0.08)',
+  deep: '#EAF7CC',
+};
+
+export const darkTheme: FormTheoryTheme = {
   mode: 'dark',
   colors: {
     background: {
-      primary: '#070908',
-      secondary: '#0C0F0D',
-      elevated: '#111512',
-      overlay: 'rgba(7,9,8,0.88)',
+      primary: formTheoryPalette.black,
+      secondary: formTheoryPalette.nearBlack,
+      elevated: formTheoryPalette.graphite,
+      overlay: 'rgba(11,13,16,0.90)',
     },
     surface: {
-      default: 'rgba(16,20,17,0.88)',
-      raised: 'rgba(21,26,22,0.92)',
-      subtle: 'rgba(12,15,13,0.78)',
-      selected: 'rgba(168,233,91,0.10)',
-      translucent: 'rgba(16,20,17,0.72)',
+      default: 'rgba(16,18,20,0.92)',
+      raised: 'rgba(26,29,34,0.96)',
+      subtle: 'rgba(20,23,27,0.86)',
+      selected: 'rgba(167,255,0,0.11)',
+      translucent: 'rgba(16,18,20,0.78)',
     },
     border: {
-      subtle: 'rgba(255,255,255,0.07)',
-      default: 'rgba(255,255,255,0.11)',
-      strong: 'rgba(255,255,255,0.17)',
-      persona: 'rgba(168,233,91,0.36)',
-      accent: 'rgba(168,233,91,0.34)',
+      subtle: 'rgba(245,246,248,0.07)',
+      default: 'rgba(245,246,248,0.12)',
+      strong: 'rgba(245,246,248,0.20)',
+      persona: 'rgba(167,255,0,0.42)',
+      accent: 'rgba(167,255,0,0.38)',
     },
     text: {
-      primary: '#F4F6F4',
-      secondary: '#A8AEA9',
-      muted: '#747B75',
-      disabled: '#505651',
-      inverse: '#080A09',
+      primary: formTheoryPalette.white,
+      secondary: formTheoryPalette.silver,
+      muted: formTheoryPalette.mutedGray,
+      disabled: '#5F646C',
+      inverse: formTheoryPalette.black,
     },
-    persona: {
-      core: '#A8E95B',
-      soft: 'rgba(168,233,91,0.22)',
-      ambient: 'rgba(113,170,67,0.10)',
-      deep: '#182015',
-    },
+    persona: darkBrand,
+    brand: darkBrand,
     accent: {
-      primary: '#A8E95B',
-      soft: '#98D94A',
-      muted: 'rgba(168,233,91,0.10)',
-      glow: 'rgba(168,233,91,0.12)',
+      primary: formTheoryPalette.lime,
+      soft: formTheoryPalette.limePressed,
+      muted: 'rgba(167,255,0,0.10)',
+      glow: 'rgba(167,255,0,0.10)',
     },
     status: {
-      success: '#79D88B',
-      warning: '#D9B96E',
-      error: '#E07C7C',
-      info: '#7FA9D8',
+      success: '#82C95B',
+      warning: formTheoryPalette.warning,
+      error: formTheoryPalette.error,
+      info: formTheoryPalette.information,
     },
   },
 };
 
-export const elaraTheme: FitOSTheme = {
+export const lightTheme: FormTheoryTheme = {
   mode: 'light',
   colors: {
     background: {
-      primary: '#F5F7F8',
-      secondary: '#EEF2F4',
+      primary: formTheoryPalette.coolWhite,
+      secondary: '#EFF1F2',
       elevated: '#FFFFFF',
-      overlay: 'rgba(245,247,248,0.88)',
+      overlay: 'rgba(247,248,248,0.90)',
     },
     surface: {
-      default: 'rgba(255,255,255,0.88)',
-      raised: 'rgba(255,255,255,0.96)',
-      subtle: 'rgba(236,241,244,0.82)',
-      selected: 'rgba(120,190,235,0.13)',
-      translucent: 'rgba(255,255,255,0.74)',
+      default: 'rgba(255,255,255,0.92)',
+      raised: 'rgba(255,255,255,0.98)',
+      subtle: 'rgba(239,241,242,0.88)',
+      selected: 'rgba(167,255,0,0.16)',
+      translucent: 'rgba(255,255,255,0.80)',
     },
     border: {
-      subtle: 'rgba(22,36,46,0.08)',
-      default: 'rgba(22,36,46,0.12)',
-      strong: 'rgba(22,36,46,0.18)',
-      persona: 'rgba(120,190,235,0.42)',
-      accent: 'rgba(120,190,235,0.42)',
+      subtle: 'rgba(21,24,29,0.08)',
+      default: 'rgba(21,24,29,0.13)',
+      strong: 'rgba(21,24,29,0.22)',
+      persona: 'rgba(143,224,0,0.42)',
+      accent: 'rgba(143,224,0,0.38)',
     },
     text: {
-      primary: '#182127',
-      secondary: '#52616A',
-      muted: '#7B8991',
-      disabled: '#A9B3B9',
+      primary: formTheoryPalette.darkText,
+      secondary: '#4E535A',
+      muted: '#777D85',
+      disabled: '#A7ABB0',
       inverse: '#FFFFFF',
     },
-    persona: {
-      core: '#5EADD9',
-      soft: 'rgba(120,190,235,0.22)',
-      ambient: 'rgba(120,190,235,0.12)',
-      deep: '#DCEEF8',
-    },
+    persona: lightBrand,
+    brand: lightBrand,
     accent: {
-      primary: '#5EADD9',
-      soft: '#78BEEB',
-      muted: 'rgba(120,190,235,0.13)',
-      glow: 'rgba(120,190,235,0.16)',
+      primary: formTheoryPalette.limePressed,
+      soft: '#A7FF00',
+      muted: 'rgba(167,255,0,0.14)',
+      glow: 'rgba(167,255,0,0.10)',
     },
     status: {
-      success: '#4F93C2',
-      warning: '#B6842D',
-      error: '#C85F5F',
-      info: '#4F93C2',
+      success: '#5E9E35',
+      warning: '#9D762E',
+      error: '#B94E4E',
+      info: '#646C78',
     },
   },
 };
 
-export const themesByPersona = {
-  cedric: cedricTheme,
-  elara: elaraTheme,
-} satisfies Record<PersonaId, FitOSTheme>;
+export const themesByAppearance = {
+  dark: darkTheme,
+  light: lightTheme,
+} satisfies Record<AppearanceMode, FormTheoryTheme>;
 
-export function getThemeForPersona(personaId: PersonaId): FitOSTheme {
-  return themesByPersona[personaId];
+export function resolveAppearanceMode(preference: AppearancePreference, colorScheme?: 'dark' | 'light' | null): AppearanceMode {
+  if (preference === 'system') return colorScheme === 'light' ? 'light' : 'dark';
+  return preference;
 }
 
-export const semanticColors = cedricTheme.colors;
+export function getThemeForAppearance(preference: AppearancePreference, colorScheme?: 'dark' | 'light' | null): FormTheoryTheme {
+  return themesByAppearance[resolveAppearanceMode(preference, colorScheme)];
+}
+
+export const semanticColors = darkTheme.colors;
 
 /*
  * Compatibility aliases. New code should prefer useActiveTheme() and theme.colors.*.
- * These remain Cedric-dark defaults for older components until they are migrated.
+ * These remain dark defaults for older components until they are migrated.
  */
 export const colors = {
   semantic: semanticColors,
@@ -228,4 +247,3 @@ export const colors = {
 } as const;
 
 export type ColorToken = keyof typeof colors;
-

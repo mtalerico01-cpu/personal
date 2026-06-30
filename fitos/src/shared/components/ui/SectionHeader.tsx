@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
     gap: spacing[2],
   },
   rule: {
-    width: 16,
-    height: 1,
+    width: 20,
+    height: 2,
     borderRadius: 1,
   },
   title: {

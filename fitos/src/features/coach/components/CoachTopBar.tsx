@@ -1,26 +1,38 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native';
+import { Image, View, TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native';
 import { Text } from '@/shared/components/ui/Text';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
-import type { PersonaId } from '../store/coachStore';
-import { CoachIdentityMark } from './CoachIdentityMark';
+import { brandAssets } from '@/branding/assets';
+import { logoSizes } from '@/shared/theme/spacing';
 
 interface CoachTopBarProps {
-  personaId: PersonaId;
   name: string;
   role: string;
-  onSwitchCoach: () => void;
   onNewConversation: () => void;
+  coachingStyleLabel: string;
+  appearanceLabel: string;
+  onCycleCoachingStyle: () => void;
+  onCycleAppearance: () => void;
   returnLabel?: string;
   onReturn?: () => void;
 }
 
-export function CoachTopBar({ personaId, name, role, onSwitchCoach, onNewConversation, returnLabel, onReturn }: CoachTopBarProps) {
+export function CoachTopBar({
+  name,
+  role,
+  onNewConversation,
+  coachingStyleLabel,
+  appearanceLabel,
+  onCycleCoachingStyle,
+  onCycleAppearance,
+  returnLabel,
+  onReturn,
+}: CoachTopBarProps) {
   const theme = useActiveTheme();
   const { width } = useWindowDimensions();
-  const targetName = personaId === 'cedric' ? 'Elara' : 'Cedric';
   const hasReturn = Boolean(onReturn && returnLabel);
   const compactLayout = width < 430;
+  const logoSource = theme.mode === 'dark' ? brandAssets.logoDark : brandAssets.logoLight;
 
   if (compactLayout) {
     return (
@@ -32,15 +44,12 @@ export function CoachTopBar({ personaId, name, role, onSwitchCoach, onNewConvers
           </View>
           <View style={styles.actions}>
             <NewConversationButton onPress={onNewConversation} />
-            <ChangeCoachButton
-              personaId={personaId}
-              targetName={targetName}
-              onPress={onSwitchCoach}
-              showLabel={false}
-            />
+            <PreferenceButton label={coachingStyleLabel} accessibilityLabel="Change coaching style" onPress={onCycleCoachingStyle} showLabel={false} />
+            <PreferenceButton label={appearanceLabel} accessibilityLabel="Change appearance" onPress={onCycleAppearance} showLabel={false} />
           </View>
         </View>
         <View style={styles.compactIdentityRow}>
+          <Image source={logoSource} resizeMode="contain" style={styles.compactLogo} />
           <View style={styles.copy}>
             <Text variant="labelLarge" color={theme.colors.text.primary} style={styles.name}>
               {name}
@@ -60,7 +69,7 @@ export function CoachTopBar({ personaId, name, role, onSwitchCoach, onNewConvers
         <MenuButton />
         {hasReturn ? <ReturnButton label={returnLabel} onPress={onReturn} /> : null}
         <View style={styles.identityRow}>
-        <CoachIdentityMark persona={personaId} size={38} />
+        <Image source={logoSource} resizeMode="contain" style={styles.logo} />
         <View style={styles.copy}>
           <Text variant="labelLarge" color={theme.colors.text.primary} style={styles.name}>
             {name}
@@ -74,7 +83,8 @@ export function CoachTopBar({ personaId, name, role, onSwitchCoach, onNewConvers
 
       <View style={styles.actions}>
         <NewConversationButton onPress={onNewConversation} />
-        <ChangeCoachButton personaId={personaId} targetName={targetName} onPress={onSwitchCoach} />
+        <PreferenceButton label={coachingStyleLabel} accessibilityLabel="Change coaching style" onPress={onCycleCoachingStyle} />
+        <PreferenceButton label={appearanceLabel} accessibilityLabel="Change appearance" onPress={onCycleAppearance} />
       </View>
     </View>
   );
@@ -134,14 +144,14 @@ function NewConversationButton({ onPress }: { onPress: () => void }) {
   );
 }
 
-function ChangeCoachButton({
-  personaId,
-  targetName,
+function PreferenceButton({
+  label,
+  accessibilityLabel,
   onPress,
   showLabel = true,
 }: {
-  personaId: PersonaId;
-  targetName: string;
+  label: string;
+  accessibilityLabel: string;
   onPress: () => void;
   showLabel?: boolean;
 }) {
@@ -150,7 +160,7 @@ function ChangeCoachButton({
   return (
     <TouchableOpacity
       accessibilityRole="button"
-      accessibilityLabel={`Change coach to ${targetName}`}
+      accessibilityLabel={accessibilityLabel}
       onPress={onPress}
       activeOpacity={0.75}
       style={[
@@ -158,10 +168,12 @@ function ChangeCoachButton({
         { borderColor: theme.colors.border.default, backgroundColor: theme.colors.surface.translucent },
       ]}
     >
-      <CoachIdentityMark persona={personaId === 'cedric' ? 'elara' : 'cedric'} size={24} active={false} />
+      <Text variant="labelMedium" color={theme.colors.persona.core} style={styles.preferenceIcon}>
+        {label.slice(0, 1)}
+      </Text>
       {showLabel ? (
         <Text variant="labelMedium" color={theme.colors.text.secondary} style={styles.switchText}>
-          Change coach
+          {label}
         </Text>
       ) : null}
     </TouchableOpacity>
@@ -195,6 +207,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 10,
   },
+  compactLogo: { width: logoSizes.standard, height: logoSizes.standard },
   container: {
     minHeight: 68,
     paddingHorizontal: 18,
@@ -219,6 +232,7 @@ const styles = StyleSheet.create({
     flex: 1,
     minWidth: 0,
   },
+  logo: { width: logoSizes.standard, height: logoSizes.standard },
   copy: { flex: 1, minWidth: 0 },
   menuButton: {
     width: 42,
@@ -248,7 +262,7 @@ const styles = StyleSheet.create({
   returnArrow: { lineHeight: 24, marginTop: -1 },
   returnText: { letterSpacing: 0.5, textTransform: 'uppercase' },
   name: { letterSpacing: 1.2, textTransform: 'uppercase' },
-  role: { marginTop: 2, letterSpacing: 0.5 },
+  role: { marginTop: 2, letterSpacing: 0.4 },
   actions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   iconButton: {
     width: 42,
@@ -276,5 +290,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  preferenceIcon: { minWidth: 14, textAlign: 'center', textTransform: 'uppercase' },
   switchText: { letterSpacing: 0.5, textTransform: 'uppercase' },
 });

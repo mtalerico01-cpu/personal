@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 import { Canvas, Fill, Shader, Skia, useClock } from '@shopify/react-native-skia';
 import { useDerivedValue } from 'react-native-reanimated';
-import { useCoachStore } from '../store/coachStore';
+import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 
 const { width: W, height: H } = Dimensions.get('window');
 
@@ -110,15 +110,15 @@ function getEffect() {
 }
 
 export function CoachBackground() {
-  const personaId = useCoachStore((state) => state.personaId);
+  const theme = useActiveTheme();
   const effect = getEffect();
   const clock = useClock();
 
   const uniforms = useDerivedValue(() => ({
     iResolution: [W, H],
     iTime: clock.value,
-    iMode: personaId === 'elara' ? 1 : 0,
-  }), [personaId]);
+    iMode: theme.mode === 'light' ? 1 : 0,
+  }), [theme.mode]);
 
   if (!effect) return null;
 

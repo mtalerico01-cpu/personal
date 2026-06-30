@@ -64,7 +64,7 @@ function PromptChip({
         styles.chip,
         compact && styles.compactChip,
         wrapped && styles.wrappedChip,
-        { borderColor: theme.colors.border.default, backgroundColor: theme.colors.surface.translucent },
+        { borderColor: theme.colors.border.default, backgroundColor: theme.colors.surface.subtle },
       ]}
     >
       <Text variant="labelMedium" color={theme.colors.text.primary} style={styles.label}>
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   centeredRow: { flexGrow: 1, justifyContent: 'center', paddingLeft: 18 },
   chip: {
     minHeight: 44,
-    borderRadius: 22,
+    borderRadius: 999,
     borderWidth: 1,
     paddingHorizontal: 15,
     alignItems: 'center',
@@ -104,5 +104,5 @@ const styles = StyleSheet.create({
   },
   compactChip: { minHeight: 38, paddingHorizontal: 13 },
   wrappedChip: { maxWidth: 156 },
-  label: { letterSpacing: 0.1, textAlign: 'center' },
+  label: { letterSpacing: 0.9, textAlign: 'center', textTransform: 'uppercase' },
 });

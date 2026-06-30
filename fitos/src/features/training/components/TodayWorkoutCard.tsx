@@ -43,7 +43,7 @@ export function TodayWorkoutCard({ workout, estimatedCalories }: TodayWorkoutCar
 
       <View style={styles.muscleRow}>
         {muscleGroups.map((g) => (
-          <View key={g} style={[styles.muscleTag, { backgroundColor: theme.colors.persona.soft }]}> 
+          <View key={g} style={[styles.muscleTag, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default }]}> 
             <Text variant="caption" color={colors.textSecondary}>{g}</Text>
           </View>
         ))}
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
   muscleTag: {
     paddingHorizontal: spacing[2],
     paddingVertical: 3,
+    borderWidth: 1,
     borderRadius: 6,
   },
 });

@@ -1,5 +1,5 @@
 /**
- * AIInsightBanner — inline AI coach callout.
+ * AIInsightBanner — inline Coach insight callout.
  * Reusable across Nutrition, Training, and Progress screens.
  */
 import React from 'react';
@@ -14,7 +14,7 @@ interface AIInsightBannerProps {
   label?: string;
 }
 
-export function AIInsightBanner({ text, label = 'AI INSIGHT' }: AIInsightBannerProps) {
+export function AIInsightBanner({ text, label = 'COACH INSIGHT' }: AIInsightBannerProps) {
   const theme = useActiveTheme();
 
   return (
@@ -25,7 +25,7 @@ export function AIInsightBanner({ text, label = 'AI INSIGHT' }: AIInsightBannerP
           backgroundColor: theme.colors.surface.default,
           borderColor: theme.colors.border.subtle,
           borderLeftColor: theme.colors.border.persona,
-          shadowOpacity: theme.mode === 'dark' ? 0.18 : 0.07,
+          shadowOpacity: theme.mode === 'dark' ? 0.10 : 0.04,
         },
       ]}
     >
@@ -53,9 +53,9 @@ const styles = StyleSheet.create({
     gap: spacing[2],
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.18,
-    shadowRadius: 18,
-    elevation: 2,
+    shadowOpacity: 0.10,
+    shadowRadius: 12,
+    elevation: 1,
   },
   labelRow: {
     flexDirection: 'row',
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: spacing[2],
     paddingVertical: 3,
-    borderRadius: radius.full,
+    borderRadius: radius.sm,
   },
   statusDot: {
     width: 7,

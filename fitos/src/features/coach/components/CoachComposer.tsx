@@ -2,21 +2,18 @@ import React from 'react';
 import { KeyboardAvoidingView, Platform, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { Text } from '@/shared/components/ui/Text';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
-import type { PersonaId } from '../store/coachStore';
-import { PERSONAS } from '../../ai/personas/personas';
+import { brand } from '@/branding/brand';
 
 interface CoachComposerProps {
   value: string;
   onChange: (text: string) => void;
   onSend: (text: string) => void;
-  personaId: PersonaId;
   disabled?: boolean;
 }
 
-export function CoachComposer({ value, onChange, onSend, personaId, disabled = false }: CoachComposerProps) {
+export function CoachComposer({ value, onChange, onSend, disabled = false }: CoachComposerProps) {
   const theme = useActiveTheme();
   const canSend = value.trim().length > 0 && !disabled;
-  const coachName = PERSONAS[personaId].name;
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
@@ -24,13 +21,13 @@ export function CoachComposer({ value, onChange, onSend, personaId, disabled = f
         <View
           style={[
             styles.composer,
-            { backgroundColor: theme.colors.surface.raised, borderColor: canSend ? theme.colors.border.persona : theme.colors.border.default },
+            { backgroundColor: theme.colors.surface.default, borderColor: canSend ? theme.colors.border.persona : theme.colors.border.default },
           ]}
         >
           <TextInput
             value={value}
             onChangeText={onChange}
-            placeholder={`Ask ${coachName} about your fitness...`}
+            placeholder="Ask about training, nutrition, or progress..."
             placeholderTextColor={theme.colors.text.muted}
             multiline
             maxLength={900}
@@ -41,7 +38,7 @@ export function CoachComposer({ value, onChange, onSend, personaId, disabled = f
           />
           <TouchableOpacity
             accessibilityRole="button"
-            accessibilityLabel={`Send message to ${coachName}`}
+            accessibilityLabel={`Send message to ${brand.coachName}`}
             disabled={!canSend}
             onPress={() => canSend && onSend(value)}
             activeOpacity={0.8}
@@ -71,7 +68,7 @@ const styles = StyleSheet.create({
     maxWidth: 760,
     alignSelf: 'center',
     minHeight: 54,
-    borderRadius: 27,
+    borderRadius: 24,
     borderWidth: 1,
     paddingLeft: 18,
     paddingRight: 7,

@@ -1,30 +1,30 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet } from 'react-native';
 import { Text } from '@/shared/components/ui/Text';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
+import { brand } from '@/branding/brand';
+import { brandAssets } from '@/branding/assets';
+import { logoSizes } from '@/shared/theme/spacing';
 import type { AIMessage, SuggestedPrompt } from '../../ai/types';
-import type { PersonaId } from '../store/coachStore';
-import { CoachIdentityMark } from './CoachIdentityMark';
 import { SuggestedPromptsRail } from './SuggestedPromptsRail';
 
 interface EmptyConversationStateProps {
-  personaId: PersonaId;
-  coachName: string;
   brief: AIMessage | null;
   prompts: SuggestedPrompt[];
   onPromptPress: (prompt: string) => void;
 }
 
-export function EmptyConversationState({ personaId, coachName, brief, prompts, onPromptPress }: EmptyConversationStateProps) {
+export function EmptyConversationState({ brief, prompts, onPromptPress }: EmptyConversationStateProps) {
   const theme = useActiveTheme();
-  const opening = brief?.details?.[1] ?? brief?.summary ?? `${coachName} has your training, nutrition, cardio, and progress context ready.`;
+  const opening = brief?.details?.[1] ?? brief?.summary ?? `${brand.coachName} has your training, nutrition, cardio, and progress context ready.`;
+  const logoSource = theme.mode === 'dark' ? brandAssets.markDark : brandAssets.markLight;
 
   return (
     <View style={styles.container}>
-      <CoachIdentityMark persona={personaId} size={72} />
+      <Image source={logoSource} resizeMode="contain" style={styles.logo} />
       <View style={styles.copy}>
         <Text variant="headingLarge" color={theme.colors.text.primary} style={styles.greeting}>
-          {brief?.title ?? `Good ${coachName === 'Cedric' ? 'morning' : 'morning'}, Alex.`}
+          {brief?.title ?? 'Good morning, Alex.'}
         </Text>
         <Text variant="bodyLarge" color={theme.colors.text.secondary} style={styles.opening}>
           {opening}
@@ -49,9 +49,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
+  logo: { width: logoSizes.hero, height: logoSizes.hero },
   greeting: {
     textAlign: 'center',
-    fontWeight: '300',
+    fontWeight: '700',
     lineHeight: 38,
   },
   opening: {

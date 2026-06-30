@@ -1,6 +1,7 @@
 import type { AIContext } from '../types';
 import { getDayPartForTimezone, getLocalTimeString, getLocalDateString, getDayOfWeek } from './getDayPart';
-import { PERSONAS } from '../personas/personas';
+import { brand } from '../../../branding/brand';
+import { coachingStyles, type CoachingStyle } from '../../coach/styles/coachingStyles';
 import { useUserStore } from '../../../store/userStore';
 import { useNutritionStore } from '../../../store/nutritionStore';
 import { useTrainingStore } from '../../../store/trainingStore';
@@ -11,7 +12,7 @@ import { useProgressStore } from '../../../store/progressStore';
  * This is the single source of truth for all AI functions.
  * Call this before any AI operation to get a fresh snapshot.
  */
-export function buildAIContext(personaId: 'cedric' | 'elara'): AIContext {
+export function buildAIContext(coachingStyle: CoachingStyle): AIContext {
   const userState = useUserStore.getState();
   const nutritionState = useNutritionStore.getState();
   const trainingState = useTrainingStore.getState();
@@ -20,7 +21,7 @@ export function buildAIContext(personaId: 'cedric' | 'elara'): AIContext {
   const profile = userState.profile;
   const timezone = 'America/New_York';
   const dayPart = getDayPartForTimezone(timezone);
-  const persona = PERSONAS[personaId];
+  const style = coachingStyles[coachingStyle];
 
   const nutritionGoals = nutritionState.goals;
   const nutritionLog = nutritionState.log;
@@ -44,10 +45,10 @@ export function buildAIContext(personaId: 'cedric' | 'elara'): AIContext {
     },
 
     persona: {
-      id: personaId,
-      name: persona.name,
-      role: persona.role,
-      tone: persona.tone,
+      id: coachingStyle,
+      name: brand.coachName,
+      role: brand.subtitle,
+      tone: style.toneInstructions,
     },
 
     time: {

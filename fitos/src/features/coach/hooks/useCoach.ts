@@ -5,7 +5,8 @@
  */
 import { useEffect } from 'react';
 import { useCoachStore } from '../store/coachStore';
-import { PERSONAS } from '../../ai/personas/personas';
+import { brand } from '../../../branding/brand';
+import { coachingStyles } from '../styles/coachingStyles';
 import { getDayPartForTimezone } from '../../ai/context/getDayPart';
 import { useUserStore } from '../../../store/userStore';
 
@@ -17,18 +18,23 @@ export function useCoach() {
   // Load brief on first mount
   useEffect(() => {
     store.initBrief();
-  }, [store.personaId]);
+  }, [store.coachingStyle]);
 
   const dayPart = getDayPartForTimezone('America/New_York');
-  const currentPersona = PERSONAS[store.personaId];
-  const greeting = currentPersona?.greeting(name, dayPart) ?? '';
+  const currentPersona = {
+    id: store.coachingStyle,
+    name: brand.coachName,
+    role: brand.subtitle,
+    tone: coachingStyles[store.coachingStyle].toneInstructions,
+  };
+  const greeting = `Good ${dayPart}, ${name}.`;
   const showSuggestions = store.messages.length === 0;
 
   return {
-    persona: store.personaId,
-    setPersona: store.setPersona,
-    completePersonaSelection: store.completePersonaSelection,
-    hasSelectedPersona: store.hasSelectedPersona,
+    coachingStyle: store.coachingStyle,
+    setCoachingStyle: store.setCoachingStyle,
+    appearance: store.appearance,
+    setAppearance: store.setAppearance,
     currentPersona,
     greeting,
     messages: store.messages,

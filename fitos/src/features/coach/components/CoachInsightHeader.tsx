@@ -4,8 +4,8 @@ import { useRouter } from 'expo-router';
 import { Text } from '@/shared/components/ui/Text';
 import { spacing, radius } from '@/shared/theme/spacing';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
+import { brand } from '@/branding/brand';
 import { useCoachStore } from '../store/coachStore';
-import { PERSONAS } from '../../ai/personas/personas';
 import { buildAIContext } from '../../ai/context/buildAIContext';
 import { buildCoachInsight, type CoachInsightScreen } from '../insights/buildCoachInsight';
 
@@ -16,10 +16,9 @@ interface CoachInsightHeaderProps {
 export function CoachInsightHeader({ screen }: CoachInsightHeaderProps) {
   const theme = useActiveTheme();
   const router = useRouter();
-  const personaId = useCoachStore((state) => state.personaId);
+  const coachingStyle = useCoachStore((state) => state.coachingStyle);
   const sendMessage = useCoachStore((state) => state.sendMessage);
-  const persona = PERSONAS[personaId];
-  const insight = buildCoachInsight(screen, buildAIContext(personaId));
+  const insight = buildCoachInsight(screen, buildAIContext(coachingStyle));
   const returnTarget = getReturnTarget(screen);
 
   const openCoach = (prompt: string) => {
@@ -33,27 +32,18 @@ export function CoachInsightHeader({ screen }: CoachInsightHeaderProps) {
         styles.container,
         {
           backgroundColor: theme.colors.surface.translucent,
-          borderColor: theme.colors.border.persona,
-          shadowOpacity: theme.mode === 'dark' ? 0.22 : 0.08,
+          borderColor: theme.colors.border.default,
+          borderLeftColor: theme.colors.border.persona,
+          shadowOpacity: theme.mode === 'dark' ? 0.10 : 0.04,
         },
       ]}
     >
       <View style={styles.topRow}>
         <View style={styles.identityRow}>
-          <View
-            style={[
-              styles.identityMark,
-              {
-                borderColor: theme.colors.border.persona,
-                backgroundColor: theme.colors.persona.soft,
-              },
-            ]}
-          >
-            <View style={[styles.identityCore, { backgroundColor: theme.colors.persona.core }]} />
-          </View>
+          <View style={[styles.identityRule, { backgroundColor: theme.colors.persona.core }]} />
           <View>
             <Text variant="labelMedium" color={theme.colors.text.muted} style={styles.eyebrow}>
-              {persona.name} is guiding this screen
+              {brand.shortCoachName} insight
             </Text>
             <Text variant="headingSmall" color={theme.colors.text.primary}>
               {insight.title}
@@ -148,9 +138,9 @@ const styles = StyleSheet.create({
     padding: spacing[4],
     gap: spacing[3],
     shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowRadius: 22,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 6 },
+    shadowRadius: 12,
+    elevation: 1,
   },
   topRow: {
     flexDirection: 'row',
@@ -164,19 +154,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: spacing[3],
   },
-  identityMark: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  identityCore: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-  },
+  identityRule: { width: 22, height: 2, borderRadius: 1, marginTop: 4 },
   eyebrow: {
     letterSpacing: 1,
     textTransform: 'uppercase',
@@ -206,7 +184,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   actionText: {
-    letterSpacing: 0.4,
+    letterSpacing: 1,
     textTransform: 'uppercase',
   },
   statusPill: {
@@ -216,7 +194,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   statusText: {
-    letterSpacing: 0.5,
+    letterSpacing: 0.9,
     textTransform: 'uppercase',
   },
 });

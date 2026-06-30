@@ -25,23 +25,21 @@ export function AIInsightCard({ brief }: AIInsightCardProps) {
           {
             backgroundColor: theme.colors.surface.default,
             borderColor: theme.colors.border.subtle,
-            shadowOpacity: theme.mode === 'dark' ? 0.2 : 0.07,
+            shadowOpacity: theme.mode === 'dark' ? 0.12 : 0.04,
           },
         ]}
       >
-        {/* Top accent bar */}
         <View style={[styles.accentBar, { backgroundColor: theme.colors.persona.core }]} />
 
         <View style={styles.content}>
-          {/* AI label */}
           <View style={styles.labelRow}>
             <View style={[styles.aiBadge, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default }]}> 
               <Text variant="labelMedium" color={theme.colors.persona.core}>
-                AI COACH
+                COACH
               </Text>
             </View>
             <Text variant="caption" color={colors.textTertiary}>
-              Daily Brief
+              Daily brief
             </Text>
           </View>
 
@@ -74,13 +72,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 18,
-    elevation: 2,
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 1,
   },
   accentBar: {
     height: 2,
-    opacity: 0.44,
+    opacity: 0.82,
   },
   content: {
     padding: spacing[4],
@@ -95,7 +93,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: spacing[2],
     paddingVertical: 3,
-    borderRadius: radius.full,
+    borderRadius: radius.sm,
   },
   headline: {
     marginBottom: spacing[2],

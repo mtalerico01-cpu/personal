@@ -6,9 +6,14 @@ import { generateSuggestedPrompts, generateFollowUpPromptsForTopic } from '../..
 import { parseMockIntent } from '../../ai/intents/parseMockIntent';
 import { generateProactiveBrief, answerCoachPrompt } from '../../ai/services/mockAIService';
 import { executeAction } from '../../ai/tools/toolDispatcher';
-import { PERSONAS } from '../../ai/personas/personas';
-
-export type PersonaId = 'cedric' | 'elara';
+import {
+  defaultExperiencePreferences,
+  isAppearancePreference,
+  isCoachingStyle,
+  mapLegacyPersonaToStyle,
+  type AppearancePreference,
+  type CoachingStyle,
+} from '../styles/coachingStyles';
 
 export interface ChatMessage {
   id: string;
@@ -20,8 +25,8 @@ export interface ChatMessage {
 }
 
 interface CoachState {
-  personaId: PersonaId;
-  hasSelectedPersona: boolean;
+  coachingStyle: CoachingStyle;
+  appearance: AppearancePreference;
   messages: ChatMessage[];
   inputText: string;
   isLoading: boolean;
@@ -31,8 +36,8 @@ interface CoachState {
   pendingActionId: string | null;
 
   // Actions
-  setPersona: (id: PersonaId) => void;
-  completePersonaSelection: (id: PersonaId) => void;
+  setCoachingStyle: (style: CoachingStyle) => void;
+  setAppearance: (appearance: AppearancePreference) => void;
   setInputText: (text: string) => void;
   initBrief: () => Promise<void>;
   sendMessage: (text: string) => Promise<void>;
@@ -61,19 +66,18 @@ const memoryPreferenceStorage = (() => {
 
 const coachPreferenceStorage = typeof window === 'undefined' ? memoryPreferenceStorage : AsyncStorage;
 const isDev = typeof __DEV__ !== 'undefined' && __DEV__;
-const preferenceStorageKey = 'fitos-coach-preferences';
+const preferenceStorageKey = 'form-theory-experience-preferences';
+const legacyPreferenceStorageKey = 'fitos-coach-preferences';
 
-const isPersonaId = (value: unknown): value is PersonaId => value === 'cedric' || value === 'elara';
-
-function saveCoachPreferences(personaId: PersonaId, hasSelectedPersona: boolean) {
+function saveCoachPreferences(coachingStyle: CoachingStyle, appearance: AppearancePreference) {
   coachPreferenceStorage
-    .setItem(preferenceStorageKey, JSON.stringify({ personaId, hasSelectedPersona }))
+    .setItem(preferenceStorageKey, JSON.stringify({ coachingStyle, appearance }))
     .catch(() => undefined);
 }
 
 export const useCoachStore = create<CoachState>()((set, get) => ({
-  personaId: 'cedric',
-  hasSelectedPersona: false,
+  coachingStyle: defaultExperiencePreferences.coachingStyle,
+  appearance: defaultExperiencePreferences.appearance,
   messages: [],
   inputText: '',
   isLoading: false,
@@ -82,19 +86,19 @@ export const useCoachStore = create<CoachState>()((set, get) => ({
   hasStartedChat: false,
   pendingActionId: null,
 
-  setPersona: (id) => {
-    if (isDev) console.log('[Coach] selected persona changed:', id);
-    set({ personaId: id, hasSelectedPersona: true });
-    saveCoachPreferences(id, true);
-    // Regenerate brief with new persona
+  setCoachingStyle: (style) => {
+    if (isDev) console.log('[Coach] coaching style changed:', style);
+    const { appearance } = get();
+    set({ coachingStyle: style });
+    saveCoachPreferences(style, appearance);
     get().initBrief();
   },
 
-  completePersonaSelection: (id) => {
-    if (isDev) console.log('[Coach] initial persona selected:', id);
-    set({ personaId: id, hasSelectedPersona: true });
-    saveCoachPreferences(id, true);
-    get().initBrief();
+  setAppearance: (appearance) => {
+    if (isDev) console.log('[Coach] appearance changed:', appearance);
+    const { coachingStyle } = get();
+    set({ appearance });
+    saveCoachPreferences(coachingStyle, appearance);
   },
 
   setInputText: (text) => set({ inputText: text }),
@@ -102,7 +106,7 @@ export const useCoachStore = create<CoachState>()((set, get) => ({
   initBrief: async () => {
     set({ isLoading: true });
     try {
-      const ctx = buildAIContext(get().personaId);
+      const ctx = buildAIContext(get().coachingStyle);
       const [brief, prompts] = await Promise.all([
         generateProactiveBrief(ctx),
         Promise.resolve(generateSuggestedPrompts(ctx)),
@@ -140,7 +144,7 @@ export const useCoachStore = create<CoachState>()((set, get) => ({
     }));
 
     try {
-      const ctx = buildAIContext(get().personaId);
+      const ctx = buildAIContext(get().coachingStyle);
       const response = await answerCoachPrompt(text, ctx);
 
       const coachMsg: ChatMessage = {
@@ -170,7 +174,7 @@ export const useCoachStore = create<CoachState>()((set, get) => ({
   },
 
   confirmAction: (actionId, messageId) => {
-    const { messages, personaId } = get();
+    const { messages, coachingStyle } = get();
 
     // Find and update the action status to 'confirmed'
     const updatedMessages = messages.map((m) => {
@@ -210,20 +214,18 @@ export const useCoachStore = create<CoachState>()((set, get) => ({
         };
       });
 
-      // Build confirmation message
-      const persona = PERSONAS[personaId];
-      const ctx = buildAIContext(personaId);
-      let confirmText = persona.generalAck();
+      const ctx = buildAIContext(coachingStyle);
+      let confirmText = 'Done. I updated that for you.';
 
       if (action.type === 'log_meal') {
         const r = result as { mealName: string; calories: number; caloriesRemaining: number };
-        confirmText = persona.mealLogged(r.mealName, r.calories, r.caloriesRemaining);
+        confirmText = `${r.mealName} logged. ${r.calories} kcal added, with ${r.caloriesRemaining} calories remaining today.`;
       } else if (action.type === 'update_macros' || action.type === 'create_plan') {
         const r = result as { newCalorieGoal: number };
-        confirmText = persona.macrosUpdated(r.newCalorieGoal);
+        confirmText = `Macro targets updated. New calorie target: ${r.newCalorieGoal} kcal.`;
       } else if (action.type === 'save_workout') {
         const r = result as { workoutName: string };
-        confirmText = persona.workoutSaved(r.workoutName);
+        confirmText = `${r.workoutName} saved.`;
       }
 
       const confirmMsg: ChatMessage = {
@@ -231,7 +233,7 @@ export const useCoachStore = create<CoachState>()((set, get) => ({
         role: 'coach',
         aiMessage: {
           id: newId(),
-          personaId,
+          coachingStyle,
           createdAt: new Date().toISOString(),
           summary: confirmText,
           confidence: 'high',
@@ -266,7 +268,7 @@ export const useCoachStore = create<CoachState>()((set, get) => ({
   },
 
   clearChat: () => {
-    const ctx = buildAIContext(get().personaId);
+    const ctx = buildAIContext(get().coachingStyle);
     const prompts = generateSuggestedPrompts(ctx);
     set({ messages: [], hasStartedChat: false, inputText: '', suggestedPrompts: prompts });
   },
@@ -274,13 +276,33 @@ export const useCoachStore = create<CoachState>()((set, get) => ({
 
 coachPreferenceStorage
   .getItem(preferenceStorageKey)
-  .then((value) => {
-    if (!value) return;
-    const preferences = JSON.parse(value) as { personaId?: unknown; hasSelectedPersona?: unknown };
-    if (!isPersonaId(preferences.personaId)) return;
+  .then(async (value) => {
+    if (value) {
+      const preferences = JSON.parse(value) as { coachingStyle?: unknown; appearance?: unknown };
+      const coachingStyle = isCoachingStyle(preferences.coachingStyle)
+        ? preferences.coachingStyle
+        : defaultExperiencePreferences.coachingStyle;
+      const appearance = isAppearancePreference(preferences.appearance)
+        ? preferences.appearance
+        : defaultExperiencePreferences.appearance;
+
+      useCoachStore.setState({
+        coachingStyle,
+        appearance,
+      });
+      return;
+    }
+
+    const legacyValue = await coachPreferenceStorage.getItem(legacyPreferenceStorageKey);
+    if (!legacyValue) return;
+    const legacyPreferences = JSON.parse(legacyValue) as { personaId?: unknown };
+    const coachingStyle = mapLegacyPersonaToStyle(legacyPreferences.personaId);
+    const appearance = defaultExperiencePreferences.appearance;
+
     useCoachStore.setState({
-      personaId: preferences.personaId,
-      hasSelectedPersona: preferences.hasSelectedPersona === true,
+      coachingStyle,
+      appearance,
     });
+    saveCoachPreferences(coachingStyle, appearance);
   })
   .catch(() => undefined);

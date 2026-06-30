@@ -15,7 +15,7 @@ function makeCtx(overrides: {
       primaryGoal: 'lose', trainingExperience: 'intermediate',
       timezone: 'America/New_York', preferredDiet: 'standard',
     },
-    persona: { id: 'cedric', name: 'Cedric', role: 'Coach', tone: 'direct' },
+    persona: { id: 'direct', name: 'Form Theory Coach', role: 'AI Fitness Coach', tone: 'direct' },
     time: {
       nowISO: '2025-01-01T08:00:00Z',
       localDate: '2025-01-01',

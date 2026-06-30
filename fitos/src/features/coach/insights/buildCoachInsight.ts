@@ -1,5 +1,4 @@
 import type { AIContext, CoachTopic } from '../../ai/types';
-import type { PersonaId } from '@/shared/theme/colors';
 
 export type CoachInsightScreen = 'dashboard' | 'nutrition' | 'training' | 'cardio' | 'progress';
 export type CoachInsightStatus = 'positive' | 'attention' | 'neutral';
@@ -18,12 +17,12 @@ export interface CoachInsight {
   actions: CoachInsightAction[];
 }
 
-function isCedric(personaId: PersonaId) {
-  return personaId === 'cedric';
+function isDirectStyle(style: AIContext['persona']['id']) {
+  return style === 'direct';
 }
 
 export function buildCoachInsight(screen: CoachInsightScreen, ctx: AIContext): CoachInsight {
-  const cedric = isCedric(ctx.persona.id);
+  const direct = isDirectStyle(ctx.persona.id);
   const caloriesRemaining = Math.max(ctx.nutrition.caloriesRemaining, 0);
   const proteinRemaining = Math.max(ctx.nutrition.proteinRemaining, 0);
   const cardioRemaining = Math.max(ctx.training.cardioGoalMinutes - ctx.training.cardioCompletedMinutes, 0);
@@ -32,11 +31,11 @@ export function buildCoachInsight(screen: CoachInsightScreen, ctx: AIContext): C
   switch (screen) {
     case 'nutrition':
       return {
-        title: cedric ? 'Nutrition readout' : 'Nutrition guidance',
-        summary: cedric
+        title: direct ? 'Nutrition readout' : 'Nutrition guidance',
+        summary: direct
           ? `${caloriesRemaining} kcal remain. Protein gap: ${proteinRemaining}g. Carbs are the cleanest lever for the next meal.`
           : `You have ${caloriesRemaining} calories left today, with ${proteinRemaining}g of protein still open. A balanced protein-and-carb meal would fit well.`,
-        recommendation: cedric
+        recommendation: direct
           ? 'Prioritise lean protein first, then allocate remaining calories to carbohydrates.'
           : 'Choose something satisfying and protein-forward so the rest of the day stays easy.',
         status: proteinRemaining > 35 ? 'attention' : 'positive',
@@ -47,11 +46,11 @@ export function buildCoachInsight(screen: CoachInsightScreen, ctx: AIContext): C
       };
     case 'training':
       return {
-        title: cedric ? 'Training directive' : 'Training check-in',
-        summary: cedric
+        title: direct ? 'Training directive' : 'Training check-in',
+        summary: direct
           ? `${workoutName} is scheduled. Current plan supports ${ctx.training.durationMinutes ?? 60} minutes with no reduction required.`
           : `${workoutName} is ready for today. Your current recovery supports the full session without needing to scale it back.`,
-        recommendation: cedric
+        recommendation: direct
           ? 'Keep compounds first, then finish accessories with controlled rest periods.'
           : 'Start with the biggest movements while you feel freshest, then keep the rest steady.',
         status: ctx.training.completed ? 'positive' : 'neutral',
@@ -62,15 +61,15 @@ export function buildCoachInsight(screen: CoachInsightScreen, ctx: AIContext): C
       };
     case 'cardio':
       return {
-        title: cedric ? 'Cardio target' : 'Cardio guidance',
-        summary: cedric
+        title: direct ? 'Cardio target' : 'Cardio guidance',
+        summary: direct
           ? `${cardioRemaining} minutes remain against a ${ctx.training.cardioGoalMinutes}-minute target. Moderate work is sufficient.`
           : `You have ${cardioRemaining} cardio minutes left. A moderate walk would complete the target without taking too much out of you.`,
         recommendation: cardioRemaining > 0
-          ? cedric
+          ? direct
             ? 'Use incline walking after lifting or later today. Avoid adding intensity.'
             : 'A comfortable incline walk later today would be the smoothest option.'
-          : cedric
+          : direct
             ? 'Cardio target complete. Shift focus to recovery.'
             : 'Cardio is complete for today, so recovery can take priority now.',
         status: cardioRemaining > 0 ? 'attention' : 'positive',
@@ -81,11 +80,11 @@ export function buildCoachInsight(screen: CoachInsightScreen, ctx: AIContext): C
       };
     case 'progress':
       return {
-        title: cedric ? 'Trend analysis' : 'Progress perspective',
-        summary: cedric
+        title: direct ? 'Trend analysis' : 'Progress perspective',
+        summary: direct
           ? `7-day average is ${ctx.progress.sevenDayAverage.toFixed(1)} lbs. Weekly change is ${ctx.progress.weeklyWeightChange > 0 ? '+' : ''}${ctx.progress.weeklyWeightChange.toFixed(1)} lbs; within target range.`
           : `Your seven-day average is ${ctx.progress.sevenDayAverage.toFixed(1)} lbs, and the weekly trend is still in a healthy range. No big adjustment is needed.`,
-        recommendation: cedric
+        recommendation: direct
           ? 'Do not change calories from a single-day fluctuation. Continue the current protocol.'
           : 'Keep watching the weekly average rather than reacting to one weigh-in.',
         status: 'positive',
@@ -97,11 +96,11 @@ export function buildCoachInsight(screen: CoachInsightScreen, ctx: AIContext): C
     case 'dashboard':
     default:
       return {
-        title: cedric ? 'Daily command' : 'Today\'s guidance',
-        summary: cedric
+        title: direct ? 'Daily command' : 'Today\'s guidance',
+        summary: direct
           ? `Nutrition is at ${Math.round((ctx.nutrition.caloriesConsumed / ctx.nutrition.calorieGoal) * 100)}%. ${workoutName} remains appropriate. Protein is the main actionable gap.`
           : `You\'re in a good position today. Nutrition and training are aligned, with protein being the main thing to focus on next.`,
-        recommendation: cedric
+        recommendation: direct
           ? 'Close the protein gap before adding discretionary calories.'
           : 'A protein-forward meal is the clearest next step.',
         status: proteinRemaining > 35 ? 'attention' : 'positive',

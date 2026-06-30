@@ -42,19 +42,19 @@ export function WorkoutGeneratorCard({
               selected === min && styles.optionSelected,
               {
                 borderColor: selected === min ? theme.colors.border.persona : theme.colors.border.default,
-                backgroundColor: selected === min ? theme.colors.persona.core : theme.colors.surface.raised,
+                backgroundColor: selected === min ? theme.colors.persona.soft : theme.colors.surface.raised,
               },
             ]}
           >
             <Text
               variant="headingSmall"
-              color={selected === min ? theme.colors.text.inverse : theme.colors.text.primary}
+              color={selected === min ? theme.colors.persona.core : theme.colors.text.primary}
             >
               {min}
             </Text>
             <Text
               variant="caption"
-              color={selected === min ? theme.colors.text.inverse : theme.colors.text.muted}
+              color={selected === min ? theme.colors.text.secondary : theme.colors.text.muted}
             >
               min
             </Text>

@@ -26,7 +26,7 @@ export function Card({
   const theme = useActiveTheme();
   const variantStyle =
     variant === 'elevated'
-      ? { backgroundColor: theme.colors.surface.raised, borderColor: theme.colors.border.default }
+      ? { backgroundColor: theme.colors.surface.raised, borderColor: theme.colors.border.strong }
       : variant === 'flat'
         ? { backgroundColor: theme.colors.surface.subtle, shadowOpacity: 0, elevation: 0 }
         : { backgroundColor: theme.colors.surface.default, borderColor: theme.colors.border.subtle };
@@ -51,10 +51,10 @@ const styles = StyleSheet.create({
     borderRadius: radius['2xl'],
     borderWidth: 1,
     shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.22,
-    shadowRadius: 18,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 2,
   },
   elevated: {
     ...shadows.elevated,
