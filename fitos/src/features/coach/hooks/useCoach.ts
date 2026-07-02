@@ -13,12 +13,14 @@ import { useUserStore } from '../../../store/userStore';
 export function useCoach() {
   const store = useCoachStore();
   const profile = useUserStore((s) => s.profile);
+  const hasProfileHydrated = useUserStore((s) => s.hasHydrated);
   const name = profile?.name ?? 'there';
 
   // Load brief on first mount
   useEffect(() => {
+    if (!hasProfileHydrated) return;
     store.initBrief();
-  }, [store.coachingStyle]);
+  }, [hasProfileHydrated, store.coachingStyle]);
 
   const dayPart = getDayPartForTimezone('America/New_York');
   const currentPersona = {

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text } from '@/shared/components/ui/Text';
+import { SparklesIcon } from '@/shared/components/ui/NavIcon';
 import { spacing, radius } from '@/shared/theme/spacing';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { brand } from '@/branding/brand';
@@ -40,7 +41,7 @@ export function CoachInsightHeader({ screen }: CoachInsightHeaderProps) {
     >
       <View style={styles.topRow}>
         <View style={styles.identityRow}>
-          <View style={[styles.identityRule, { backgroundColor: theme.colors.persona.core }]} />
+          <SparklesIcon color={theme.colors.persona.core} size={28} />
           <View>
             <Text variant="labelMedium" color={theme.colors.text.muted} style={styles.eyebrow}>
               {brand.shortCoachName} insight
@@ -156,8 +157,7 @@ const styles = StyleSheet.create({
   },
   identityRule: { width: 22, height: 2, borderRadius: 1, marginTop: 4 },
   eyebrow: {
-    letterSpacing: 1,
-    textTransform: 'uppercase',
+    letterSpacing: 0.5,
     marginBottom: 3,
   },
   summary: {

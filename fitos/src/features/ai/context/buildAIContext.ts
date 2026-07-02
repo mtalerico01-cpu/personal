@@ -34,14 +34,14 @@ export function buildAIContext(coachingStyle: CoachingStyle): AIContext {
     user: {
       id: profile?.id ?? 'user-1',
       name: profile?.name ?? 'Alex',
-      age: 28,
-      heightInches: 70,
+      age: profile?.identity.age ?? 28,
+      heightInches: profile?.body.heightCm ? Math.round(profile.body.heightCm / 2.54) : 70,
       currentWeight: progressState.currentWeightLbs,
       goalWeight: progressState.goalWeightLbs,
-      primaryGoal: 'gain',
-      trainingExperience: 'intermediate',
-      timezone,
-      preferredDiet: 'standard',
+      primaryGoal: mapGoalToAIContext(profile?.planGoals.primaryGoal),
+      trainingExperience: mapTrainingExperience(profile?.training.experience),
+      timezone: profile?.identity.timezone ?? timezone,
+      preferredDiet: profile?.nutrition.eatingStyles[0] ?? 'standard',
     },
 
     persona: {
@@ -111,4 +111,18 @@ export function buildAIContext(coachingStyle: CoachingStyle): AIContext {
       targetDate: '2026-09-01',
     },
   };
+}
+
+function mapGoalToAIContext(goal: string | undefined): AIContext['user']['primaryGoal'] {
+  if (goal === 'fat_loss') return 'lose';
+  if (goal === 'muscle_gain' || goal === 'strength' || goal === 'athletic_performance') return 'gain';
+  if (goal === 'recomposition') return 'recomp';
+  if (goal === 'cardiovascular_fitness' || goal === 'endurance' || goal === 'event_preparation') return 'maintain';
+  return 'maintain';
+}
+
+function mapTrainingExperience(experience: string | undefined): AIContext['user']['trainingExperience'] {
+  if (experience === 'advanced' || experience === 'athlete') return 'advanced';
+  if (experience === 'intermediate') return 'intermediate';
+  return 'beginner';
 }

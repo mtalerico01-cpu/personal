@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 22,
-    gap: 24,
+    gap: 16,
   },
   copy: {
     width: '100%',
@@ -49,14 +49,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
-  logo: { width: logoSizes.hero, height: logoSizes.hero },
+  logo: { width: 58, height: 58 },
   greeting: {
     textAlign: 'center',
     fontWeight: '700',
-    lineHeight: 38,
+    lineHeight: 32,
   },
   opening: {
     textAlign: 'center',
-    lineHeight: 25,
+    lineHeight: 22,
   },
 });

@@ -39,43 +39,43 @@ export const typography = {
   // Large display values (KPI numbers)
   displayLarge: {
     fontSize: fontSizes['4xl'],
-    fontWeight: fontWeights.heavy,
-    letterSpacing: 0.2,
+    fontWeight: fontWeights.semibold,
+    letterSpacing: -0.5,
     lineHeight: fontSizes['4xl'] * lineHeights.tight,
   } satisfies TextStyle,
 
   displayMedium: {
     fontSize: fontSizes['3xl'],
-    fontWeight: fontWeights.heavy,
-    letterSpacing: 0.2,
+    fontWeight: fontWeights.semibold,
+    letterSpacing: -0.3,
     lineHeight: fontSizes['3xl'] * lineHeights.tight,
   } satisfies TextStyle,
 
   displaySmall: {
     fontSize: fontSizes['2xl'],
-    fontWeight: fontWeights.bold,
-    letterSpacing: 0.1,
+    fontWeight: fontWeights.medium,
+    letterSpacing: -0.1,
     lineHeight: fontSizes['2xl'] * lineHeights.snug,
   } satisfies TextStyle,
 
   // Section headings
   headingLarge: {
     fontSize: fontSizes.xl,
-    fontWeight: fontWeights.bold,
-    letterSpacing: 0.1,
+    fontWeight: fontWeights.semibold,
+    letterSpacing: 0,
     lineHeight: fontSizes.xl * lineHeights.snug,
   } satisfies TextStyle,
 
   headingMedium: {
     fontSize: fontSizes.lg,
-    fontWeight: fontWeights.semibold,
-    letterSpacing: 0.1,
+    fontWeight: fontWeights.medium,
+    letterSpacing: 0,
     lineHeight: fontSizes.lg * lineHeights.snug,
   } satisfies TextStyle,
 
   headingSmall: {
     fontSize: fontSizes.md,
-    fontWeight: fontWeights.semibold,
+    fontWeight: fontWeights.medium,
     letterSpacing: 0,
     lineHeight: fontSizes.md * lineHeights.normal,
   } satisfies TextStyle,

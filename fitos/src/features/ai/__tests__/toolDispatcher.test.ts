@@ -62,11 +62,11 @@ describe('updateCardioGoalTool via toolDispatcher', () => {
 
 describe('createFitnessPlanTool via toolDispatcher', () => {
   it('sets macros from calorie goal (cut)', () => {
-    executeAction('create_plan', { mode: 'cut', calorieGoal: 1800 });
+    const result = executeAction('create_plan', { mode: 'cut', calorieGoal: 1800 });
     const goals = useNutritionStore.getState().goals;
     expect(goals.calories).toBe(1800);
-    // protein ≈ 30% of 1800 / 4 ≈ 135
     expect(goals.proteinGrams).toBeGreaterThan(120);
+    expect(result.sourceReferences).toEqual(expect.arrayContaining(['SRC-ISSN-PROTEIN-2017']));
   });
 });
 

@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: spacing[10],
+    // Extra bottom padding so content is never hidden behind the floating tab bar (≈86px tall)
+    paddingBottom: 104,
   },
   staticContent: {
     flex: 1,

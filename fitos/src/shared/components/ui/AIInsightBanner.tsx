@@ -5,6 +5,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from './Text';
+import { SparklesIcon } from './NavIcon';
 import { colors } from '@/shared/theme/colors';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing, radius } from '@/shared/theme/spacing';
@@ -30,7 +31,8 @@ export function AIInsightBanner({ text, label = 'COACH INSIGHT' }: AIInsightBann
       ]}
     >
       <View style={styles.labelRow}>
-        <View style={[styles.badge, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default }]}> 
+        <View style={[styles.badge, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default }]}>
+          <SparklesIcon color={theme.colors.persona.core} size={18} />
           <Text variant="labelMedium" color={theme.colors.persona.core}>
             {label}
           </Text>
@@ -63,6 +65,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   badge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
     borderWidth: 1,
     paddingHorizontal: spacing[2],
     paddingVertical: 3,

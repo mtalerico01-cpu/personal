@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View, TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native';
+import { Image, View, TouchableOpacity, StyleSheet, type LayoutChangeEvent } from 'react-native';
 import { Text } from '@/shared/components/ui/Text';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { brandAssets } from '@/branding/assets';
@@ -9,10 +9,7 @@ interface CoachTopBarProps {
   name: string;
   role: string;
   onNewConversation: () => void;
-  coachingStyleLabel: string;
-  appearanceLabel: string;
-  onCycleCoachingStyle: () => void;
-  onCycleAppearance: () => void;
+  onMenuPress: () => void;
   returnLabel?: string;
   onReturn?: () => void;
 }
@@ -21,40 +18,38 @@ export function CoachTopBar({
   name,
   role,
   onNewConversation,
-  coachingStyleLabel,
-  appearanceLabel,
-  onCycleCoachingStyle,
-  onCycleAppearance,
+  onMenuPress,
   returnLabel,
   onReturn,
 }: CoachTopBarProps) {
   const theme = useActiveTheme();
-  const { width } = useWindowDimensions();
+  const [containerWidth, setContainerWidth] = React.useState<number | null>(null);
   const hasReturn = Boolean(onReturn && returnLabel);
-  const compactLayout = width < 430;
+  const compactLayout = containerWidth === null || containerWidth < 520;
   const logoSource = theme.mode === 'dark' ? brandAssets.logoDark : brandAssets.logoLight;
+  const handleLayout = (event: LayoutChangeEvent) => {
+    setContainerWidth(event.nativeEvent.layout.width);
+  };
 
   if (compactLayout) {
     return (
-      <View style={styles.compactContainer}>
+      <View style={styles.compactContainer} onLayout={handleLayout}>
         <View style={styles.compactNavRow}>
           <View style={styles.compactLeftControls}>
-            <MenuButton />
+            <MenuButton onPress={onMenuPress} />
             {hasReturn ? <ReturnButton label={returnLabel} onPress={onReturn} /> : null}
           </View>
           <View style={styles.actions}>
             <NewConversationButton onPress={onNewConversation} />
-            <PreferenceButton label={coachingStyleLabel} accessibilityLabel="Change coaching style" onPress={onCycleCoachingStyle} showLabel={false} />
-            <PreferenceButton label={appearanceLabel} accessibilityLabel="Change appearance" onPress={onCycleAppearance} showLabel={false} />
           </View>
         </View>
         <View style={styles.compactIdentityRow}>
           <Image source={logoSource} resizeMode="contain" style={styles.compactLogo} />
           <View style={styles.copy}>
-            <Text variant="labelLarge" color={theme.colors.text.primary} style={styles.name}>
+            <Text variant="labelLarge" color={theme.colors.text.primary} numberOfLines={1} style={styles.name}>
               {name}
             </Text>
-            <Text variant="caption" color={theme.colors.text.muted} style={styles.role}>
+            <Text variant="caption" color={theme.colors.text.muted} numberOfLines={1} style={styles.role}>
               {role}
             </Text>
           </View>
@@ -64,17 +59,17 @@ export function CoachTopBar({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={handleLayout}>
       <View style={styles.leftCluster}>
-        <MenuButton />
+        <MenuButton onPress={onMenuPress} />
         {hasReturn ? <ReturnButton label={returnLabel} onPress={onReturn} /> : null}
         <View style={styles.identityRow}>
         <Image source={logoSource} resizeMode="contain" style={styles.logo} />
         <View style={styles.copy}>
-          <Text variant="labelLarge" color={theme.colors.text.primary} style={styles.name}>
+          <Text variant="labelLarge" color={theme.colors.text.primary} numberOfLines={1} style={styles.name}>
             {name}
           </Text>
-          <Text variant="caption" color={theme.colors.text.muted} style={styles.role}>
+          <Text variant="caption" color={theme.colors.text.muted} numberOfLines={1} style={styles.role}>
             {role}
           </Text>
         </View>
@@ -83,20 +78,19 @@ export function CoachTopBar({
 
       <View style={styles.actions}>
         <NewConversationButton onPress={onNewConversation} />
-        <PreferenceButton label={coachingStyleLabel} accessibilityLabel="Change coaching style" onPress={onCycleCoachingStyle} />
-        <PreferenceButton label={appearanceLabel} accessibilityLabel="Change appearance" onPress={onCycleAppearance} />
       </View>
     </View>
   );
 }
 
-function MenuButton() {
+function MenuButton({ onPress }: { onPress: () => void }) {
   const theme = useActiveTheme();
 
   return (
     <TouchableOpacity
       accessibilityRole="button"
       accessibilityLabel="Open Coach menu"
+      onPress={onPress}
       activeOpacity={0.75}
       style={[styles.menuButton, { borderColor: theme.colors.border.default, backgroundColor: theme.colors.surface.translucent }]}
     >
@@ -140,42 +134,6 @@ function NewConversationButton({ onPress }: { onPress: () => void }) {
       style={[styles.iconButton, { borderColor: theme.colors.border.default, backgroundColor: theme.colors.surface.translucent }]}
     >
       <Text variant="headingSmall" color={theme.colors.text.secondary}>+</Text>
-    </TouchableOpacity>
-  );
-}
-
-function PreferenceButton({
-  label,
-  accessibilityLabel,
-  onPress,
-  showLabel = true,
-}: {
-  label: string;
-  accessibilityLabel: string;
-  onPress: () => void;
-  showLabel?: boolean;
-}) {
-  const theme = useActiveTheme();
-
-  return (
-    <TouchableOpacity
-      accessibilityRole="button"
-      accessibilityLabel={accessibilityLabel}
-      onPress={onPress}
-      activeOpacity={0.75}
-      style={[
-        showLabel ? styles.switchButton : styles.switchIconButton,
-        { borderColor: theme.colors.border.default, backgroundColor: theme.colors.surface.translucent },
-      ]}
-    >
-      <Text variant="labelMedium" color={theme.colors.persona.core} style={styles.preferenceIcon}>
-        {label.slice(0, 1)}
-      </Text>
-      {showLabel ? (
-        <Text variant="labelMedium" color={theme.colors.text.secondary} style={styles.switchText}>
-          {label}
-        </Text>
-      ) : null}
     </TouchableOpacity>
   );
 }
@@ -272,24 +230,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  switchButton: {
-    minHeight: 42,
-    borderRadius: 22,
-    borderWidth: 1,
-    paddingLeft: 8,
-    paddingRight: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  switchIconButton: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  preferenceIcon: { minWidth: 14, textAlign: 'center', textTransform: 'uppercase' },
-  switchText: { letterSpacing: 0.5, textTransform: 'uppercase' },
 });

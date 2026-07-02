@@ -4,14 +4,12 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { CoachBackground } from '@/features/coach/components/CoachBackground';
 import { CoachTopBar } from '@/features/coach/components/CoachTopBar';
+import { CoachNavigationRail } from '@/features/coach/components/CoachNavigationRail';
 import { EmptyConversationState } from '@/features/coach/components/EmptyConversationState';
 import { ConversationList } from '@/features/coach/components/ConversationList';
 import { CoachComposer } from '@/features/coach/components/CoachComposer';
 import { useCoach } from '@/features/coach/hooks/useCoach';
-import { coachingStyles, type AppearancePreference, type CoachingStyle } from '@/features/coach/styles/coachingStyles';
-
-const coachingStyleOrder: CoachingStyle[] = ['direct', 'balanced', 'encouraging'];
-const appearanceOrder: AppearancePreference[] = ['dark', 'light', 'system'];
+import { useUserStore } from '@/store/userStore';
 
 export default function CoachScreen() {
   const {
@@ -34,24 +32,18 @@ export default function CoachScreen() {
 
   const theme = useActiveTheme();
   const router = useRouter();
+  const profile = useUserStore((state) => state.profile);
+  const [isNavigationRailOpen, setIsNavigationRailOpen] = React.useState(false);
   const params = useLocalSearchParams<{ returnTo?: string; returnLabel?: string }>();
   const hasMessages = messages.length > 0;
   const returnTo = typeof params.returnTo === 'string' ? params.returnTo : undefined;
   const returnLabel = typeof params.returnLabel === 'string' ? params.returnLabel : undefined;
+  const displayName = profile?.identity.firstName ?? profile?.name ?? 'Member';
+  const username = profile?.identity.username ? `@${profile.identity.username}` : displayName;
 
   const handleSend = (text: string) => {
     if (!text.trim() || isThinking) return;
     sendMessage(text);
-  };
-
-  const handleCycleCoachingStyle = () => {
-    const currentIndex = coachingStyleOrder.indexOf(coachingStyle);
-    setCoachingStyle(coachingStyleOrder[(currentIndex + 1) % coachingStyleOrder.length]);
-  };
-
-  const handleCycleAppearance = () => {
-    const currentIndex = appearanceOrder.indexOf(appearance);
-    setAppearance(appearanceOrder[(currentIndex + 1) % appearanceOrder.length]);
   };
 
   const handleReturn = () => {
@@ -83,10 +75,7 @@ export default function CoachScreen() {
           name={currentPersona.name}
           role={currentPersona.role}
           onNewConversation={clearChat}
-          coachingStyleLabel={coachingStyles[coachingStyle].name}
-          appearanceLabel={appearance === 'system' ? 'System' : appearance === 'dark' ? 'Dark' : 'Light'}
-          onCycleCoachingStyle={handleCycleCoachingStyle}
-          onCycleAppearance={handleCycleAppearance}
+          onMenuPress={() => setIsNavigationRailOpen(true)}
           returnLabel={returnLabel}
           onReturn={returnTo ? handleReturn : undefined}
         />
@@ -115,7 +104,21 @@ export default function CoachScreen() {
           onSend={handleSend}
           disabled={isThinking}
         />
+        {/* Spacer so the floating tab bar never covers the composer */}
+        <View style={styles.tabBarSpacer} />
       </SafeAreaView>
+
+      <CoachNavigationRail
+        visible={isNavigationRailOpen}
+        displayName={displayName}
+        username={username}
+        avatarUrl={profile?.avatarUrl}
+        coachingStyle={coachingStyle}
+        appearance={appearance}
+        onCoachingStyleChange={setCoachingStyle}
+        onAppearanceChange={setAppearance}
+        onClose={() => setIsNavigationRailOpen(false)}
+      />
     </View>
   );
 }
@@ -124,4 +127,6 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safeArea: { flex: 1 },
   conversationShell: { flex: 1, minHeight: 0 },
+  // Height matches GlassTabBar shell: bar height 78 + bottom padding 8
+  tabBarSpacer: { height: 86 },
 });

@@ -6,6 +6,9 @@ import type {
   WorkoutProposal,
   WorkoutExercise,
 } from '../types';
+import { calculateMacroRecommendation } from '../../../domain/nutrition/macros/calculateMacroRecommendation';
+import type { MacroPreference } from '../../../domain/recommendations/types';
+import type { PrimaryGoal, TrainingExperience } from '../../../types';
 import { parseMockIntent } from '../intents/parseMockIntent';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -544,17 +547,10 @@ export async function proposeMacroAdjustment(
     ? nutrition.calorieGoal + calDelta
     : Math.max(1200, nutrition.calorieGoal - calDelta);
 
-  // Safety: no extreme deficits
-  const safeDelta = newCalories - nutrition.calorieGoal;
-
-  // Distribute: 60% to carbs, 30% to protein, 10% to fat (for a bulk)
-  const carbDelta = Math.round((safeDelta * 0.6) / 4); // grams
-  const proteinDelta = Math.round((safeDelta * 0.3) / 4);
-  const fatDelta = Math.round((safeDelta * 0.1) / 9);
-
-  const newProtein = Math.max(150, nutrition.proteinGoal + proteinDelta);
-  const newCarbs = Math.max(100, nutrition.carbGoal + carbDelta);
-  const newFat = Math.max(40, nutrition.fatGoal + fatDelta);
+  const recommendation = recommendMacrosForAIContext(ctx, newCalories, isIncrease ? 'balanced' : 'higher_protein');
+  const newProtein = recommendation.proteinGoal;
+  const newCarbs = recommendation.carbGoal;
+  const newFat = recommendation.fatGoal;
 
   const proposal = { calories: newCalories, protein: newProtein, carbs: newCarbs, fat: newFat };
 
@@ -574,8 +570,8 @@ export async function proposeMacroAdjustment(
   };
 
   const summary = isDirectStyle(ctx)
-    ? `Proposed adjustment: +${Math.abs(calDelta)} kcal, primarily through carbohydrates.`
-    : `I'd suggest adding most of the extra calories through carbs — here's the breakdown.`;
+    ? `Proposed adjustment: ${isIncrease ? '+' : '-'}${Math.abs(calDelta)} kcal using Form Theory macro rules.`
+    : `I'd adjust calories and let the macro engine rebalance protein, carbs, and fats around your current goal.`;
 
   return {
     proposal,
@@ -587,11 +583,13 @@ export async function proposeMacroAdjustment(
         `Protein: ${nutrition.proteinGoal}g → ${newProtein}g`,
         `Carbs: ${nutrition.carbGoal}g → ${newCarbs}g`,
         `Fat: ${nutrition.fatGoal}g → ${newFat}g`,
+        `Rules: ${recommendation.ruleIds.join(', ')}`,
+        `Sources: ${recommendation.sourceIds.join(', ')}`,
       ],
       recommendation: isDirectStyle(ctx)
         ? 'Monitor weight trend over 2 weeks before further adjustments.'
         : 'Give it 2 weeks and we can revisit based on how your body responds.',
-      confidence: 'high',
+      confidence: recommendation.confidence,
       proposedActions: [actionProposal],
     }),
   };
@@ -620,7 +618,7 @@ function buildRemainingMacrosMessage(ctx: AIContext): AIMessage {
       nutrition.proteinRemaining > 40
         ? isDirectStyle(ctx)
           ? `${nutrition.proteinRemaining}g protein outstanding. Prioritise protein in your next meal.`
-          : `You still need ${nutrition.proteinRemaining}g of protein. A high-protein meal or shake would help close that gap.`
+          : `You still need ${nutrition.proteinRemaining}g of protein. A protein-forward meal or shake would help close that gap.`
         : isDirectStyle(ctx)
           ? 'Protein target is on track.'
           : 'Your protein is looking good!',
@@ -655,7 +653,7 @@ function buildMealRecommendationMessage(ctx: AIContext): AIMessage {
 
 function buildDietStrategyCompareMessage(ctx: AIContext): AIMessage {
   const strategies = [
-    'High-protein calorie-controlled: best default for body recomposition and appetite control.',
+    'Protein-forward calorie-controlled: useful for body recomposition and appetite control.',
     'Mediterranean: easiest long-term adherence, strong for health markers, moderate protein unless planned.',
     'Lower-carbohydrate: useful for appetite control, but may reduce training performance if pushed too hard.',
     'Flexible dieting: strongest fit when consistency and social flexibility matter most.',
@@ -670,8 +668,8 @@ function buildDietStrategyCompareMessage(ctx: AIContext): AIMessage {
       : 'The best diet here is the one that protects protein, supports training, and feels repeatable enough to actually live with.',
     details: strategies,
     recommendation: isDirectStyle(ctx)
-      ? 'Use a high-protein flexible plan unless you have a strong preference for Mediterranean structure.'
-      : 'I would start with a high-protein flexible plan, then borrow Mediterranean meal patterns when you want structure.',
+      ? 'Use a protein-forward flexible plan unless you have a strong preference for Mediterranean structure.'
+      : 'I would start with a protein-forward flexible plan, then borrow Mediterranean meal patterns when you want structure.',
     confidence: 'high',
   });
 }
@@ -682,8 +680,8 @@ function buildDietStrategyRecommendationMessage(ctx: AIContext): AIMessage {
     intent: 'diet_strategy_recommend',
     title: isDirectStyle(ctx) ? 'Recommended Diet Strategy' : 'The diet I would choose for you',
     summary: isDirectStyle(ctx)
-      ? `Recommendation: high-protein flexible dieting at ${ctx.nutrition.calorieGoal} kcal.`
-      : 'I would use high-protein flexible dieting for you: enough structure to hit targets, enough freedom to stay consistent.',
+      ? `Recommendation: protein-forward flexible dieting at ${ctx.nutrition.calorieGoal} kcal.`
+      : 'I would use protein-forward flexible dieting for you: enough structure to hit targets, enough freedom to stay consistent.',
     details: [
       `${ctx.nutrition.proteinGoal}g protein as the anchor`,
       `${ctx.nutrition.calorieGoal} kcal daily target`,
@@ -701,9 +699,10 @@ function buildDietPlanPreviewMessage(ctx: AIContext, includeAction: boolean): AI
     : ctx.user.primaryGoal === 'gain'
       ? ctx.nutrition.calorieGoal + 200
       : ctx.nutrition.calorieGoal;
-  const proteinGoal = Math.max(ctx.nutrition.proteinGoal, Math.round(ctx.user.currentWeight * 0.85));
-  const carbGoal = Math.round((targetCalories * 0.43) / 4);
-  const fatGoal = Math.round((targetCalories * 0.25) / 9);
+  const recommendation = recommendMacrosForAIContext(ctx, targetCalories, ctx.user.primaryGoal === 'lose' ? 'higher_protein' : 'balanced');
+  const proteinGoal = recommendation.proteinGoal;
+  const carbGoal = recommendation.carbGoal;
+  const fatGoal = recommendation.fatGoal;
 
   const actionProposal: AIActionProposal = {
     id: actionId(),
@@ -725,21 +724,55 @@ function buildDietPlanPreviewMessage(ctx: AIContext, includeAction: boolean): AI
     intent: includeAction ? 'diet_plan_apply' : 'diet_plan_preview',
     title: isDirectStyle(ctx) ? 'Diet Plan Preview' : 'Diet plan preview',
     summary: isDirectStyle(ctx)
-      ? 'High-protein flexible plan. Conservative targets, training-compatible carbohydrate intake.'
+      ? 'Protein-forward flexible plan. Conservative targets, training-compatible carbohydrate intake.'
       : 'Here is the plan I would use: high protein, flexible food choices, and enough carbs to keep training productive.',
     details: [
       `Calories: ${ctx.nutrition.calorieGoal} -> ${targetCalories} kcal`,
       `Protein: ${ctx.nutrition.proteinGoal}g -> ${proteinGoal}g`,
       `Carbs: ${ctx.nutrition.carbGoal}g -> ${carbGoal}g`,
       `Fat: ${ctx.nutrition.fatGoal}g -> ${fatGoal}g`,
+      `Rules: ${recommendation.ruleIds.join(', ')}`,
+      `Sources: ${recommendation.sourceIds.join(', ')}`,
       'Meal pattern: 3-4 meals, each with a protein anchor',
     ],
     recommendation: includeAction
       ? 'Confirm to apply these macro targets. This will not erase logged meals or training data.'
       : 'Nothing changes yet. Ask me to apply this plan when you want these targets saved.',
-    confidence: 'high',
+    confidence: recommendation.confidence,
     proposedActions: includeAction ? [actionProposal] : undefined,
   });
+}
+
+function recommendMacrosForAIContext(ctx: AIContext, calorieGoal: number, macroPreference: MacroPreference) {
+  const result = calculateMacroRecommendation({
+    calorieGoal,
+    bodyWeightKg: Math.max(45, Math.round(ctx.user.currentWeight / 2.20462)),
+    primaryGoal: mapAIContextGoalToPrimaryGoal(ctx.user.primaryGoal),
+    trainingExperience: mapAIContextTrainingExperience(ctx.user.trainingExperience),
+    macroPreference,
+  });
+
+  return {
+    proteinGoal: result.active.proteinGrams,
+    carbGoal: result.active.carbsGrams,
+    fatGoal: result.active.fatGrams,
+    confidence: result.metadata.confidence,
+    sourceIds: result.metadata.sourceIds,
+    ruleIds: result.metadata.rationale.map((item) => item.ruleId),
+  };
+}
+
+function mapAIContextGoalToPrimaryGoal(goal: AIContext['user']['primaryGoal']): PrimaryGoal {
+  if (goal === 'lose') return 'fat_loss';
+  if (goal === 'gain') return 'muscle_gain';
+  if (goal === 'recomp') return 'recomposition';
+  return 'maintenance';
+}
+
+function mapAIContextTrainingExperience(experience: AIContext['user']['trainingExperience']): TrainingExperience {
+  if (experience === 'advanced') return 'advanced';
+  if (experience === 'intermediate') return 'intermediate';
+  return 'beginner';
 }
 
 function buildNavigationMessage(ctx: AIContext, values: Record<string, unknown>): AIMessage {

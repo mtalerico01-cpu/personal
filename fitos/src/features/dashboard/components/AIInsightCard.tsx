@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text } from '../../../shared/components/ui/Text';
+import { SparklesIcon } from '../../../shared/components/ui/NavIcon';
 import { colors } from '@/shared/theme/colors';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing, radius } from '@/shared/theme/spacing';
@@ -33,7 +34,8 @@ export function AIInsightCard({ brief }: AIInsightCardProps) {
 
         <View style={styles.content}>
           <View style={styles.labelRow}>
-            <View style={[styles.aiBadge, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default }]}> 
+            <View style={[styles.aiBadge, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default }]}>
+              <SparklesIcon color={theme.colors.persona.core} size={18} />
               <Text variant="labelMedium" color={theme.colors.persona.core}>
                 COACH
               </Text>
@@ -90,6 +92,9 @@ const styles = StyleSheet.create({
     marginBottom: spacing[3],
   },
   aiBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
     borderWidth: 1,
     paddingHorizontal: spacing[2],
     paddingVertical: 3,

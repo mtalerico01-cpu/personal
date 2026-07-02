@@ -33,6 +33,7 @@ interface CoachState {
   proactiveBrief: AIMessage | null;
   suggestedPrompts: SuggestedPrompt[];
   hasStartedChat: boolean;
+  hasOnboardingHandoff: boolean;
   pendingActionId: string | null;
 
   // Actions
@@ -43,6 +44,7 @@ interface CoachState {
   sendMessage: (text: string) => Promise<void>;
   confirmAction: (actionId: string, messageId: string) => void;
   cancelAction: (actionId: string, messageId: string) => void;
+  setPostOnboardingHandoff: (handoff: { summary: string; details: string[]; prompts: string[] }) => void;
   clearChat: () => void;
 }
 
@@ -84,12 +86,18 @@ export const useCoachStore = create<CoachState>()((set, get) => ({
   proactiveBrief: null,
   suggestedPrompts: [],
   hasStartedChat: false,
+  hasOnboardingHandoff: false,
   pendingActionId: null,
 
   setCoachingStyle: (style) => {
     if (isDev) console.log('[Coach] coaching style changed:', style);
     const { appearance } = get();
-    set({ coachingStyle: style });
+    set({
+      coachingStyle: style,
+      proactiveBrief: null,
+      suggestedPrompts: [],
+      hasOnboardingHandoff: false,
+    });
     saveCoachPreferences(style, appearance);
     get().initBrief();
   },
@@ -104,6 +112,7 @@ export const useCoachStore = create<CoachState>()((set, get) => ({
   setInputText: (text) => set({ inputText: text }),
 
   initBrief: async () => {
+    if (get().hasOnboardingHandoff && get().proactiveBrief && !get().hasStartedChat) return;
     set({ isLoading: true });
     try {
       const ctx = buildAIContext(get().coachingStyle);
@@ -111,6 +120,10 @@ export const useCoachStore = create<CoachState>()((set, get) => ({
         generateProactiveBrief(ctx),
         Promise.resolve(generateSuggestedPrompts(ctx)),
       ]);
+      if (get().hasOnboardingHandoff && get().proactiveBrief && !get().hasStartedChat) {
+        set({ isLoading: false });
+        return;
+      }
       set({ proactiveBrief: brief, suggestedPrompts: prompts, isLoading: false });
     } catch {
       set({ isLoading: false });
@@ -267,10 +280,36 @@ export const useCoachStore = create<CoachState>()((set, get) => ({
     }));
   },
 
+  setPostOnboardingHandoff: ({ summary, details, prompts }) => {
+    const coachingStyle = get().coachingStyle;
+    set({
+      messages: [],
+      hasStartedChat: false,
+      hasOnboardingHandoff: true,
+      proactiveBrief: {
+        id: newId(),
+        coachingStyle,
+        createdAt: new Date().toISOString(),
+        topic: 'goals',
+        title: 'Your starting plan is ready.',
+        summary,
+        details,
+        confidence: 'high',
+      },
+      suggestedPrompts: prompts.map((prompt, index) => ({
+        id: `handoff-${index}`,
+        label: prompt,
+        category: index === 0 ? 'training' : index === 1 ? 'nutrition' : index === 2 ? 'planning' : 'general',
+        prompt,
+        topic: index === 0 ? 'training' : index === 1 ? 'nutrition' : index === 2 ? 'goals' : 'general',
+      })),
+    });
+  },
+
   clearChat: () => {
     const ctx = buildAIContext(get().coachingStyle);
     const prompts = generateSuggestedPrompts(ctx);
-    set({ messages: [], hasStartedChat: false, inputText: '', suggestedPrompts: prompts });
+    set({ messages: [], hasStartedChat: false, hasOnboardingHandoff: false, inputText: '', suggestedPrompts: prompts });
   },
 }));
 

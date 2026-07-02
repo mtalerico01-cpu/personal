@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Screen } from '../../src/shared/components/ui/Screen';
+import { Text as UIText } from '../../src/shared/components/ui/Text';
 import { AIInsightCard } from '../../src/features/dashboard/components/AIInsightCard';
 import { KPICard } from '../../src/features/dashboard/components/KPICard';
 import { TrainingCard } from '../../src/features/dashboard/components/TrainingCard';
@@ -49,10 +50,19 @@ export default function DashboardScreen() {
         ))}
       </View>
 
+      {/* KPI status legend */}
+      <View style={styles.kpiLegend}>
+        {([['#6B7280', 'No data'], ['#D8A84F', 'In progress'], ['#A7FF00', 'Complete']] as const).map(([color, label]) => (
+          <View key={label} style={styles.legendItem}>
+            <View style={[styles.legendDot, { backgroundColor: color }]} />
+            <UIText variant="caption" color={color}>{label}</UIText>
+          </View>
+        ))}
+      </View>
+
       <View style={styles.sectionSpacer} />
 
       {/* Today's Training */}
-      <TrainingCard workout={workout} />
     </Screen>
   );
 }
@@ -70,8 +80,25 @@ const styles = StyleSheet.create({
     gap: spacing[3],
   },
   kpiCell: {
-    // Each cell takes exactly half the grid width minus half the gap
     flexBasis: '47.5%',
     flexGrow: 1,
+  },
+  kpiLegend: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    gap: spacing[4],
+    marginTop: spacing[2],
+    paddingHorizontal: 2,
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
+  legendDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
   },
 });
