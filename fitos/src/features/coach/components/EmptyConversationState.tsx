@@ -1,10 +1,7 @@
 import React from 'react';
-import { Image, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Text } from '@/shared/components/ui/Text';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
-import { brand } from '@/branding/brand';
-import { brandAssets } from '@/branding/assets';
-import { logoSizes } from '@/shared/theme/spacing';
 import type { AIMessage, SuggestedPrompt } from '../../ai/types';
 import { SuggestedPromptsRail } from './SuggestedPromptsRail';
 
@@ -16,21 +13,19 @@ interface EmptyConversationStateProps {
 
 export function EmptyConversationState({ brief, prompts, onPromptPress }: EmptyConversationStateProps) {
   const theme = useActiveTheme();
-  const opening = brief?.details?.[1] ?? brief?.summary ?? `${brand.coachName} has your training, nutrition, cardio, and progress context ready.`;
-  const logoSource = theme.mode === 'dark' ? brandAssets.markDark : brandAssets.markLight;
+  const starterPrompts = prompts.slice(0, 2);
 
   return (
     <View style={styles.container}>
-      <Image source={logoSource} resizeMode="contain" style={styles.logo} />
       <View style={styles.copy}>
         <Text variant="headingLarge" color={theme.colors.text.primary} style={styles.greeting}>
-          {brief?.title ?? 'Good morning, Alex.'}
+          How can I help?
         </Text>
-        <Text variant="bodyLarge" color={theme.colors.text.secondary} style={styles.opening}>
-          {opening}
+        <Text variant="bodyMedium" color={theme.colors.text.muted} style={styles.opening}>
+          Ask about training, nutrition, recovery, or your plan.
         </Text>
       </View>
-      <SuggestedPromptsRail prompts={prompts} onPress={onPromptPress} />
+      <SuggestedPromptsRail prompts={starterPrompts} onPress={onPromptPress} />
     </View>
   );
 }
@@ -41,22 +36,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 22,
-    gap: 16,
+    gap: 18,
   },
   copy: {
     width: '100%',
-    maxWidth: 680,
+    maxWidth: 420,
     alignItems: 'center',
-    gap: 10,
+    gap: 8,
   },
-  logo: { width: 58, height: 58 },
   greeting: {
     textAlign: 'center',
-    fontWeight: '700',
-    lineHeight: 32,
+    fontSize: 24,
+    fontWeight: '600',
+    lineHeight: 30,
+    letterSpacing: 0,
   },
   opening: {
     textAlign: 'center',
-    lineHeight: 22,
+    fontSize: 14,
+    lineHeight: 20,
   },
 });

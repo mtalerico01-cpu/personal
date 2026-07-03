@@ -5,7 +5,22 @@
  * App-safe fallback uses the platform sans stack while preserving the same rhythm.
  */
 
-import { TextStyle } from 'react-native';
+import { Platform, TextStyle } from 'react-native';
+
+export const fontFamilies = {
+  sans: Platform.select({
+    web: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+    ios: 'Avenir Next',
+    android: 'sans-serif',
+    default: undefined,
+  }),
+  button: Platform.select({
+    web: 'Inter, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", ui-sans-serif, system-ui, sans-serif',
+    ios: 'System',
+    android: 'sans-serif-medium',
+    default: undefined,
+  }),
+} as const;
 
 export const fontSizes = {
   xs: 11,
@@ -24,7 +39,7 @@ export const fontWeights = {
   medium: '500',
   semibold: '600',
   bold: '700',
-  heavy: '800',
+  heavy: '700',
 } as const;
 
 export const lineHeights = {
@@ -40,21 +55,21 @@ export const typography = {
   displayLarge: {
     fontSize: fontSizes['4xl'],
     fontWeight: fontWeights.semibold,
-    letterSpacing: -0.5,
+    letterSpacing: 0,
     lineHeight: fontSizes['4xl'] * lineHeights.tight,
   } satisfies TextStyle,
 
   displayMedium: {
     fontSize: fontSizes['3xl'],
     fontWeight: fontWeights.semibold,
-    letterSpacing: -0.3,
+    letterSpacing: 0,
     lineHeight: fontSizes['3xl'] * lineHeights.tight,
   } satisfies TextStyle,
 
   displaySmall: {
     fontSize: fontSizes['2xl'],
     fontWeight: fontWeights.medium,
-    letterSpacing: -0.1,
+    letterSpacing: 0,
     lineHeight: fontSizes['2xl'] * lineHeights.snug,
   } satisfies TextStyle,
 
@@ -96,15 +111,15 @@ export const typography = {
   // Labels / captions
   labelLarge: {
     fontSize: fontSizes.sm,
-    fontWeight: fontWeights.bold,
-    letterSpacing: 1.1,
+    fontWeight: fontWeights.semibold,
+    letterSpacing: 0,
     lineHeight: fontSizes.sm * lineHeights.normal,
   } satisfies TextStyle,
 
   labelMedium: {
     fontSize: fontSizes.xs,
-    fontWeight: fontWeights.bold,
-    letterSpacing: 1.2,
+    fontWeight: fontWeights.semibold,
+    letterSpacing: 0,
     lineHeight: fontSizes.xs * lineHeights.normal,
   } satisfies TextStyle,
 

@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { brandAssets } from '@/branding/assets';
 import { Text } from '@/shared/components/ui/Text';
 import { radius, spacing } from '@/shared/theme/spacing';
+import { fontFamilies } from '@/shared/theme/typography';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { ChoiceCard } from '@/features/onboarding/components/ChoiceCard';
 import { OnboardingShell } from '@/features/onboarding/components/OnboardingShell';
@@ -682,21 +683,21 @@ const styles = StyleSheet.create({
   stack: { gap: spacing[3] },
   inputGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing[3] },
   inputWrap: { minWidth: 140, flex: 1, gap: spacing[2] },
-  inputLabel: { letterSpacing: 0.8, textTransform: 'uppercase' },
-  input: { minHeight: 48, borderWidth: 1, borderRadius: radius.lg, paddingHorizontal: spacing[4], fontSize: 16, fontWeight: '500' },
+  inputLabel: { letterSpacing: 0.3 },
+  input: { minHeight: 48, borderWidth: 1, borderRadius: radius.md, paddingHorizontal: spacing[4], fontFamily: fontFamilies.sans, fontSize: 15, fontWeight: '400' },
   generationCard: { borderRadius: radius.xl, borderWidth: 1, padding: spacing[5], gap: spacing[4] },
   checkRow: { flexDirection: 'row', alignItems: 'center', gap: spacing[3] },
   checkDot: { width: 12, height: 12, borderRadius: 6 },
   adjustRow: { flexDirection: 'row', gap: spacing[3] },
-  affirmationGoalPill: { alignSelf: 'flex-start', borderRadius: 999, paddingHorizontal: spacing[5], paddingVertical: spacing[2] },
-  affirmationPillText: { letterSpacing: 0.5, textTransform: 'uppercase' },
+  affirmationGoalPill: { alignSelf: 'flex-start', borderRadius: 8, paddingHorizontal: spacing[5], paddingVertical: spacing[2] },
+  affirmationPillText: { letterSpacing: 0.3 },
   affirmationBody: { lineHeight: 27 },
   affirmationDivider: { height: 1, marginVertical: spacing[2] },
-  shortcutButton: { marginTop: spacing[2], paddingHorizontal: spacing[5], paddingVertical: spacing[3], borderRadius: 999, borderWidth: 1, alignItems: 'center' },
+  shortcutButton: { marginTop: spacing[2], paddingHorizontal: spacing[5], paddingVertical: spacing[3], borderRadius: 8, borderWidth: 1, alignItems: 'center' },
   calorieBanner: { borderRadius: radius.xl, borderWidth: 2, padding: spacing[6], alignItems: 'center', gap: spacing[1] },
-  calorieBannerLabel: { letterSpacing: 1.2, textTransform: 'uppercase' },
-  calorieNumber: { fontSize: 52, lineHeight: 60, fontWeight: '800' },
+  calorieBannerLabel: { letterSpacing: 0.5 },
+  calorieNumber: { fontSize: 48, lineHeight: 56, fontWeight: '700' },
   outcomeRow: { borderWidth: 1, borderRadius: radius.lg, padding: spacing[4], gap: spacing[1] },
-  smallButton: { minHeight: 42, borderRadius: 999, borderWidth: 1, paddingHorizontal: spacing[4], alignItems: 'center', justifyContent: 'center' },
-  smallButtonText: { letterSpacing: 0.6, textTransform: 'uppercase' },
+  smallButton: { minHeight: 42, borderRadius: 8, borderWidth: 1, paddingHorizontal: spacing[4], alignItems: 'center', justifyContent: 'center' },
+  smallButtonText: { letterSpacing: 0.3 },
 });

@@ -1,10 +1,20 @@
 import React from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 import { Text } from '@/shared/components/ui/Text';
+import { fontFamilies } from '@/shared/theme/typography';
 import { spacing } from '@/shared/theme/spacing';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { OnboardingProgress } from './OnboardingProgress';
 import type { OnboardingSection } from '../types';
+
+function ChevronLeft({ size = 18, color = '#E6E8ED' }: { size?: number; color?: string }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <Path d="M15 18l-6-6 6-6" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
 
 interface OnboardingShellProps {
   title: string;
@@ -44,8 +54,9 @@ export function OnboardingShell({
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
         <View style={styles.topRow}>
           {onBack ? (
-            <TouchableOpacity accessibilityRole="button" onPress={onBack} style={[styles.backButton, { borderColor: theme.colors.border.default }]}>
-              <Text variant="labelLarge" color={theme.colors.text.secondary}>Back</Text>
+            <TouchableOpacity accessibilityRole="button" onPress={onBack} activeOpacity={0.72} style={[styles.backButton, { borderColor: theme.colors.border.default }]}>
+              <ChevronLeft size={18} color="#D7D9E0" />
+              <Text variant="labelMedium" color="#D7D9E0" style={styles.backLabel}>Back</Text>
             </TouchableOpacity>
           ) : <View style={styles.backPlaceholder} />}
           <View style={styles.progressWrap}>
@@ -114,12 +125,20 @@ const styles = StyleSheet.create({
     gap: spacing[4],
   },
   backButton: {
-    minHeight: 38,
-    borderWidth: 1,
-    borderRadius: 999,
-    paddingHorizontal: spacing[4],
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    minHeight: 40,
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: spacing[3],
+    gap: 4,
+  },
+  backLabel: {
+    fontFamily: fontFamilies.button,
+    fontSize: 15,
+    fontWeight: '600',
+    lineHeight: 20,
+    letterSpacing: 0,
   },
   backPlaceholder: {
     width: 72,
@@ -131,7 +150,7 @@ const styles = StyleSheet.create({
     gap: spacing[3],
   },
   title: {
-    lineHeight: 40,
+    lineHeight: 34,
   },
   explanation: {
     lineHeight: 25,
@@ -161,13 +180,16 @@ const styles = StyleSheet.create({
   continueButton: {
     minHeight: 50,
     minWidth: 150,
-    borderRadius: 999,
+    borderRadius: 8,
     paddingHorizontal: spacing[6],
     alignItems: 'center',
     justifyContent: 'center',
   },
   footerLabel: {
-    letterSpacing: 0.8,
-    textTransform: 'uppercase',
+    fontFamily: fontFamilies.button,
+    fontSize: 16,
+    fontWeight: '600',
+    lineHeight: 22,
+    letterSpacing: 0,
   },
 });

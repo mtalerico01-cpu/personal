@@ -9,12 +9,14 @@ import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 export function CoachBackground() {
   const theme = useActiveTheme();
 
+  if (theme.mode === 'light') return null;
+
   return (
     <View style={styles.container} pointerEvents="none">
       {/* @ts-ignore -- web-only static ambient layer */}
-      <div style={theme.mode === 'dark' ? darkAmbientStyle : lightAmbientStyle} />
+      <div style={darkAmbientStyle} />
       {/* @ts-ignore -- radial gradient vignette: dark edges, clear center */}
-      <div style={theme.mode === 'dark' ? darkVignetteStyle : lightVignetteStyle} />
+      <div style={darkVignetteStyle} />
       <View style={[styles.baseWash, { backgroundColor: theme.colors.background.primary }]} />
     </View>
   );
@@ -32,17 +34,6 @@ const darkAmbientStyle = {
 };
 
 // @ts-ignore
-const lightAmbientStyle = {
-  position: 'absolute',
-  inset: 0,
-  zIndex: 0,
-  backgroundImage:
-    'radial-gradient(ellipse at 30% 28%, rgba(120,190,235,0.30) 0%, rgba(120,190,235,0.12) 26%, transparent 54%), radial-gradient(ellipse at 72% 68%, rgba(255,255,255,0.95) 0%, rgba(220,238,248,0.54) 30%, transparent 58%), linear-gradient(118deg, rgba(255,255,255,0.62), rgba(238,242,244,0.24) 44%, rgba(120,190,235,0.12) 74%, transparent 100%)',
-  mixBlendMode: 'normal',
-  pointerEvents: 'none',
-};
-
-// @ts-ignore
 const darkVignetteStyle = {
   position: 'absolute',
   top: 0,
@@ -51,18 +42,6 @@ const darkVignetteStyle = {
   width: '100%',
   height: '100%',
   backgroundImage: 'radial-gradient(circle at 50% 35%, rgba(245,246,248,0.035) 0%, rgba(245,246,248,0.012) 28%, transparent 54%), radial-gradient(ellipse at center, rgba(11,13,16,0.04) 0%, rgba(11,13,16,0.24) 35%, rgba(11,13,16,0.82) 100%)',
-  pointerEvents: 'none',
-};
-
-// @ts-ignore
-const lightVignetteStyle = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  zIndex: 2,
-  width: '100%',
-  height: '100%',
-  backgroundImage: 'radial-gradient(circle at 50% 35%, rgba(120,190,235,0.16) 0%, rgba(255,255,255,0.42) 28%, transparent 54%), radial-gradient(ellipse at center, rgba(245,247,248,0.05) 0%, rgba(245,247,248,0.20) 35%, rgba(238,242,244,0.70) 100%)',
   pointerEvents: 'none',
 };
 

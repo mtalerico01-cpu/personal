@@ -5,13 +5,14 @@ import { brandAssets } from '@/branding/assets';
 import { Text } from '@/shared/components/ui/Text';
 import { darkTheme } from '@/shared/theme/colors';
 import { radius, spacing } from '@/shared/theme/spacing';
+import { fontFamilies } from '@/shared/theme/typography';
 import { useOnboardingStore } from '@/features/onboarding/store/onboardingStore';
 
 const SLIDES = [
   {
     stat: '2,430',
     label: 'Calories',
-    headline: "Ready for better data? Start coaching, it's simple.",
+    headline: 'Your coach is ready.',
   },
   {
     stat: '185g',
@@ -30,7 +31,7 @@ export default function WelcomeScreen() {
   const onboarding = useOnboardingStore();
   const shortcut = onboarding.savedShortcut;
 
-  const startOnboarding = () => router.replace('/onboarding');
+  const startOnboarding = () => router.push({ pathname: '/login', params: { mode: 'signup' } });
   const openLogin = () => router.push('/login');
 
   return (
@@ -160,9 +161,10 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     color: '#8B919A',
-    fontSize: 21,
-    fontWeight: '800',
-    opacity: 0.82,
+    fontSize: 14,
+    fontWeight: '500',
+    letterSpacing: 0.2,
+    opacity: 0.88,
   },
   logo: {
     width: 188,
@@ -218,8 +220,9 @@ const styles = StyleSheet.create({
   },
   metricLabel: {
     color: '#F5F6F8',
-    fontSize: 18,
-    textTransform: 'uppercase',
+    fontSize: 13,
+    fontWeight: '600',
+    letterSpacing: 0.4,
   },
   metricRange: {
     color: '#C7CBD1',
@@ -228,7 +231,7 @@ const styles = StyleSheet.create({
   metricStat: {
     color: '#A7FF00',
     marginTop: spacing[1],
-    fontWeight: '900',
+    fontWeight: '700',
   },
   barGrid: {
     height: 82,
@@ -252,7 +255,7 @@ const styles = StyleSheet.create({
   dayText: {
     color: '#C7CBD1',
     fontSize: 12,
-    fontWeight: '800',
+    fontWeight: '600',
   },
   peekCard: {
     width: 112,
@@ -266,8 +269,7 @@ const styles = StyleSheet.create({
   peekText: {
     color: '#8B919A',
     transform: [{ rotate: '90deg' }],
-    textTransform: 'uppercase',
-    letterSpacing: 1,
+    letterSpacing: 0.4,
   },
   messageBlock: {
     alignItems: 'center',
@@ -277,9 +279,9 @@ const styles = StyleSheet.create({
   mainMessage: {
     color: '#F5F6F8',
     textAlign: 'center',
-    fontSize: 29,
-    lineHeight: 36,
-    fontWeight: '900',
+    fontSize: 25,
+    lineHeight: 32,
+    fontWeight: '600',
   },
   dots: {
     flexDirection: 'row',
@@ -288,7 +290,7 @@ const styles = StyleSheet.create({
   dot: {
     width: 9,
     height: 9,
-    borderRadius: 999,
+    borderRadius: 4.5,
   },
   dotActive: {
     width: 10,
@@ -310,7 +312,7 @@ const styles = StyleSheet.create({
   },
   primaryCta: {
     height: 58,
-    borderRadius: 999,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -321,17 +323,18 @@ const styles = StyleSheet.create({
   },
   ctaLabel: {
     color: '#0B0D10',
-    fontSize: 17,
-    fontWeight: '900',
+    fontSize: 15,
+    fontWeight: '700',
   },
   loginLabel: {
     color: '#A7FF00',
-    fontSize: 17,
-    fontWeight: '900',
+    fontSize: 15,
+    fontWeight: '600',
   },
   versionText: {
     color: '#C7CBD1',
     textAlign: 'center',
     fontSize: 13,
+    fontFamily: fontFamilies.sans,
   },
 });

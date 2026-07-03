@@ -24,6 +24,8 @@ export function Card({
   padding = 16,
 }: CardProps) {
   const theme = useActiveTheme();
+  const lightModeShadow = theme.mode === 'light' ? styles.flatShadow : null;
+  const lightModeBorder = theme.mode === 'light' ? styles.lightBorder : null;
   const variantStyle =
     variant === 'elevated'
       ? { backgroundColor: theme.colors.surface.raised, borderColor: theme.colors.border.strong }
@@ -36,6 +38,8 @@ export function Card({
       style={[
         styles.base,
         variant === 'elevated' && styles.elevated,
+        lightModeShadow,
+        lightModeBorder,
         variantStyle,
         { padding },
         style,
@@ -58,5 +62,13 @@ const styles = StyleSheet.create({
   },
   elevated: {
     ...shadows.elevated,
+  },
+  flatShadow: {
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    elevation: 0,
+  },
+  lightBorder: {
+    borderWidth: 2,
   },
 });

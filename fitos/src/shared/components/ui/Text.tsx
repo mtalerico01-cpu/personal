@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text as RNText, TextStyle, StyleProp } from 'react-native';
 import { darkTheme, colors } from '@/shared/theme/colors';
-import { typography } from '@/shared/theme/typography';
+import { fontFamilies, typography } from '@/shared/theme/typography';
 import type { TypographyToken } from '@/shared/theme/typography';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 
@@ -25,7 +25,7 @@ export function Text({
 
   return (
     <RNText
-      style={[typography[variant], { color: resolvedColor }, style]}
+      style={[{ fontFamily: fontFamilies.sans }, typography[variant], { color: resolvedColor }, style]}
       numberOfLines={numberOfLines}
     >
       {children}

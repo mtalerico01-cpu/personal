@@ -138,9 +138,9 @@ export const lightTheme: FormTheoryTheme = {
       translucent: 'rgba(255,255,255,0.80)',
     },
     border: {
-      subtle: 'rgba(21,24,29,0.08)',
-      default: 'rgba(21,24,29,0.13)',
-      strong: 'rgba(21,24,29,0.22)',
+      subtle: 'rgba(21,24,29,0.12)',
+      default: 'rgba(21,24,29,0.17)',
+      strong: 'rgba(21,24,29,0.26)',
       persona: 'rgba(143,224,0,0.42)',
       accent: 'rgba(143,224,0,0.38)',
     },

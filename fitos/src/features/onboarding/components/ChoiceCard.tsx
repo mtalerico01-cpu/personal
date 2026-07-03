@@ -25,6 +25,7 @@ export function ChoiceCard({ label, description, selected = false, onPress }: Ch
         {
           backgroundColor: selected ? theme.colors.surface.selected : theme.colors.surface.default,
           borderColor: selected ? theme.colors.border.persona : theme.colors.border.default,
+          borderWidth: theme.mode === 'dark' ? 1 : 2,
         },
       ]}
     >
@@ -74,8 +75,7 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   label: {
-    letterSpacing: 0.5,
-    textTransform: 'uppercase',
+    letterSpacing: 0.1,
   },
   description: {
     lineHeight: 19,

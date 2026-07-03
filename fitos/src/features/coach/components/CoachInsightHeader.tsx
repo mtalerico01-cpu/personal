@@ -35,7 +35,10 @@ export function CoachInsightHeader({ screen }: CoachInsightHeaderProps) {
           backgroundColor: theme.colors.surface.translucent,
           borderColor: theme.colors.border.default,
           borderLeftColor: theme.colors.border.persona,
-          shadowOpacity: theme.mode === 'dark' ? 0.10 : 0.04,
+          borderWidth: theme.mode === 'dark' ? 1 : 2,
+          shadowOpacity: theme.mode === 'dark' ? 0.10 : 0,
+          shadowRadius: theme.mode === 'dark' ? 12 : 0,
+          elevation: theme.mode === 'dark' ? 1 : 0,
         },
       ]}
     >

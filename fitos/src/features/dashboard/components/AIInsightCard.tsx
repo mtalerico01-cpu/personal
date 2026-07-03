@@ -26,7 +26,10 @@ export function AIInsightCard({ brief }: AIInsightCardProps) {
           {
             backgroundColor: theme.colors.surface.default,
             borderColor: theme.colors.border.subtle,
-            shadowOpacity: theme.mode === 'dark' ? 0.12 : 0.04,
+            borderWidth: theme.mode === 'dark' ? 1 : 2,
+            shadowOpacity: theme.mode === 'dark' ? 0.12 : 0,
+            shadowRadius: theme.mode === 'dark' ? 12 : 0,
+            elevation: theme.mode === 'dark' ? 1 : 0,
           },
         ]}
       >

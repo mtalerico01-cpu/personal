@@ -114,11 +114,13 @@ export function CoachBackground() {
   const effect = getEffect();
   const clock = useClock();
 
+  if (theme.mode === 'light') return null;
+
   const uniforms = useDerivedValue(() => ({
     iResolution: [W, H],
     iTime: clock.value,
-    iMode: theme.mode === 'light' ? 1 : 0,
-  }), [theme.mode]);
+    iMode: 0,
+  }), []);
 
   if (!effect) return null;
 

@@ -8,6 +8,7 @@ import { useActiveTheme } from '../src/shared/theme/useActiveTheme';
 import { useOnboardingStore } from '../src/features/onboarding/store/onboardingStore';
 import { useActivePlanStore } from '../src/store/activePlanStore';
 import { useUserStore } from '../src/store/userStore';
+import { useAuthStore } from '../src/store/authStore';
 
 export default function RootLayout() {
   const theme = useActiveTheme();
@@ -17,8 +18,11 @@ export default function RootLayout() {
   const hasActivePlanHydrated = useActivePlanStore((state) => state.hasHydrated);
   const initProfile = useUserStore((state) => state.initProfile);
   const hasProfileHydrated = useUserStore((state) => state.hasHydrated);
+  const initAuth = useAuthStore((state) => state.init);
+  const session = useAuthStore((state) => state.session);
 
   useEffect(() => {
+    initAuth();
     onboarding.init();
     initActivePlan();
     initProfile();
@@ -30,6 +34,15 @@ export default function RootLayout() {
     const isOnboardingRoute = route === 'onboarding';
     const isWelcomeRoute = route === 'welcome';
     const isLoginRoute = route === 'login';
+
+    // If signed in via Supabase, go to app
+    if (session) {
+      if (isWelcomeRoute || isLoginRoute) {
+        router.replace('/');
+      }
+      return;
+    }
+
     const hasCompletedOnboarding = onboarding.status === 'completed';
 
     if (!hasCompletedOnboarding && !isOnboardingRoute && !isWelcomeRoute && !isLoginRoute) {
@@ -40,7 +53,7 @@ export default function RootLayout() {
     if (hasCompletedOnboarding && isOnboardingRoute) {
       router.replace('/');
     }
-  }, [onboarding.isHydrated, onboarding.status, hasProfileHydrated, hasActivePlanHydrated, segments]);
+  }, [onboarding.isHydrated, onboarding.status, hasProfileHydrated, hasActivePlanHydrated, segments, session]);
 
   const isWeb = Platform.OS === 'web';
 

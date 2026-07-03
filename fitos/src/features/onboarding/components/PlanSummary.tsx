@@ -13,7 +13,7 @@ export function PlanSummary({ plan }: PlanSummaryProps) {
   const theme = useActiveTheme();
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.surface.default, borderColor: theme.colors.border.default }]}> 
+    <View style={[styles.container, { backgroundColor: theme.colors.surface.default, borderColor: theme.colors.border.default, borderWidth: theme.mode === 'dark' ? 1 : 2 }]}> 
       <SummaryRow label="Goal" value={plan.goalLabel} />
       <SummaryRow label="Calories" value={`${plan.macros.calories.active.toLocaleString()} per day`} />
       <SummaryRow

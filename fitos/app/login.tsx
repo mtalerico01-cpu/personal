@@ -1,51 +1,98 @@
 import React, { useState } from 'react';
-import { Platform, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
-import { router } from 'expo-router';
+import { ActivityIndicator, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
+import { router, useLocalSearchParams } from 'expo-router';
+import { brandAssets } from '@/branding/assets';
 import { Text } from '@/shared/components/ui/Text';
 import { darkTheme } from '@/shared/theme/colors';
-import { radius, spacing } from '@/shared/theme/spacing';
-import { useOnboardingStore } from '@/features/onboarding/store/onboardingStore';
+import { spacing } from '@/shared/theme/spacing';
+import { fontFamilies } from '@/shared/theme/typography';
+import { useAuthStore } from '@/store/authStore';
 
-const SOCIAL_OPTIONS = ['Continue with Google', 'Continue with Apple', 'Continue with Facebook'];
+function ChevronLeft({ size = 20, color = '#E6E8ED' }: { size?: number; color?: string }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <Path d="M15 18l-6-6 6-6" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
 
 export default function LoginScreen() {
   const theme = darkTheme;
-  const onboarding = useOnboardingStore();
+  const params = useLocalSearchParams<{ mode?: string }>();
+  const [mode, setMode] = useState<'login' | 'signup'>(params.mode === 'signup' ? 'signup' : 'login');
+  const { signIn, signUp, isLoading, error, clearError } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
 
-  const handleLogin = () => {
-    if (onboarding.savedShortcut) {
-      onboarding.restoreFromShortcut();
-      return;
+  const handleSubmit = async () => {
+    if (!email.trim() || !password) return;
+    clearError();
+    if (mode === 'signup') {
+      if (!username.trim()) return;
+      await signUp(email.trim().toLowerCase(), password, username.trim().toLowerCase());
+      router.replace('/onboarding');
+    } else {
+      await signIn(email.trim().toLowerCase(), password);
     }
+  };
 
-    router.replace('/onboarding');
+  const switchMode = () => {
+    clearError();
+    setMode(mode === 'login' ? 'signup' : 'login');
+  };
+
+  const isSignup = mode === 'signup';
+  const handleBack = () => {
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace('/welcome');
+    }
   };
 
   return (
-    <View style={[styles.root, { backgroundColor: theme.colors.background.primary }]}> 
-      <View style={[styles.header, { borderBottomColor: theme.colors.border.subtle }]}> 
-        <TouchableOpacity
-          accessibilityRole="button"
-          onPress={() => router.back()}
-          activeOpacity={0.82}
-          style={[styles.backButton, { borderColor: theme.colors.border.default }]}
-        >
-          <Text variant="headingMedium" color={theme.colors.text.primary} style={styles.backArrow}>
-            ‹
-          </Text>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={[styles.root, { backgroundColor: theme.colors.background.primary }]}>
+      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+        <TouchableOpacity accessibilityRole="button" onPress={handleBack} activeOpacity={0.76} style={styles.backLink}>
+          <ChevronLeft size={22} color="#E6E8ED" />
+          <Text variant="labelMedium" color="#E6E8ED" style={styles.backText}>Back</Text>
         </TouchableOpacity>
-        <Text variant="headingSmall" color={theme.colors.text.primary} style={styles.headerTitle}>
-          Log In
-        </Text>
-        <View style={styles.headerSpacer} />
-      </View>
 
-      <View style={styles.form}> 
-        <View style={styles.fieldBlock}>
-          <Text variant="labelLarge" color={theme.colors.text.muted} style={styles.fieldLabel}>
-            Email Address
+        <View style={styles.brandBlock}>
+          <Image source={brandAssets.logoDark} resizeMode="contain" style={styles.logo} />
+        </View>
+
+        <View style={styles.headerBlock}>
+          <Text variant="headingLarge" color={theme.colors.text.primary} style={styles.title}>
+            {isSignup ? 'Create your account' : 'Sign in'}
+          </Text>
+          <Text variant="bodyLarge" color="#D7D9E0" style={styles.subtitle}>
+            {isSignup ? 'Start with an account, then build your coaching profile.' : 'Access your coaching plan, nutrition targets, and progress history.'}
+          </Text>
+        </View>
+
+        <View style={styles.form}>
+          {isSignup && (
+          <View style={styles.fieldBlock}>
+            <Text variant="labelMedium" color="#E6E8ED" style={styles.fieldLabel}>
+              Username
+            </Text>
+            <TextInput
+              value={username}
+              onChangeText={setUsername}
+              autoCapitalize="none"
+              placeholder="yourname"
+              placeholderTextColor="#B8BDC6"
+              style={[styles.input, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default, color: theme.colors.text.primary }]}
+            />
+          </View>
+          )}
+
+          <View style={styles.fieldBlock}>
+          <Text variant="labelMedium" color="#E6E8ED" style={styles.fieldLabel}>
+            Email
           </Text>
           <TextInput
             value={email}
@@ -53,13 +100,13 @@ export default function LoginScreen() {
             autoCapitalize="none"
             keyboardType="email-address"
             placeholder="you@formtheory.app"
-            placeholderTextColor={theme.colors.text.disabled}
-            style={[styles.input, { borderColor: theme.colors.border.default, color: theme.colors.text.primary }]}
+            placeholderTextColor="#B8BDC6"
+            style={[styles.input, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default, color: theme.colors.text.primary }]}
           />
-        </View>
+          </View>
 
-        <View style={styles.fieldBlock}>
-          <Text variant="labelLarge" color={theme.colors.text.muted} style={styles.fieldLabel}>
+          <View style={styles.fieldBlock}>
+          <Text variant="labelMedium" color="#E6E8ED" style={styles.fieldLabel}>
             Password
           </Text>
           <TextInput
@@ -67,57 +114,58 @@ export default function LoginScreen() {
             onChangeText={setPassword}
             secureTextEntry
             placeholder="••••••••"
-            placeholderTextColor={theme.colors.text.disabled}
-            style={[styles.input, { borderColor: theme.colors.border.default, color: theme.colors.text.primary }]}
+            placeholderTextColor="#B8BDC6"
+            style={[styles.input, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default, color: theme.colors.text.primary }]}
           />
-        </View>
+          </View>
 
-        <TouchableOpacity
-          accessibilityRole="button"
-          onPress={handleLogin}
-          activeOpacity={0.88}
-          style={[styles.loginButton, { backgroundColor: theme.colors.persona.core }]}
-        >
-          <Text variant="labelLarge" color={theme.colors.text.inverse} style={styles.loginText}>
-            Log In
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            accessibilityRole="button"
+            onPress={handleSubmit}
+            activeOpacity={0.86}
+            disabled={isLoading}
+            style={[styles.primaryButton, { backgroundColor: theme.colors.persona.core, opacity: isLoading ? 0.72 : 1 }]}
+          >
+            {isLoading ? (
+              <ActivityIndicator color="#0B0D10" />
+            ) : (
+              <Text variant="labelLarge" color={theme.colors.text.inverse} style={styles.primaryButtonText}>
+                {isSignup ? 'Create account' : 'Sign in'}
+              </Text>
+            )}
+          </TouchableOpacity>
 
-        <TouchableOpacity accessibilityRole="button" activeOpacity={0.86} style={styles.forgotButton}>
-          <Text variant="labelMedium" color={theme.colors.persona.core} style={styles.forgotText}>
-            Forgot password?
-          </Text>
-        </TouchableOpacity>
+          {error ? (
+            <View style={[styles.errorBox, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.status.error }]}> 
+              <Text variant="bodyMedium" color={theme.colors.status.error} style={styles.errorText}>{error}</Text>
+            </View>
+          ) : null}
 
-        <View style={styles.dividerRow}>
-          <View style={[styles.divider, { backgroundColor: theme.colors.border.subtle }]} />
-          <Text variant="labelMedium" color={theme.colors.text.muted} style={styles.orText}>
-            OR
-          </Text>
-          <View style={[styles.divider, { backgroundColor: theme.colors.border.subtle }]} />
-        </View>
-
-        <View style={styles.socialStack}>
-          {SOCIAL_OPTIONS.map((option) => (
-            <TouchableOpacity
-              key={option}
-              accessibilityRole="button"
-              onPress={handleLogin}
-              activeOpacity={0.88}
-              style={styles.socialButton}
-            >
-              <Text variant="labelLarge" color="#0f1117" style={styles.socialText}>
-                {option}
+          {!isSignup ? (
+            <TouchableOpacity accessibilityRole="button" activeOpacity={0.76} style={styles.forgotButton}>
+              <Text variant="bodyMedium" color="#D7D9E0" style={styles.forgotText}>
+                Reset password
               </Text>
             </TouchableOpacity>
-          ))}
+          ) : null}
         </View>
 
-        <Text variant="bodyMedium" color={theme.colors.text.muted} style={styles.permissionText}>
-          We will never post anything without your permission.
+        <View style={styles.switchRow}>
+          <Text variant="bodyMedium" color="#C9CDD4" style={styles.switchPrompt}>
+            {isSignup ? 'Already have an account?' : 'New to Form Theory?'}
+          </Text>
+          <TouchableOpacity accessibilityRole="button" onPress={switchMode} activeOpacity={0.76}>
+            <Text variant="bodyMedium" color="#F5F6F8" style={styles.switchLink}>
+              {isSignup ? 'Sign in' : 'Create account'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text variant="caption" color="#AEB4BE" style={styles.sessionNote}>
+          Your session is encrypted and stored securely on this device.
         </Text>
-      </View>
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -125,113 +173,136 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
   },
-  header: {
-    height: Platform.OS === 'ios' ? 112 : 96,
-    paddingTop: Platform.OS === 'ios' ? 46 : 30,
-    paddingHorizontal: spacing[4],
-    borderBottomWidth: StyleSheet.hairlineWidth,
+  content: {
+    flexGrow: 1,
+    width: '100%',
+    maxWidth: 430,
+    alignSelf: 'center',
+    paddingHorizontal: spacing[5],
+    paddingTop: Platform.OS === 'ios' ? 58 : spacing[8],
+    paddingBottom: spacing[8],
+  },
+  backLink: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    alignSelf: 'flex-start',
+    minHeight: 40,
+    gap: spacing[1],
+    marginBottom: spacing[6],
   },
-  backButton: {
-    width: 44,
+  backText: {
+    color: '#E6E8ED',
+    fontFamily: fontFamilies.button,
+    fontSize: 15,
+    fontWeight: '600',
+    lineHeight: 22,
+    letterSpacing: 0,
+  },
+  brandBlock: {
+    alignItems: 'flex-start',
+    marginBottom: spacing[8],
+  },
+  logo: {
+    width: 154,
     height: 44,
-    borderRadius: 22,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  backArrow: {
+  headerBlock: {
+    gap: spacing[2],
+    marginBottom: spacing[8],
+  },
+  title: {
     color: '#F5F6F8',
-    fontSize: 42,
-    lineHeight: 42,
-    marginTop: -4,
+    fontSize: 34,
+    lineHeight: 40,
+    fontWeight: '600',
+    letterSpacing: 0,
   },
-  headerTitle: {
-    color: '#F5F6F8',
-    fontWeight: '900',
-  },
-  headerSpacer: {
-    width: 44,
+  subtitle: {
+    color: '#D7D9E0',
+    maxWidth: 330,
+    fontSize: 17,
+    lineHeight: 26,
   },
   form: {
-    flex: 1,
-    paddingHorizontal: spacing[5],
-    paddingTop: spacing[8],
+    gap: spacing[4],
   },
   fieldBlock: {
     gap: spacing[2],
-    marginBottom: spacing[5],
   },
   fieldLabel: {
-    color: '#8B919A',
+    color: '#E6E8ED',
     fontSize: 16,
-    fontWeight: '900',
+    fontWeight: '600',
+    letterSpacing: 0.2,
   },
   input: {
-    height: 58,
-    borderRadius: radius.lg,
-    borderWidth: 1.5,
+    height: 54,
+    borderRadius: 8,
+    borderWidth: 1,
     paddingHorizontal: spacing[4],
-    fontSize: 16,
-    fontWeight: '500',
+    fontFamily: fontFamilies.sans,
+    fontSize: 17,
+    fontWeight: '400',
   },
-  loginButton: {
-    height: 58,
-    borderRadius: radius.md,
+  primaryButton: {
+    height: 54,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: spacing[2],
+    marginTop: spacing[1],
   },
-  loginText: {
+  primaryButtonText: {
     color: '#0B0D10',
-    fontSize: 17,
-    fontWeight: '900',
+    fontFamily: fontFamilies.button,
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: 0,
+  },
+  errorBox: {
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: spacing[3],
+    paddingVertical: spacing[3],
+  },
+  errorText: {
+    lineHeight: 20,
   },
   forgotButton: {
-    height: 64,
-    alignItems: 'center',
+    alignSelf: 'flex-start',
+    minHeight: 32,
     justifyContent: 'center',
   },
   forgotText: {
-    color: '#A7FF00',
-    fontSize: 15,
-  },
-  dividerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing[4],
-    marginBottom: spacing[5],
-  },
-  divider: {
-    flex: 1,
-    height: StyleSheet.hairlineWidth,
-  },
-  orText: {
-    color: '#8B919A',
-    fontSize: 14,
-    fontWeight: '800',
-  },
-  socialStack: {
-    gap: spacing[3],
-  },
-  socialButton: {
-    height: 54,
-    borderRadius: radius.sm,
-    backgroundColor: '#f7f7f4',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  socialText: {
+    color: '#D7D9E0',
     fontSize: 16,
-    fontWeight: '900',
+    lineHeight: 24,
+    textDecorationLine: 'underline',
+    textDecorationColor: 'rgba(245,246,248,0.35)',
   },
-  permissionText: {
-    color: '#8B919A',
-    textAlign: 'center',
-    marginTop: spacing[6],
+  switchRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    gap: spacing[2],
+    marginTop: spacing[8],
+  },
+  switchPrompt: {
+    color: '#C9CDD4',
+    fontSize: 17,
+    lineHeight: 24,
+  },
+  switchLink: {
+    color: '#F5F6F8',
+    fontSize: 17,
+    lineHeight: 24,
+    fontWeight: '600',
+    textDecorationLine: 'underline',
+    textDecorationColor: 'rgba(245,246,248,0.35)',
+  },
+  sessionNote: {
+    color: '#AEB4BE',
+    marginTop: spacing[4],
+    fontSize: 15,
     lineHeight: 22,
-    paddingHorizontal: spacing[5],
   },
 });
