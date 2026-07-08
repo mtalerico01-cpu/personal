@@ -1,0 +1,211 @@
+# Core Principles
+
+## Purpose
+
+This document defines the core principles that guide Michael Talerico's work.
+
+These principles influence how problems are approached, how products are designed, how teams are led, and how software is developed.
+
+Unlike technical documentation, these principles are intended to shape decision making.
+
+Whenever AI assists with this project, it should strive to make recommendations that align with these principles.
+
+---
+
+# Solve Business Problems First
+
+Technology is never the objective.
+
+Business outcomes are.
+
+Every recommendation should begin by understanding the business problem before proposing a technical solution.
+
+The best technology is often the simplest technology that solves the problem effectively.
+
+---
+
+# Always Start With The User
+
+Every successful product begins by understanding the people who will use it.
+
+Technology should adapt to users.
+
+Users should not have to adapt to technology.
+
+Every feature should answer the question:
+
+"How does this make someone's job easier?"
+
+---
+
+# Simplicity Wins
+
+Complexity creates friction.
+
+Great products remove friction.
+
+Whether designing dashboards, software, documentation, or presentations, simplicity should always be preferred over unnecessary complexity.
+
+The goal is not to remove capability.
+
+The goal is to reduce cognitive load.
+
+---
+
+# Design Is Part Of The Product
+
+Design is not decoration.
+
+Design determines how easily people understand information.
+
+Every interface should communicate professionalism, trust, and clarity.
+
+Whitespace, typography, spacing, hierarchy, and interaction design are critical components of the product—not afterthoughts.
+
+---
+
+# Data Should Drive Decisions
+
+Analytics should help people answer questions.
+
+Analytics should create confidence.
+
+Analytics should reduce uncertainty.
+
+Reports that simply display numbers without helping users decide what to do next have limited value.
+
+---
+
+# Think In Systems
+
+Avoid solving isolated problems.
+
+Understand how people, processes, technology, and data interact.
+
+The best long-term solutions improve the overall system rather than optimizing a single component.
+
+---
+
+# Continuous Improvement
+
+No product is ever finished.
+
+Every release creates an opportunity to learn.
+
+Seek feedback.
+
+Measure outcomes.
+
+Iterate continuously.
+
+Small improvements compound over time.
+
+---
+
+# Learn Across Disciplines
+
+Innovation often happens at the intersection of multiple fields.
+
+Michael intentionally studies topics outside traditional analytics, including:
+
+- Product Management
+- User Experience
+- Software Engineering
+- Artificial Intelligence
+- Entrepreneurship
+- Marketing
+- Leadership
+
+This cross-disciplinary thinking creates stronger solutions.
+
+---
+
+# Communicate Clearly
+
+Communication is a competitive advantage.
+
+Complex ideas should become easier to understand—not more complicated.
+
+Every presentation, dashboard, document, and application should tell a clear story.
+
+If an executive cannot understand the message quickly, the solution should be improved.
+
+---
+
+# Build For Scale
+
+Every solution should be designed with future growth in mind.
+
+Avoid unnecessary shortcuts.
+
+Prefer reusable components.
+
+Prefer standardized processes.
+
+Prefer maintainable architecture.
+
+Think beyond today's requirements.
+
+---
+
+# AI Is A Force Multiplier
+
+Artificial Intelligence is one of the most important technological shifts in modern software development.
+
+Michael views AI as a tool that amplifies creativity, productivity, learning, and engineering quality.
+
+AI should enhance human capability—not replace thoughtful problem solving.
+
+---
+
+# Leadership Through Influence
+
+Leadership is not defined by job title.
+
+Leadership comes from creating clarity, building trust, solving difficult problems, and helping others succeed.
+
+The best leaders create environments where teams can do their best work.
+
+---
+
+# Never Stop Learning
+
+Continuous learning is one of Michael's defining characteristics.
+
+Every project is an opportunity to improve.
+
+Every challenge is an opportunity to grow.
+
+Every new technology is an opportunity to expand the way problems can be solved.
+
+Curiosity should always remain stronger than comfort.
+
+---
+
+# Quality Matters
+
+Attention to detail communicates professionalism.
+
+Small details compound into exceptional experiences.
+
+Whether writing software, designing dashboards, documenting processes, or presenting analytics, quality should never be treated as optional.
+
+People remember craftsmanship.
+
+---
+
+# What Success Looks Like
+
+When someone experiences Michael's work, they should consistently think:
+
+"This feels thoughtful."
+
+"This is easy to understand."
+
+"This solves the right problem."
+
+"This is well designed."
+
+"This is something I would trust."
+
+Those impressions matter more than any individual technology or programming language.

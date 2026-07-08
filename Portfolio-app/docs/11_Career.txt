@@ -1,0 +1,1444 @@
+Career Knowledge Base
+This document serves as the authoritative record of Michael Talerico’s professional career.
+
+
+It is intentionally more comprehensive than a traditional resume and is not constrained by page limits.
+
+
+The purpose of this document is to preserve the complete context behind Michael’s professional experience, including career progression, business impact, leadership, technical skills, accomplishments, projects, awards, certifications, and lessons learned.
+
+
+Future resumes, portfolio pages, LinkedIn updates, cover letters, interview preparation, promotion packets, biographies, and case studies should reference this document as the primary source of truth.
+
+Professional Summary
+Michael Talerico is a Senior Data Analyst within The Home Depot’s Customer Experience Data Science & Analytics organization, commonly referred to as CX Data Science & Analytics, supporting the Pro Product business.
+
+His work spans Product Analytics, Customer Experience Analytics, Business Intelligence, Executive Reporting, Strategic Analytics, AI Measurement, Experimentation, Analytics Engineering, and Software-Enabled Decision Support.
+
+Michael’s career has evolved from entrepreneurship and business development into enterprise analytics, product analytics, and modern analytics application development.
+
+He specializes in translating ambiguous business problems into clear analytics strategies, intuitive reporting experiences, scalable measurement frameworks, and internal analytics tools that help leaders make better decisions.
+
+Michael’s professional strength is not limited to one technology. Tableau, Power BI, SQL, Python, React, BigQuery, Figma, and AI-assisted development are tools that support a larger mission: helping organizations make better decisions through thoughtful analytics products.
+
+His long-term goal is to become a senior individual contributor or technical analytics leader focused on Product Analytics, Analytics Engineering, AI-enabled analytics software, and internal analytics platforms.
+
+Professional Positioning
+Michael should not be positioned primarily as a traditional dashboard developer, Tableau developer, reporting analyst, or report builder.
+
+Those skills are part of his foundation, but they do not fully represent his current professional identity.
+
+Michael should be positioned as a professional who combines:
+
+Product Analytics
+Business Intelligence
+Analytics Engineering
+Customer Experience Analytics
+Executive Decision Support
+AI Measurement
+User Experience
+Data Visualization
+Strategic Analytics
+Internal Analytics Applications
+Software-Enabled Business Solutions
+Cross-functional Analytics Leadership
+The strongest framing is:
+
+Michael builds modern analytics products that help business, product, and executive teams make better decisions.
+
+Career Narrative
+Michael’s career progression is best understood as a continuous evolution from business ownership, to sales and recruiting, to analytics transformation, to product analytics and analytics application development.
+
+He began as an entrepreneur while attending Troy University, co-founding and operating QuickFix Delivery in Troy, Alabama.
+
+After graduation, he entered sales and recruiting at Insight Global. Although he performed well in that environment, he realized that his long-term interest was not traditional sales. He was more interested in designing creative solutions that could solve business problems and create measurable impact.
+
+At the time, Michael did not have a deep technical background. He intentionally developed technical skills and transitioned into Insight Global’s growing analytics organization.
+
+Over the next six years, he became part of a rapidly scaling analytics and data organization, eventually serving as Insight Global’s first officially titled Tableau Developer and later its first Senior Business Intelligence Developer.
+
+During that time, he worked across nearly every part of the analytics ecosystem, including business intelligence, analytics engineering, data science, QA, governance, automation, UX, executive reporting, dashboard design, analytics enablement, and enterprise reporting transformation.
+
+His Insight Global experience should be treated as one of the strongest pillars of his career. It was not simply a BI development role. It was where he helped mature an enterprise analytics function by building reporting infrastructure, creating design standards, improving usability, training users and developers, partnering with UX and Data Science, and turning analytics into a scalable internal capability.
+
+He then joined The Home Depot’s CX Data Science & Analytics organization, where his work expanded further into product analytics, AI measurement, experimentation, B2B customer experience, executive reporting, contractor leadership, and cloud-hosted analytics applications.
+
+The consistent thread throughout Michael’s career is his desire to solve real business problems through strategy, design, analytics, and technology.
+
+Career Timeline
+Years
+
+Organization
+
+Position
+
+2013–2018
+
+Troy University
+
+B.S.B.A., Global Business / Marketing
+
+2016
+
+Enterprise Holdings
+
+Management Intern
+
+2016–2018
+
+QuickFix Delivery LLC
+
+Co-Founder / Owner
+
+2018–2019
+
+Insight Global
+
+IT Recruiter
+
+2019–2021
+
+Insight Global
+
+Sales Analyst
+
+2021–2022
+
+Insight Global
+
+Tableau Developer, Business Analytics
+
+2022–2025
+
+Insight Global
+
+Senior BI Developer, Data Insights & Analytics
+
+2025–Present
+
+The Home Depot
+
+Senior Data Analyst, CX Data Science & Analytics, Pro Product
+
+Education
+Troy University
+Sorrell College of Business
+
+Bachelor of Science in Business Administration
+Major: Global Business / Marketing
+2013–2018
+
+Leadership
+Vice President, Troy University Marketing Club
+Academic Recognition
+Sorrell College of Business Student Excellence Award in Marketing
+Sorrell College of Business Student Research Showcase — 1st Place Undergraduate Paper, Empirical
+Troy University Chancellor’s List, multiple semesters
+Earned 4.0 GPA during Chancellor’s List semesters
+Career Relevance
+Michael’s academic foundation in marketing, global business, customer behavior, and research shaped the way he approaches analytics today.
+
+His background in business and marketing helps him understand stakeholders, customers, value propositions, user behavior, market positioning, and business outcomes before jumping into technical execution.
+
+This foundation continues to influence his approach to Product Analytics, Customer Experience Analytics, and analytics product design.
+
+Enterprise Holdings
+Management Intern
+June 2016 – September 2016
+Roswell, Georgia
+
+Business Context
+Enterprise’s Management Internship exposed Michael to the fundamentals of business operations, customer service, sales, logistics, branch performance, and leadership.
+
+Responsibilities
+Supported daily branch operations.
+Assisted customers through the rental process.
+Learned core business operations, customer service, and sales practices.
+Gained exposure to operational metrics, service quality, and branch performance management.
+Skills Developed
+Customer Service
+Sales
+Operations
+Business Management
+Professional Communication
+Leadership Foundations
+Career Relevance
+This experience gave Michael early exposure to how operational businesses function and how front-line execution connects to customer experience and financial performance.
+
+It also reinforced his interest in business operations, customer experience, and leadership.
+
+Resume Highlights
+Supported daily rental operations while developing foundational experience in sales, customer service, logistics, and branch-level business management.
+Gained early exposure to operational performance, customer experience, and service execution in a fast-paced business environment.
+Portfolio Relevance
+This role does not need to be featured heavily in the public portfolio, but it belongs in the career knowledge base as part of Michael’s early business foundation.
+
+QuickFix Delivery LLC
+Co-Founder / Owner
+2016–2018
+Troy, Alabama
+
+Note: LinkedIn may show a shorter date range. Michael recalls launching in 2016, operating and scaling the business while attending Troy University, and selling it after graduation in 2018. Final public dates should be confirmed before publishing.
+
+Business Context
+While attending Troy University, Michael co-founded QuickFix Delivery LLC in Troy, Alabama.
+
+The business was created after recognizing a practical problem in the local market: students and members of the surrounding rural community wanted convenient access to fast food and restaurant delivery, but delivery infrastructure was limited or unavailable.
+
+Michael and his co-founder identified the opportunity as college students with limited money but a clear understanding of the customer pain point. Students were busy with classes, social activities, late-night events, and campus life, and many did not want to drive to pick up food.
+
+QuickFix Delivery was created to solve that problem.
+
+Business Overview
+QuickFix Delivery provided local restaurant and fast food delivery services in Troy, Alabama.
+
+The company served college students, local residents, and nearby businesses by coordinating food orders and deliveries through a locally operated delivery model.
+
+The business initially operated primarily with cash payments before later adopting Square card readers to accept card payments.
+
+Michael hired local college students, including fraternity members, to serve as delivery drivers and help fulfill orders.
+
+Michael’s Role
+Michael co-founded, operated, and helped scale the business while attending Troy University full time.
+
+His responsibilities included:
+
+Identifying the market opportunity.
+Helping create the business model.
+Recruiting and hiring local student delivery drivers.
+Managing day-to-day delivery operations.
+Coordinating schedules and delivery coverage.
+Managing customer service issues.
+Supporting restaurant relationships.
+Helping market the service to students and the local community.
+Improving payment processing by adopting Square card readers.
+Balancing business operations while completing a college degree.
+Business Outcome
+After graduating from Troy University, Michael and his co-founder sold the business.
+
+Although the business was local and relatively small, it represented Michael’s first meaningful experience building, operating, scaling, and exiting a business.
+
+Skills Developed
+Entrepreneurship
+Operations
+Hiring
+Customer Experience
+Local Marketing
+Business Development
+Leadership
+Logistics
+Problem Solving
+Process Management
+Payment Operations
+Decision Making Under Constraints
+Career Relevance
+QuickFix Delivery is important because it established Michael’s early entrepreneurial mindset.
+
+It shows that before he entered analytics, he was already interested in identifying customer problems, building practical solutions, managing people, improving processes, and creating value.
+
+This experience helps explain why Michael approaches analytics through a product and customer-experience lens rather than viewing analytics as reporting alone.
+
+Resume Highlights
+Co-founded and operated a local food delivery business serving Troy University students, local residents, and nearby businesses.
+Recruited and managed student delivery drivers while coordinating daily operations, customer service, and restaurant relationships.
+Improved operational capabilities by expanding payment options from cash-only transactions to Square card processing.
+Helped sell the business after graduation, gaining early experience in entrepreneurship, operations, leadership, and customer experience.
+Interview Stories
+Potential interview story themes:
+
+Identifying an unmet customer need in a local market.
+Building a business with limited capital.
+Hiring and managing peers while still in college.
+Balancing business ownership with school responsibilities.
+Learning the difference between having an idea and operating a real business.
+Selling the business after graduation and transitioning into a professional career.
+Portfolio Relevance
+QuickFix Delivery should likely appear as a supporting entrepreneurial story rather than a primary enterprise case study.
+
+Recommended placement:
+
+About page
+Career timeline
+Optional founder story section
+Interview narrative around product thinking and customer problem solving
+Insight Global
+Company Overview
+Insight Global is a staffing, professional services, and workforce solutions company.
+
+Michael spent approximately seven years at Insight Global, progressing from recruiting and sales-related roles into analytics and business intelligence leadership.
+
+His time at Insight Global was foundational because it exposed him to nearly every part of the analytics lifecycle, including business requirements, dashboard design, data engineering partnerships, QA, governance, analytics enablement, predictive analytics, UX collaboration, training, and executive reporting.
+
+Over time, Michael became one of the key contributors to Insight Global’s BI design standards, dashboard templates, visualization practices, design systems, analytics portal experience, and enterprise reporting ecosystem.
+
+Insight Global should be treated as a major chapter of Michael’s career because it demonstrates his development from business operator into enterprise analytics leader.
+
+Insight Global — Career Significance
+Insight Global was the foundation of Michael’s analytics career and should be treated as a major pillar, not a supporting background role.
+
+During his time at Insight Global, Michael progressed from recruiting and sales into enterprise analytics, eventually becoming the company’s first officially titled Tableau Developer and later its first Senior Business Intelligence Developer.
+
+His work contributed to the maturation of the company’s analytics function from a growing reporting team into a more structured enterprise analytics organization with stronger dashboard standards, development processes, UX alignment, training resources, reporting governance, and executive-facing business intelligence.
+
+Michael’s Insight Global experience is important because it demonstrates:
+
+Enterprise BI architecture
+Dashboard design transformation
+Tableau and Power BI standards
+UX-aligned analytics design
+Data portal development
+Predictive analytics enablement
+Executive reporting
+BI governance
+Peer review and QA processes
+Training and enablement
+Cross-functional analytics leadership
+Analytics product thinking before he formally entered Product Analytics
+This experience should not be described narrowly as dashboard development.
+
+It should be positioned as enterprise analytics transformation.
+
+Insight Global — IT Recruiter
+IT Recruiter
+June 2018 – June 2019
+Greater Atlanta Area
+
+Business Context
+Michael began his professional career at Insight Global in recruiting.
+
+This role gave him firsthand experience in sales, candidate management, stakeholder communication, relationship building, and the staffing industry.
+
+Although he performed well, he eventually realized that the traditional sales and recruiting environment was not the long-term path he wanted.
+
+He was more interested in solving business problems, designing better processes, and using technology and analytics to create meaningful business impact.
+
+Responsibilities
+Recruited IT professionals for client opportunities.
+Managed candidate pipelines.
+Communicated with candidates and internal sales teams.
+Supported client-facing staffing needs.
+Developed relationship-building and communication skills.
+Learned the staffing business from the ground up.
+Skills Developed
+Recruiting
+Sales
+Communication
+Relationship Management
+Candidate Evaluation
+Business Development Foundations
+Stakeholder Management
+Time Management
+Resilience
+Career Relevance
+This role gave Michael a strong business foundation.
+
+It helped him understand how sales organizations operate, how staffing companies create revenue, and how recruiting activity connects to business outcomes.
+
+That context later became valuable when he transitioned into analytics roles supporting sales, recruiting, revenue, and operational performance.
+
+Resume Highlights
+Recruited IT professionals while managing candidate pipelines and supporting sales teams across client opportunities.
+Developed foundational experience in sales, communication, stakeholder management, and business operations within a fast-paced staffing environment.
+Built business context that later supported analytics work across recruiting, sales, revenue, and operational reporting.
+Interview Stories
+Potential interview story themes:
+
+Transitioning from sales/recruiting into analytics.
+Learning the business before learning the technical side.
+Understanding stakeholder needs from a front-line business role.
+Realizing that problem solving and solution design were stronger long-term motivators than traditional sales.
+Portfolio Relevance
+This role should not be a primary portfolio feature, but it is important context for Michael’s career story.
+
+It explains why he understands the business side of analytics better than many purely technical professionals.
+
+Insight Global — Sales Analyst
+Sales Analyst
+June 2019 – February 2021
+Brookhaven, Georgia
+
+Business Context
+After starting in recruiting, Michael transitioned into a Sales Analyst role at Insight Global.
+
+This was the turning point where he moved from front-line sales and recruiting into data, reporting, and business intelligence.
+
+The role allowed him to combine his business knowledge from recruiting with emerging technical skills in reporting, analytics, and market insights.
+
+Responsibilities
+Supported national sales teams with market insights and reporting.
+Developed reporting solutions to improve visibility into sales activity, account performance, and market opportunities.
+Worked with stakeholders to understand business questions and translate them into analytics deliverables.
+Began building technical skills in data analysis, visualization, and reporting.
+Supported business leaders with data-driven decision making.
+Skills Developed
+Business Intelligence
+Data Visualization
+Sales Analytics
+Market Analysis
+Reporting
+Stakeholder Requirements
+Data-driven Decision Making
+Tableau Foundations
+SQL Foundations
+Business Storytelling
+Career Relevance
+The Sales Analyst role was Michael’s bridge from business operations into analytics.
+
+Because he already understood recruiting and sales from the inside, he was able to approach analytics from a business-first perspective.
+
+This period helped him develop the confidence and technical foundation needed to move deeper into business intelligence and dashboard development.
+
+Resume Highlights
+Supported national sales teams by delivering reporting and market insights that improved visibility into sales activity, account performance, and business opportunities.
+Translated business questions from sales stakeholders into analytics deliverables, building a foundation in business intelligence and data visualization.
+Leveraged recruiting and sales experience to create business-relevant analytics solutions grounded in operational context.
+Developed technical skills in reporting, dashboarding, and data analysis while transitioning into Insight Global’s analytics organization.
+Interview Stories
+Potential interview story themes:
+
+Moving from business user to analytics creator.
+Learning technical skills because the business needed better visibility.
+Translating sales problems into reporting solutions.
+Building credibility with stakeholders because of prior front-line experience.
+Portfolio Relevance
+This role should be summarized in the career timeline and used as part of Michael’s transition story.
+
+It does not need a standalone case study unless specific projects are later identified.
+
+Insight Global — Tableau Developer
+Tableau Developer, Business Analytics
+February 2021 – May 2022
+Atlanta, Georgia
+
+Business Context
+Michael became Insight Global’s first officially titled Tableau Developer during a period when the company was expanding its analytics capabilities and scaling enterprise reporting.
+
+Business teams needed more consistent, reliable, and user-friendly dashboards. The analytics organization also needed stronger standards for design, usability, development, access, publishing, and data portal organization.
+
+This role marked Michael’s formal transition into business intelligence product development.
+
+Responsibilities
+Built foundational Tableau reporting infrastructure.
+Designed and developed enterprise dashboards.
+Created standardized dashboard templates.
+Helped launch and organize a centralized Data Portal.
+Improved dashboard usability and visual consistency.
+Supported Tableau Server permissions and workbook configuration.
+Delivered Tableau workshops and training.
+Partnered with Data Engineering to improve dashboard performance.
+Supported cross-department KPI reporting.
+Helped establish dashboard development practices.
+Delivered analytics tools used by sales and recruiting teams nationwide.
+Major Contributions
+First Standardized Dashboard Template
+Michael created Insight Global’s first standardized Tableau dashboard template.
+
+This template helped establish a consistent look and feel across Tableau reporting and became the foundation for future dashboard design standards.
+
+This work was the starting point for Michael’s larger Dashboard Design Transformation initiative.
+
+Data Portal 1.0
+Michael organized and launched Data Portal 1.0, a centralized reporting destination that improved dashboard discoverability and made enterprise analytics easier for stakeholders to access.
+
+The portal helped reduce reporting fragmentation by giving business users a single location to find dashboards and reporting tools.
+
+Account Health Dashboard
+Michael delivered the widely adopted Account Health Dashboard, which consolidated key metrics for nationwide sales teams to monitor account activity and revenue performance.
+
+This dashboard improved visibility into account performance and helped sales teams better understand activity, engagement, and business opportunity.
+
+Tableau Training and Adoption
+Michael conducted interactive Tableau workshops for more than 200 sales and recruiting professionals.
+
+These workshops helped improve dashboard adoption, user confidence, self-service customization proficiency, and general analytics literacy.
+
+Tableau Server and Access Management
+Michael oversaw Tableau Server permissions and workbook configurations.
+
+This work ensured secure access to data assets while minimizing administrative overhead.
+
+Dashboard Performance Optimization
+Michael partnered with Data Engineering to enhance dashboard load times and optimize queries and data sources.
+
+This helped improve dashboard usability and stakeholder trust.
+
+Account Growth Tracking
+Michael developed an account growth tracking solution that surfaced market saturation insights and supported informed decisions around new market expansion.
+
+Skills Developed
+Tableau Development
+Dashboard Architecture
+Dashboard Templates
+Data Portal Design
+User Training
+Tableau Server Administration
+KPI Reporting
+UX Foundations
+Data Visualization Best Practices
+Performance Optimization
+Data Engineering Partnership
+Reporting Access Management
+Career Relevance
+This role established Michael as a visualization and dashboard design expert within Insight Global.
+
+It also sparked his deeper interest in user experience, design systems, dashboard standards, data portals, and analytics enablement.
+
+This experience became the foundation for his later Dashboard Design Transformation work.
+
+Resume Highlights
+Became Insight Global’s first officially titled Tableau Developer, helping establish foundational reporting infrastructure and dashboard design standards.
+Created the company’s first standardized Tableau dashboard template, improving consistency and usability across enterprise reporting.
+Organized and launched Data Portal 1.0, centralizing access to dashboards and improving data accessibility across business units.
+Delivered the widely adopted Account Health Dashboard, consolidating key metrics for nationwide sales teams to monitor account activity and revenue performance.
+Conducted interactive Tableau workshops for 200+ sales and recruiting professionals, improving dashboard adoption and self-service customization proficiency.
+Oversaw Tableau Server permissions and workbook configurations, ensuring secure access to reporting assets while minimizing administrative overhead.
+Partnered with Data Engineering to optimize dashboard performance and improve dashboard reliability.
+Developed account growth tracking capabilities that surfaced market saturation insights and supported market expansion decisions.
+Interview Stories
+Potential interview story themes:
+
+Becoming the first Tableau Developer in a growing analytics organization.
+Building a dashboard template from scratch.
+Launching centralized reporting access through the Data Portal.
+Teaching business users how to interact with analytics.
+Improving dashboard usability and performance.
+Building account growth reporting that supported market expansion decisions.
+Portfolio Relevance
+This role supports the Dashboard Design Transformation case study.
+
+It should be referenced as the starting point for Michael’s design system, BI governance, and analytics portal journey at Insight Global.
+
+Insight Global — Senior BI Developer
+Senior Business Intelligence Developer, Data Insights & Analytics
+May 2022 – May 2025
+Atlanta Metropolitan Area
+
+Business Context
+As Insight Global’s analytics organization matured, Michael advanced into a Senior BI Developer role.
+
+During this time, the Data Insights & Analytics organization continued scaling from a startup-style analytics team into a larger enterprise data and analytics organization.
+
+Michael’s responsibilities expanded far beyond dashboard development.
+
+He became deeply involved in enterprise dashboard standards, analytics governance, UX collaboration, predictive analytics enablement, executive reporting, dashboard training, BI process improvement, peer review, and design system development.
+
+This role represented Michael’s evolution from dashboard developer into analytics strategist, design-system builder, BI governance contributor, trainer, and cross-functional analytics leader.
+
+Responsibilities
+Designed and maintained enterprise dashboards used across multiple business units.
+Supported sales, recruiting, talent, government, revenue, operations, and executive reporting.
+Developed standardized BI design frameworks.
+Created dashboard templates for Tableau and Power BI.
+Partnered with UX to align analytics design with enterprise design language.
+Built Figma-based dashboard design systems and design kits.
+Created BI planning guides and development resources.
+Supported dashboard QA and peer review processes.
+Led Tableau design workshops and training sessions.
+Facilitated bi-weekly sprint discussions and project reviews.
+Partnered with Data Science on predictive analytics projects.
+Translated complex business problems into intuitive analytics solutions.
+Produced dashboards identifying revenue opportunities, margin trends, and underperforming business areas.
+Mentored and enabled other analytics developers through standards, templates, training, and design feedback.
+Bridged communication between UX and BI teams to ensure dashboards followed design principles without sacrificing business functionality.
+Major Contributions
+Enterprise Dashboard Design Framework
+Michael built and operationalized a standardized dashboard design framework used across Tableau and Power BI reporting.
+
+This framework improved usability, visual consistency, development efficiency, and stakeholder trust across enterprise reports.
+
+The framework also helped BI developers create cleaner, more consistent, higher-performing dashboards with a shared design language.
+
+Dashboard Design Transformation
+Michael led a multi-phase dashboard design transformation initiative.
+
+The initiative began with research into dashboard design best practices and the creation of a standardized Tableau dashboard template.
+
+After the initial template was created, Michael helped enhance existing dashboards across the organization to align with the new standard.
+
+He met with other analysts and developers to explain how to transfer dashboards into the new template and improve design consistency.
+
+The work expanded into a broader analytics transformation that included:
+
+Tableau dashboard templates
+Power BI dashboard templates
+Dashboard design standards
+BI development processes
+QA and peer review guidance
+Dashboard performance considerations
+Data validation practices
+UX-aligned design systems
+Figma design components
+Analytics portal improvements
+Training and enablement resources
+This became one of Michael’s most important career projects because it combined BI, UX, governance, enablement, design systems, and leadership.
+
+BI Governance and Enablement
+Michael introduced internal BI team resources including dashboard planning guides, Tableau Cloud documentation, and peer review processes focused on both data accuracy and usability.
+
+These resources helped establish a stronger development lifecycle for analytics products.
+
+The peer review process emphasized not only whether dashboards functioned correctly, but whether they were easy to use, visually effective, trustworthy, and aligned with design standards.
+
+Tableau Design Workshops and Developer Enablement
+Michael orchestrated weekly Tableau design workshops and facilitated sprint discussions, project reviews, and interactive Tableau and SQL trainings.
+
+These sessions helped elevate visualization quality, encourage creative design approaches, improve developer consistency, and strengthen adherence to best practices across the BI team.
+
+This work demonstrated leadership without relying solely on formal authority.
+
+Enterprise Dashboard Delivery
+Michael delivered more than 60 enterprise dashboards supporting revenue, talent, sales operations, recruiting, government, operations, and executive reporting.
+
+These dashboards reduced ad-hoc reporting requests, improved access to trusted information, and helped leaders monitor performance across major business functions.
+
+Analytics Portal
+Michael contributed to the development and enhancement of a centralized analytics portal where stakeholders could access dashboards through organized Tableau links and reporting categories.
+
+The portal created a more streamlined experience for business users and helped reduce reporting fragmentation.
+
+Figma-Based Dashboard Design System
+Michael worked closely with UX and analytics leadership to translate internal UX design principles into a BI design system.
+
+The design system incorporated typography, spacing, sizing, layout, color usage, and branding standards into reusable dashboard design guidance.
+
+The work helped align Tableau and Power BI reporting with broader enterprise design standards.
+
+Dashboard Development and QA Process
+Michael helped create a dashboard design, development, deployment, and QA process.
+
+This process emphasized:
+
+Requirements gathering
+Design planning
+Dashboard development
+Data validation
+Usability review
+Peer review
+Publishing standards
+Ongoing iteration
+The process helped create a more consistent and trustworthy analytics delivery model.
+
+Predictive Hiring Analytics Platform
+Michael partnered with Data Science on a predictive analytics initiative designed to identify job requisitions with the highest likelihood of converting to a successful hire.
+
+The model used requisition-level information such as pay rate, bill rate, contract length, contract vs. permanent status, hiring manager history, number of openings, and other job attributes.
+
+A Data Scientist partner built the model in Python.
+
+Michael worked closely with the Data Scientist to understand the business problem, interpret the model outputs, design the measurement strategy, and create an executive-facing monitoring dashboard.
+
+The pilot measured pre- and post-model implementation performance in one sales vertical and demonstrated approximately $5 million in incremental revenue over eight weeks.
+
+Michael created a highly visual dashboard experience that combined contextual explanation, methodology, business framing, and live performance monitoring.
+
+The solution was designed in Figma and implemented in Tableau, using a custom visual layout that explained the problem, approach, methodology, and results while allowing leaders to monitor performance in real time.
+
+Predictive Analytics Integration Into BI Workflows
+Michael partnered with Data Science to integrate predictive insights into Tableau dashboards, improving requisition prioritization and supporting revenue-generating initiatives.
+
+This work helped bridge the gap between machine learning outputs and business-user decision-making.
+
+It also demonstrated Michael’s ability to operationalize advanced analytics for non-technical stakeholders.
+
+UX and BI Partnership
+Michael served as a bridge between UX and BI teams, ensuring dashboards aligned with established design principles without sacrificing business functionality.
+
+This partnership helped translate enterprise design language into analytics experiences that were cleaner, more consistent, and easier to use.
+
+Revenue and Margin Analysis
+Michael produced analytical dashboards that exposed revenue opportunities, margin trends, and underperforming business verticals.
+
+These tools supported senior leadership in strategic planning and helped identify areas requiring business attention.
+
+Skills Developed
+Enterprise Business Intelligence
+Dashboard Architecture
+Tableau
+Tableau Server
+Power BI
+Figma
+UX Collaboration
+Design Systems
+Analytics Governance
+Data Visualization
+Predictive Analytics Enablement
+Executive Reporting
+Data Storytelling
+BI Training
+Stakeholder Management
+Cross-functional Leadership
+Requirements Gathering
+Dashboard QA
+Peer Review
+Analytics Enablement
+Data Science Partnership
+Data Engineering Partnership
+Dashboard Performance Optimization
+Enterprise Reporting Strategy
+Career Relevance
+This role was central to Michael’s development as an analytics leader and design-focused BI professional.
+
+It established his ability to lead large, ambiguous analytics initiatives, influence standards across teams, partner with technical and non-technical stakeholders, and build analytics experiences that go beyond traditional reporting.
+
+It also created the foundation for his current interest in building modern analytics web applications.
+
+Most importantly, this role proves that Michael can do more than analyze data. He can improve the way analytics is designed, governed, delivered, adopted, and trusted across an organization.
+
+Resume Highlights
+Delivered 60+ enterprise dashboards supporting revenue, sales, recruiting, talent, operations, government, and executive reporting.
+Led dashboard design transformation efforts by creating standardized Tableau templates, Power BI templates, BI design standards, and reusable Figma-based design systems.
+Built and operationalized a standardized dashboard design framework, improving usability and consistency across Tableau and Power BI enterprise reports.
+Introduced BI team resources including planning guides, Tableau Cloud documentation, and peer review processes integrating data accuracy and usability checks.
+Orchestrated weekly Tableau design workshops, elevating visualization skills, encouraging creative approaches, and strengthening adherence to best practices across the BI team.
+Facilitated bi-weekly sprint discussions, project reviews, and interactive Tableau and SQL trainings to enhance development workflows and technical skillsets.
+Partnered with UX to align analytics products with enterprise design principles, improving usability, consistency, and visual quality across reporting assets.
+Partnered with Data Science to operationalize predictive analytics within Tableau dashboards, including an eight-week pilot that generated approximately $5 million in incremental revenue within one sales vertical.
+Created dashboard development, QA, peer review, and publishing processes that improved reporting quality, data accuracy, and stakeholder trust.
+Built executive dashboards and analytical tools exposing revenue opportunities, margin trends, and underperforming business segments.
+Helped mature a growing analytics organization by creating reusable resources, design frameworks, documentation, and enablement practices.
+Interview Stories
+Potential interview story themes:
+
+Leading the Dashboard Design Transformation.
+Building a BI design system from scratch.
+Partnering with UX to improve analytics quality.
+Creating standards across Tableau and Power BI.
+Operationalizing predictive analytics with Data Science.
+Demonstrating business impact from a predictive model pilot.
+Teaching and mentoring other BI developers.
+Improving analytics adoption through design and governance.
+Bridging UX and BI teams to improve dashboard usability.
+Creating reusable development processes and QA standards.
+Portfolio Relevance
+This role supports multiple major portfolio case studies:
+
+Dashboard Design Transformation
+Predictive Hiring Analytics Platform
+Enterprise BI Governance and Enablement
+Analytics Portal Modernization
+UX-Aligned Analytics Design System
+The strongest public case study from Insight Global is likely Dashboard Design Transformation, because it combines design, UX, governance, analytics, leadership, and organizational impact.
+
+The Home Depot
+Senior Data Analyst — CX Data Science & Analytics, Pro Product
+June 2025 – Present
+Atlanta, Georgia
+
+Organization
+Michael works within The Home Depot’s Customer Experience Data Science & Analytics organization, supporting the Pro Product business.
+
+The broader CX Data Science & Analytics organization supports customer experience analytics and data science capabilities across The Home Depot.
+
+Michael specifically supports the Pro Product organization, which focuses on improving digital and operational experiences for professional customers.
+
+Business Context
+The Pro customer segment is strategically important to The Home Depot.
+
+Michael’s role supports product teams that are responsible for improving the B2B digital experience, order management, sales enablement, Pro experience, customer loyalty, and self-service capabilities.
+
+His work sits at the intersection of:
+
+Product Analytics
+Customer Experience Analytics
+Executive Reporting
+B2B Analytics
+AI Measurement
+Strategic Analytics
+Business Intelligence
+Decision Support
+Core Responsibilities
+Own and support executive-level reporting for Pro Product initiatives.
+Partner with Product teams to define success metrics and measurement frameworks.
+Support feature discovery and product measurement strategies.
+Track product adoption and customer behavior.
+Conduct deep-dive analyses across revenue, margin, customer experience, and operational performance.
+Build executive dashboards and reporting solutions.
+Present findings through leadership reporting and business reviews.
+Partner with UX, Engineering, Data Science, Program Management, and Product leadership.
+Support experimentation and AI measurement initiatives.
+Lead analytics workstreams for strategic Pro Product projects.
+Coordinate with consultants and contractors on analytics delivery.
+Product Areas Supported
+Order Management
+Focus areas include:
+
+Delivery customer satisfaction
+On-time completion
+Delivery lead times
+Site delivery instructions
+Customer communication preferences
+Complex order scheduling
+Fulfillment behavior
+Michael supports product measurement, KPI reporting, opportunity identification, and executive reporting for Order Management capabilities.
+
+Sales Enablement
+Focus areas include:
+
+Pro CRM
+Opportunity management
+Outside Sales Representative performance
+Managed account engagement
+Sales analytics
+Michael supports opportunity reporting, KPI development, executive reporting, and sales enablement analytics.
+
+Pro Experience / NPS
+Focus areas include:
+
+Customer loyalty
+Net Promoter Score
+Managed account experience
+Survey analytics
+Sentiment
+Customer experience measurement
+Michael supports survey reporting, sentiment analysis, experience measurement, and executive storytelling.
+
+E2E / B2B Product Analytics
+Focus areas include:
+
+Self-service B2B capabilities
+Online purchasing
+Complex project purchasing
+B2B customer experience
+Product adoption
+Revenue impact
+Customer segmentation
+Digital engagement
+Michael supports adoption tracking, KPI design, revenue impact analysis, customer behavior analysis, and product strategy.
+
+Major Initiatives
+Executive OKR Reporting Program
+Michael supports and owns executive-level OKR reporting used to measure strategic objectives across multiple Pro Product capabilities.
+
+Responsibilities
+KPI governance
+Target tracking
+Executive reporting
+Dashboard development
+Metric definition
+Strategic performance analysis
+Reporting cadence
+Executive storytelling
+Business Value
+This work provides leadership with visibility into strategic priorities, progress against key results, and product performance across the Pro Product organization.
+
+Career Relevance
+This work demonstrates Michael’s ability to support senior leadership, govern metrics, design executive reporting experiences, and translate complex product performance data into clear business narratives.
+
+B2B Target Customer Placemat Dashboard
+Michael led the end-to-end delivery of a Tableau dashboard designed to help Product, UX, Engineering, and B2B leadership better understand The Home Depot’s highest-value Pro customers.
+
+Business Context
+The dashboard focused on Target Pros with high estimated wallet size and active B2B engagement.
+
+The goal was to transform static customer segmentation research into an interactive decision-making platform.
+
+Role
+Michael served as project lead and primary business owner.
+
+He coordinated a consulting team responsible for SQL development, data modeling, Tableau dashboard development, and dashboard enhancements.
+
+Responsibilities
+Partnered with B2B Product, UX, and Engineering stakeholders to define reporting requirements.
+Directed consultants responsible for SQL, data modeling, Tableau development, and dashboard enhancements.
+Performed data discovery and validation across enterprise data sources.
+Validated business logic, metric definitions, customer segmentation, and persona methodology.
+Defined and validated the target customer population.
+Refined reporting across Enterprise, Crew Manager, Digital Adopter, and Generalist personas.
+Designed dashboard architecture and KPI framework.
+Developed percentile analysis methodology.
+Supported channel behavior reporting, fulfillment reporting, and engagement reporting.
+Identified and resolved data quality issues.
+Facilitated stakeholder reviews and prioritized enhancements.
+Managed delivery timelines and final stakeholder handoff.
+Business Impact
+The dashboard created a centralized analytics tool that helps Product, UX, and Engineering teams benchmark customer behavior, understand persona differences, evaluate digital engagement, analyze fulfillment preferences, and inform future B2B product strategy.
+
+Career Relevance
+This project demonstrates Michael’s ability to lead analytics delivery, manage contractors, validate complex enterprise data, partner cross-functionally, and turn customer segmentation into an interactive analytics product.
+
+Portfolio Relevance
+This should be one of the strongest Home Depot case studies.
+
+Recommended title:
+
+B2B Target Customer Placemat
+
+Non-Stock Quoting Agent Analytics Platform
+Michael served as analytics lead for a B2B non-stock quoting agent embedded on Product Information Pages within The Home Depot’s B2B platform.
+
+Business Context
+Historically, Pro customers purchasing configurable or non-stock SKUs often needed to call the QuoteCenter to generate a quote.
+
+The new AI-powered quoting agent enables customers to ask questions, receive product information, and generate quote-related outcomes directly from the online Product Information Page experience.
+
+The project began as a request to measure a chatbot pilot but evolved into the development of an internal analytics platform for measuring customer behavior, conversation flow, transcript patterns, quote generation, and business impact.
+
+Measurement Strategy
+Michael helped define the measurement framework across multiple phases:
+
+Phase 0 — Smoke Test / Measurement Readiness
+Phase 1 — Chatbot vs. Control
+Phase 2 — Chatbot + Phone CTA vs. Control
+Cross-functional Partners
+Michael partnered with:
+
+Product
+Engineering
+Data Science
+Test & Target
+Pro CX Analytics
+Leadership stakeholders
+Responsibilities
+Defined measurement strategy for the quoting agent pilot.
+Validated transcript data availability in BigQuery.
+Confirmed session-level data, metadata, and quote ID extraction.
+Developed transcript analytics.
+Built customer behavior reporting.
+Connected agent engagement to quote creation and downstream outcomes.
+Designed conversation flow analytics.
+Supported executive reporting.
+Built a dedicated internal analytics web application.
+Incorporated stakeholder feedback into the product experience.
+Prepared the platform for future experiment reporting.
+Analytics Platform
+Rather than relying only on static dashboards or notebooks, Michael designed and developed a lightweight internal analytics web application.
+
+Technologies used:
+
+Python
+HTML
+CSS
+JavaScript
+BigQuery
+Google Cloud Run
+VS Code
+GitHub Copilot
+Claude Sonnet
+ChatGPT
+Platform Capabilities
+The application helps stakeholders:
+
+Review chatbot transcripts.
+Search and filter sessions.
+Analyze customer intent.
+Classify conversation topics.
+Monitor usage and engagement patterns.
+Review session duration and user turns.
+Track quote creation rates.
+Analyze session funnels.
+Identify engineering failures.
+Understand customer drop-off.
+Explore last topic discussed before abandonment.
+Export filtered data to CSV.
+Monitor trends over time.
+Prepare for A/B test reporting and downstream business impact measurement.
+Phase 0 Deliverables
+Phase 0 focused on three business questions.
+
+1. Is the measurement infrastructure working?
+Michael validated that:
+
+Transcript data was flowing into BigQuery.
+Session-level data was available.
+Metadata was available.
+Quote IDs could be extracted.
+Reporting infrastructure was functioning correctly.
+2. What topics are customers discussing?
+Michael developed a rule-based topic classification engine using Python.
+
+The classifier grouped conversations into business-defined topics such as:
+
+Pricing / Quote
+Product Configuration
+Store / Availability
+Other categories
+This helped Product teams understand customer intent.
+
+3. How well do conversations flow?
+Michael built conversation flow analytics that measured:
+
+Session duration
+User turns
+Quote creation rate
+Session funnel
+Conversation outcomes
+Engineering failures
+Customer drop-off
+One valuable insight was identifying the last topic discussed before abandonment, helping Product and UX teams understand where customers encountered friction.
+
+Stakeholder Feedback and Enhancements
+After presenting the prototype to the project team, Michael incorporated feedback and expanded the platform.
+
+Enhancements included:
+
+Timeframe filtering across KPIs and charts.
+Dynamic KPI tooltips.
+Interactive transcript exploration.
+CSV export.
+Refresh Data functionality.
+Daily trend reporting.
+Engineering failure monitoring.
+Topic-based filtering.
+Dashboard usability improvements.
+Production Deployment
+Michael productionized the platform by:
+
+Deploying it to Google Cloud Run.
+Establishing automated hourly data refresh using THD Workbench / Analytics Engine.
+Connecting directly to BigQuery.
+Displaying localized refresh timestamps.
+Preparing the platform for Phase 1 reporting.
+Leadership can access the live dashboard without running anything locally.
+
+AI-Assisted Development
+This project became one of Michael’s first major AI-assisted software development efforts.
+
+He used:
+
+GitHub Copilot
+Claude Sonnet
+ChatGPT
+AI accelerated development, but Michael retained ownership of:
+
+Product vision
+Measurement strategy
+Business logic
+Analytics design
+Dashboard architecture
+Stakeholder alignment
+Future Roadmap
+The rule-based transcript classifier was intentionally designed as an MVP.
+
+Future roadmap items include Gemini / Vertex AI integration to support:
+
+Smarter topic classification
+Conversation summaries
+Sentiment analysis
+Containment analysis
+Conversation quality scoring
+Likely drop-off reason identification
+More accurate transcript categorization
+Business Impact Measurement
+As the pilot progresses, the platform will support measurement of:
+
+Visit-to-Quote Creation Rate
+Quote-to-Order Conversion
+Revenue Attribution
+Average Order Value
+Incremental Revenue
+Customer Engagement
+Adobe / Test & Target experiment metrics
+Recognition
+The project received positive recognition from leaders and stakeholders.
+
+Examples include:
+
+Product leadership praised the partnership, thoughtful questions, and quality of work.
+Analytics leadership recognized Michael’s backend and analytics contributions.
+Senior leadership described the dashboard and measurement approach as highly detailed and worth showcasing.
+Director-level stakeholders expressed interest in reviewing the dashboard.
+Career Relevance
+This project is highly important because it demonstrates Michael’s transition from traditional BI into analytics application development.
+
+It combines:
+
+Product Analytics
+AI Measurement
+Transcript Analytics
+Customer Experience
+Experimentation
+Python
+BigQuery
+Cloud Run
+Web Application Development
+Executive Reporting
+Stakeholder Feedback
+AI-Assisted Development
+Portfolio Relevance
+This should be one of Michael’s top featured case studies.
+
+Recommended title:
+
+Non-Stock Quoting Agent Analytics Platform
+
+HD Supply Competitive Analysis
+Michael led a strategic analytics initiative to help the Pro Product organization understand whether The Home Depot and HD Supply were creating internal competitive pressure.
+
+Business Context
+The organization wanted to answer a strategic question:
+
+Are we competing with ourselves?
+
+The analysis focused on overlap between The Home Depot and HD Supply, particularly in areas involving non-stock and configurable SKUs.
+
+Michael’s Role
+Michael served as analytics lead.
+
+He gathered data, analyzed competitive overlap, evaluated markdown behavior, assessed margin patterns, and presented findings to product leadership.
+
+Findings
+Michael identified that non-stock/configurable SKUs sourced from HD Supply showed higher markdowns and lower margins, which signaled stronger competitive pressure in those areas.
+
+Business Value
+The analysis helped Product leadership better understand competitive dynamics, margin implications, and potential strategic considerations related to HD Supply overlap.
+
+Portfolio Relevance
+This should be a supporting case study focused on strategic analytics, margin analysis, pricing pressure, and executive decision support.
+
+Recommended title:
+
+Are We Competing With Ourselves?
+
+B2B 3.0 Product Analytics
+Michael supports B2B product analytics for self-service capabilities targeting large-spend Pro customers.
+
+Business Context
+The B2B / E2E product team focuses on improving the digital experience for professional customers, including purchasing workflows, project purchasing, order management, delivery, pickup, and self-service capabilities.
+
+Workstreams
+Michael’s work has included analysis around:
+
+Target Pro customer behavior.
+Delivery and pickup behavior.
+Fulfillment methods.
+B2B online purchasing.
+Customer engagement.
+Product adoption.
+Revenue impact.
+Customer segmentation.
+Responsibilities
+Defined product measurement requirements.
+Validated enterprise data sources.
+Supported KPI design.
+Analyzed digital engagement.
+Partnered with Product, UX, Engineering, and leadership.
+Supported strategic decisions around B2B capabilities.
+Career Relevance
+This work demonstrates Michael’s product analytics capabilities and ability to connect customer behavior with business outcomes.
+
+Analytics Web Application Development
+Michael has begun building modern analytics web applications as an extension of his analytics work.
+
+Business Context
+Traditional BI tools such as Tableau and Power BI are powerful, but they can limit user experience, flexibility, custom logic, and workflow integration.
+
+Michael sees an opportunity to build custom internal analytics applications that provide richer experiences, faster interactions, and more tailored business logic.
+
+Work Completed
+Michael recreated an executive OKR reporting experience as a custom web application using modern web technologies.
+
+The initial version was built rapidly with AI-assisted development and connected directly to BigQuery.
+
+Technologies
+React
+JavaScript / TypeScript
+Python
+BigQuery
+Cloud deployment
+GitHub Copilot
+Claude
+ChatGPT
+Career Relevance
+This work represents Michael’s future direction.
+
+It bridges:
+
+Business Intelligence
+Analytics Engineering
+Product Analytics
+Software Engineering
+User Experience
+AI-Assisted Development
+Portfolio Relevance
+This should be included carefully and only with sanitized, non-confidential examples.
+
+Recommended case study title:
+
+Modern Analytics Web Applications
+
+Certifications
+Tableau Certified Data Analyst
+Issued: April 2024
+Expiration: April 2026
+Credential ID: TDA-C01
+
+Relevance
+This certification validates Michael’s advanced Tableau knowledge, dashboarding capability, data analysis skill, and business intelligence expertise.
+
+Tableau Desktop Specialist
+Issued: January 2021
+
+Relevance
+This certification reflects Michael’s early formal validation in Tableau and business intelligence development.
+
+Tableau Designer
+Issued: September 2020
+
+Relevance
+This certification reflects Michael’s early focus on dashboard design, visual analytics, and BI usability.
+
+Microsoft Power BI Data Analyst Associate
+Status from prior resume: Expected Q2 2025
+
+Relevance
+Status should be confirmed before being included in any final resume or public portfolio.
+
+Awards and Recognition
+Insight Global — Be The Light Award
+Received in 2021.
+
+Relevance
+Recognized Michael for leadership, resilience, mentorship, collaboration, and professional growth.
+
+Home Depot Recognition
+Michael has received multiple Homer Awards and a Bronze Award for outstanding performance.
+
+Relevance
+Details should be added later once award photos, descriptions, and dates are available.
+
+Troy University Academic Awards
+Sorrell College of Business Student Excellence Award in Marketing
+Sorrell College of Business Student Research Showcase — 1st Place Undergraduate Paper, Empirical
+Troy University Chancellor’s List, multiple semesters
+Relevance
+These awards demonstrate early academic excellence, research capability, business curiosity, and leadership.
+
+Technical Skills
+Analytics and BI
+Tableau
+Tableau Server
+Power BI
+SQL
+BigQuery
+KPI Design
+Executive Reporting
+Dashboard Architecture
+Data Visualization
+Business Intelligence
+Data Storytelling
+Programming and Application Development
+Python
+HTML
+CSS
+JavaScript
+React
+TypeScript
+FastAPI
+Git
+GitHub
+VS Code
+Cloud and Data Platforms
+BigQuery
+Google Cloud Run
+THD Workbench / Analytics Engine
+Azure concepts
+Cloud-hosted analytics applications
+AI Tools
+GitHub Copilot
+Claude Sonnet
+ChatGPT
+NotebookLM
+Gemini / Vertex AI roadmap
+Design and UX
+Figma
+Dashboard Design Systems
+Wireframing
+Prototyping
+UX Collaboration
+Visual Hierarchy
+Data Visualization Best Practices
+Design Governance
+Business and Leadership
+Product Analytics
+Customer Experience Analytics
+Stakeholder Management
+Requirements Gathering
+Executive Communication
+Strategic Analytics
+Contractor Leadership
+Vendor Coordination
+Training and Enablement
+Cross-functional Collaboration
+Career Highlights
+Co-founded and sold a local delivery business while attending Troy University.
+Transitioned from recruiting and sales into analytics by intentionally building technical skills.
+Became Insight Global’s first officially titled Tableau Developer.
+Became Insight Global’s first Senior Business Intelligence Developer.
+Helped mature Insight Global’s BI function by establishing dashboard standards, design systems, training resources, QA processes, and analytics enablement practices.
+Delivered more than 60 enterprise dashboards across multiple business units.
+Led dashboard design transformation through templates, standards, Figma systems, QA processes, and governance.
+Created the company’s first standardized Tableau dashboard template.
+Helped launch Data Portal 1.0 to centralize access to analytics assets.
+Conducted Tableau workshops for 200+ sales and recruiting professionals.
+Partnered with UX to align analytics products with enterprise design standards.
+Partnered with Data Science on a predictive analytics pilot that generated approximately $5 million in incremental revenue in one sales vertical over eight weeks.
+Joined The Home Depot’s CX Data Science & Analytics organization supporting Pro Product.
+Led delivery of the B2B Target Customer Placemat dashboard.
+Served as analytics lead for the Non-Stock Quoting Agent Analytics Platform.
+Built a cloud-hosted internal analytics web application using Python, HTML, CSS, JavaScript, BigQuery, and Cloud Run.
+Began transitioning from traditional BI into modern analytics web application development.
+Developed a professional philosophy around building analytics products rather than simply reports.
+Resume Bullet Library
+This section contains resume-ready bullets that can be tailored for future resumes.
+
+The Home Depot
+Serve as Senior Data Analyst within CX Data Science & Analytics supporting Pro Product, partnering with Product, UX, Engineering, Data Science, and leadership to define measurement strategies and deliver analytics that influence product decisions.
+Led analytics strategy for an AI-powered B2B non-stock quoting agent, defining measurement across transcript analytics, topic classification, quote creation, experimentation, customer engagement, and downstream business outcomes.
+Designed and developed a cloud-hosted internal analytics application using Python, HTML, CSS, JavaScript, BigQuery, and Cloud Run to monitor quoting-agent performance, transcript behavior, session funnels, and customer friction points.
+Led the delivery of a B2B Target Customer Placemat dashboard, coordinating consulting resources and validating enterprise data to help Product, UX, and Engineering teams understand high-value Pro customer behavior.
+Conducted strategic competitive analysis evaluating HD Supply overlap, markdown behavior, and margin patterns to support Product leadership decision-making.
+Own and support executive-level OKR reporting across Pro Product capabilities, establishing visibility into strategic performance, KPI progress, and product outcomes.
+Insight Global
+Delivered 60+ enterprise dashboards supporting revenue, sales, recruiting, talent, operations, government, and executive reporting.
+Led the creation of standardized Tableau and Power BI dashboard templates, improving design consistency, usability, and development efficiency across enterprise reporting.
+Created Figma-based BI design systems aligned with UX standards, translating typography, spacing, layout, branding, and visual hierarchy into reusable dashboard design guidance.
+Built and operationalized a standardized dashboard design framework, improving usability and consistency across Tableau and Power BI enterprise reports.
+Introduced BI team resources including planning guides, Tableau Cloud documentation, and peer review processes integrating data accuracy and usability checks.
+Orchestrated weekly Tableau design workshops, elevating visualization skills, encouraging creative approaches, and strengthening adherence to best practices across the BI team.
+Facilitated bi-weekly sprint discussions, project reviews, and interactive Tableau and SQL trainings to enhance development workflows and technical skillsets.
+Partnered with Data Science to operationalize predictive analytics within Tableau dashboards, supporting an eight-week pilot that generated approximately $5 million in incremental revenue within one sales vertical.
+Partnered with UX to align analytics products with enterprise design principles, improving usability, consistency, and visual quality across reporting assets.
+Created dashboard development, QA, peer review, and publishing processes that improved reporting quality, data accuracy, and stakeholder trust.
+Built and enhanced centralized reporting portals that improved dashboard discoverability and access across business units.
+Created the company’s first standardized Tableau dashboard template, establishing the foundation for consistent design practices in Tableau.
+Conducted interactive Tableau workshops for 200+ sales and recruiting professionals, improving dashboard adoption and customization proficiency.
+Oversaw Tableau Server permissions and workbook configurations, ensuring secure access to reporting assets while minimizing administrative overhead.
+Partnered with Data Engineering to improve dashboard performance through optimized queries and data sources.
+Developed account growth tracking capabilities that surfaced market saturation insights and informed new market expansion decisions.
+QuickFix Delivery
+Co-founded and operated a local food delivery business while attending Troy University, serving students, residents, and local businesses in Troy, Alabama.
+Recruited and managed student delivery drivers while coordinating daily operations, customer service, restaurant relationships, and payment processing.
+Helped sell the business after graduation, gaining early experience in entrepreneurship, operations, leadership, and customer experience.
+Interview Story Library
+Story 1 — Transition From Sales to Analytics
+Theme:
+
+Career reinvention, self-learning, business context, technical growth.
+
+Core message:
+
+Michael performed well in sales and recruiting but realized he was more motivated by solving business problems through data, design, and technology. He intentionally developed technical skills and transitioned into analytics, eventually becoming a BI leader.
+
+Story 2 — Dashboard Design Transformation
+Theme:
+
+Leadership without authority, design systems, UX, governance.
+
+Core message:
+
+Michael identified inconsistency across enterprise dashboards and led a multi-phase effort to standardize design, improve usability, create templates, align with UX, and establish repeatable development processes.
+
+Story 3 — Predictive Hiring Analytics
+Theme:
+
+Data science partnership, business impact, model operationalization.
+
+Core message:
+
+Michael partnered with a Data Scientist to translate a predictive model into a business-facing dashboard and measurement framework that demonstrated meaningful revenue lift during a pilot.
+
+Story 4 — B2B Target Customer Placemat
+Theme:
+
+Project leadership, contractor management, stakeholder alignment.
+
+Core message:
+
+Michael led delivery of a strategic analytics tool by managing consultants, defining requirements, validating data, resolving quality issues, and delivering a decision-support dashboard for Product, UX, Engineering, and leadership.
+
+Story 5 — Non-Stock Quoting Agent Analytics Platform
+Theme:
+
+AI measurement, product analytics, analytics application development.
+
+Core message:
+
+Michael took a request to measure a chatbot pilot and developed a dedicated analytics application that enabled transcript exploration, topic classification, session analysis, quote tracking, and future experiment measurement.
+
+Story 6 — QuickFix Delivery
+Theme:
+
+Entrepreneurship, customer problem solving, operations.
+
+Core message:
+
+Michael identified a local customer need, built a delivery business while in college, hired drivers, managed operations, and sold the business after graduation.
+
+Story 7 — UX and BI Partnership
+Theme:
+
+Cross-functional collaboration, design systems, usability.
+
+Core message:
+
+Michael served as a bridge between UX and BI teams, translating enterprise design principles into practical dashboard standards without sacrificing functionality.
+
+Story 8 — Analytics Portal and Dashboard Discoverability
+Theme:
+
+Analytics adoption, self-service BI, internal product thinking.
+
+Core message:
+
+Michael helped organize and launch a centralized analytics portal that improved dashboard discoverability and gave stakeholders easier access to trusted reporting.
+
+Portfolio Case Study References
+The following experiences should be considered for portfolio case studies.
+
+Primary Case Studies
+Dashboard Design Transformation
+Non-Stock Quoting Agent Analytics Platform
+B2B Target Customer Placemat
+Predictive Hiring Analytics Platform
+Supporting Case Studies
+HD Supply Competitive Analysis
+Executive OKR Reporting
+Modern Analytics Web Applications
+QuickFix Delivery Founder Story
+Analytics Portal Modernization
+UX-Aligned BI Design System
+Public Portfolio Guidance
+The public portfolio should not expose confidential employer information.
+
+Do not publish:
+
+Internal dashboards
+Proprietary SQL
+Customer-level data
+Confidential financial figures
+Internal strategy documents
+Non-public product roadmaps
+Sensitive business results
+Use:
+
+Generalized business descriptions
+Mock data
+Recreated visuals
+Process diagrams
+Frameworks
+Architecture diagrams
+Sanitized screenshots only if approved and safe
+Future Updates Needed
+The following areas should be expanded later:
+
+Add exact Enterprise Holdings internship responsibilities.
+Confirm exact QuickFix Delivery dates.
+Add additional QuickFix Delivery details if available.
+Add full Home Depot OKR dashboard project details.
+Add more detail on Delivery Experience Analytics.
+Add more detail on Sales Enablement / Pro CRM analytics.
+Add more detail on NPS and Pro Experience analytics.
+Add Home Depot awards and recognition details.
+Add screenshots or descriptions of Homer Awards and Bronze Award.
+Confirm Power BI certification status.
+Add final resume versions once generated.
+Add STAR interview responses for each major project.
+Add more details on specific Insight Global dashboards if useful.
+Add additional information on the Data Portal and dashboard adoption metrics if available.
+Add details about dashboard design transformation phases, artifacts, and stakeholder feedback.
+Final Note
+This document should evolve continuously.
+
+Whenever Michael completes a major project, receives recognition, learns a new technology, updates his resume, prepares for an interview, or builds a new portfolio feature, this document should be updated first.
+
+The goal is to maintain one trusted source of professional truth that can power every future resume, portfolio page, cover letter, interview answer, LinkedIn update, and career conversation.

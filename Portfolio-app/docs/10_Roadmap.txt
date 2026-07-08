@@ -1,0 +1,182 @@
+# Development Roadmap
+
+## Purpose
+
+This document outlines the long-term vision, development roadmap, and implementation priorities for Michael Talerico's portfolio application.
+
+Unlike the other documentation in this repository, this document is intended to evolve continuously as the application grows.
+
+The roadmap should help prioritize work, communicate future direction, and ensure that new features align with the overall product vision.
+
+---
+
+# Vision
+
+The long-term goal is to build a portfolio that feels like a modern software product rather than a traditional personal website.
+
+The application should demonstrate:
+
+- Product thinking
+- Analytics expertise
+- Software engineering
+- User experience
+- Artificial intelligence
+- Professional storytelling
+
+The portfolio itself should become Michael's strongest case study.
+
+---
+
+# Phase 1 — Foundation
+
+## Goal
+
+Establish a production-ready portfolio foundation.
+
+### Objectives
+
+- Create the project architecture.
+- Build the design system.
+- Implement reusable UI components.
+- Create global layouts.
+- Configure routing.
+- Establish responsive behavior.
+- Deploy the initial application.
+
+**Status:** Planned
+
+---
+
+# Phase 2 — Core Experience
+
+## Goal
+
+Build the primary portfolio experience.
+
+### Features
+
+- Home page
+- About page
+- Resume
+- Skills
+- Contact page
+- Featured projects
+- Featured case studies
+
+**Status:** Planned
+
+---
+
+# Phase 3 — Case Studies
+
+## Goal
+
+Develop rich, interactive case study experiences.
+
+### Features
+
+- Individual case study pages
+- Interactive visuals
+- Process diagrams
+- Before-and-after comparisons
+- Business impact summaries
+- Technology breakdowns
+
+**Status:** Planned
+
+---
+
+# Phase 4 — Interactive Experiences
+
+## Goal
+
+Show, not just tell.
+
+### Features
+
+- Live analytics demos
+- Interactive dashboards
+- Architecture diagrams
+- Animated workflows
+- Data visualizations
+- Embedded prototypes
+
+**Status:** Future
+
+---
+
+# Phase 5 — Technical Content
+
+## Goal
+
+Share knowledge publicly.
+
+### Features
+
+- Technical blog
+- Design articles
+- Analytics articles
+- AI development notes
+- Speaking resources
+
+**Status:** Future
+
+---
+
+# Phase 6 — AI Features
+
+## Goal
+
+Demonstrate modern AI-enabled software.
+
+### Features
+
+- AI portfolio assistant
+- Semantic search
+- Interactive career timeline
+- AI-powered project exploration
+- Intelligent content recommendations
+
+**Status:** Future
+
+---
+
+# Phase 7 — Professional Platform
+
+## Goal
+
+Expand beyond a portfolio into a professional platform.
+
+### Potential Additions
+
+- Open-source projects
+- Community resources
+- Public dashboards
+- Templates
+- Design systems
+- Analytics utilities
+- Future SaaS products
+
+**Status:** Vision
+
+---
+
+# Success Metrics
+
+The project will be considered successful when it:
+
+- Clearly differentiates Michael from traditional BI professionals.
+- Demonstrates strong software engineering practices.
+- Communicates business impact through compelling case studies.
+- Reflects a premium level of design and craftsmanship.
+- Serves as a living representation of Michael's professional growth.
+
+---
+
+# Guiding Principle
+
+This project is never truly finished.
+
+As Michael's career evolves, the portfolio should evolve alongside it.
+
+Every new project, promotion, technology, and lesson learned should strengthen the portfolio and expand its value over time.

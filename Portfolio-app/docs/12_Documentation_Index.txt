@@ -1,0 +1,194 @@
+Documentation Index
+This file explains the purpose of each document in the /docs folder and how each one should be used when building the portfolio application.
+
+
+Before making major design, content, architecture, or feature decisions, AI assistants should read this index first, then reference the relevant source documents.
+
+Purpose of the Documentation System
+The /docs folder acts as the source of truth for the portfolio application.
+
+These documents are not just notes. They define:
+
+The product vision
+Michael’s professional positioning
+Career history
+Case studies
+Design philosophy
+Technical architecture
+Development standards
+Application requirements
+Long-term roadmap
+The portfolio should be built from these documents rather than improvised from scratch.
+
+Whenever AI assistants such as GitHub Copilot, Claude, ChatGPT, or other tools contribute to this project, they should use these files to understand the goals, tone, structure, and strategy behind the application.
+
+Document Overview
+00_Project_Vision.md
+Defines the overall purpose and mission of the portfolio application.
+
+Use this file to understand why the application exists, what it should communicate, and how it should feel as a professional product.
+
+This file should guide high-level decisions about the application experience.
+
+01_Professional_Profile.md
+Defines Michael Talerico’s professional identity, strengths, career direction, leadership style, communication style, and long-term goals.
+
+Use this file when writing homepage copy, About page content, professional summaries, bios, resume summaries, LinkedIn content, and interview positioning.
+
+This file should prevent the application from positioning Michael as only a dashboard developer or reporting analyst.
+
+02_Career_Timeline.md
+Provides a chronological overview of Michael’s professional journey.
+
+Use this file when building the About page, resume timeline, career journey sections, interactive timeline components, and professional narrative flows.
+
+This file helps explain how Michael evolved from entrepreneurship to analytics to product analytics and analytics application development.
+
+03_Core_Principles.md
+Defines the values and principles that guide Michael’s work.
+
+Use this file when shaping product decisions, case study tone, user experience decisions, and content strategy.
+
+This file should influence how the portfolio communicates Michael’s approach to problem solving, leadership, design, analytics, and technology.
+
+04_Product_Philosophy.md
+Defines how Michael thinks about building products.
+
+Use this file when designing application features, page flows, user journeys, and interactive experiences.
+
+This file should guide the portfolio toward feeling like a polished software product rather than a basic personal website.
+
+05_Design_Philosophy.md
+Defines the visual and user experience standards for the portfolio.
+
+Use this file when making decisions about layout, typography, spacing, hierarchy, motion, accessibility, dashboard visuals, and overall interface quality.
+
+This file should guide the application toward a premium SaaS-style aesthetic inspired by products like Apple, Stripe, Linear, Vercel, Notion, Framer, and Raycast.
+
+06_Technology_Stack.md
+Defines the preferred technology stack and engineering direction.
+
+Use this file when setting up the application architecture, choosing libraries, building components, creating backend services, and planning future AI or cloud integrations.
+
+This file should guide decisions around React, TypeScript, Vite, Tailwind, shadcn/ui, Framer Motion, Python, FastAPI, PostgreSQL, GitHub, Azure, and future AI integrations.
+
+07_Case_Studies.md
+Defines the master list of professional case studies that should appear in the portfolio.
+
+Use this file when building the Case Studies page, homepage featured case study sections, individual case study pages, project cards, and resume/portfolio alignment.
+
+This file identifies the most important professional stories to showcase, including Dashboard Design Transformation, Non-Stock Quoting Agent Analytics Platform, B2B Target Customer Placemat, Predictive Hiring Analytics Platform, and other supporting projects.
+
+08_Portfolio_Requirements.md
+Defines what the application needs to do.
+
+Use this file when building the site structure, routing, pages, navigation, feature list, and functional requirements.
+
+This file should guide the initial application build, including Home, About, Case Studies, Projects, Skills, Resume, and Contact pages.
+
+09_Development_Guidelines.md
+Defines coding standards, implementation principles, component expectations, accessibility requirements, documentation practices, and AI collaboration standards.
+
+Use this file while writing code.
+
+This file should guide how components are structured, how code is organized, how reusable patterns are created, and how the project maintains production-level quality.
+
+10_Roadmap.md
+Defines the phased development plan for the portfolio application.
+
+Use this file to prioritize work and avoid trying to build everything at once.
+
+This file should guide development phases, starting with foundation and core experience before moving into case studies, interactive demos, technical content, AI features, and future professional platform capabilities.
+
+11_Career.md
+Serves as the master career knowledge base.
+
+Use this file when generating resume content, About page copy, case study details, interview stories, career timeline sections, professional summaries, and portfolio positioning.
+
+This file is intentionally more detailed than a resume. It captures Michael’s full professional story, including QuickFix Delivery, Insight Global, The Home Depot, major projects, awards, technical skills, resume bullets, and interview stories.
+
+How These Documents Should Be Used Together
+The documents are designed to work as a system.
+
+For Application Architecture
+Reference:
+
+00_Project_Vision.md
+06_Technology_Stack.md
+08_Portfolio_Requirements.md
+09_Development_Guidelines.md
+10_Roadmap.md
+These files should guide folder structure, routing, reusable components, feature planning, technical stack, and engineering standards.
+
+For Visual Design
+Reference:
+
+04_Product_Philosophy.md
+05_Design_Philosophy.md
+08_Portfolio_Requirements.md
+09_Development_Guidelines.md
+These files should guide layout, spacing, typography, visual hierarchy, animations, interaction design, responsive behavior, and accessibility.
+
+For Homepage and About Page Content
+Reference:
+
+01_Professional_Profile.md
+02_Career_Timeline.md
+03_Core_Principles.md
+11_Career.md
+These files should guide Michael’s positioning, career narrative, professional philosophy, and personal brand.
+
+For Case Study Pages
+Reference:
+
+07_Case_Studies.md
+11_Career.md
+03_Core_Principles.md
+04_Product_Philosophy.md
+These files should guide which case studies matter, how they should be framed, what business problems they solved, and how they connect to Michael’s broader professional identity.
+
+For Resume and Career Content
+Reference:
+
+01_Professional_Profile.md
+02_Career_Timeline.md
+07_Case_Studies.md
+11_Career.md
+These files should guide future resume versions, LinkedIn updates, cover letters, recruiter messages, and interview preparation.
+
+For AI-Assisted Development
+Reference all documents before major implementation work.
+
+AI assistants should:
+
+Read the documentation before generating code.
+Treat the documentation as the source of truth.
+Preserve Michael’s professional positioning.
+Build with reusable components.
+Avoid generic portfolio templates.
+Prioritize premium design and strong user experience.
+Avoid exposing confidential employer information.
+Keep the application scalable for future features.
+Recommended Workflow for AI Assistants
+When starting a new task, follow this workflow:
+
+Read this Documentation Index.
+Identify which source documents apply to the task.
+Review those documents before generating code or content.
+Build the smallest useful version first.
+Reuse existing components and patterns.
+Keep the application aligned with the product vision.
+Update documentation when major decisions change.
+Key Reminder
+This project is not just a resume website.
+
+It is a professional analytics portfolio application designed to demonstrate Michael’s ability to combine:
+
+Business strategy
+Analytics
+Product thinking
+User experience
+Software engineering
+AI-assisted development
+Executive communication
+The application itself should become one of Michael’s strongest portfolio pieces.
