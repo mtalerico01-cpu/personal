@@ -1,0 +1,281 @@
+# Development Guidelines
+
+## Purpose
+
+This document defines the engineering standards, development practices, and implementation guidelines for this repository.
+
+The goal is to ensure that every feature, component, page, and service is built consistently, maintainably, and at a production level.
+
+This project should be treated like a real software product rather than a personal website.
+
+Whenever AI contributes code, documentation, or architecture, it should follow these guidelines.
+
+---
+
+# Engineering Philosophy
+
+This repository represents Michael Talerico's professional work.
+
+The quality of the codebase should communicate the same level of professionalism as the finished user experience.
+
+Every implementation should prioritize:
+
+- Maintainability
+- Readability
+- Simplicity
+- Scalability
+- Performance
+- Accessibility
+
+The goal is not simply to make something work.
+
+The goal is to build software that another senior engineer would enjoy maintaining.
+
+---
+
+# General Principles
+
+Always solve the business problem before optimizing technical implementation.
+
+Favor simplicity over unnecessary abstraction.
+
+Avoid clever code.
+
+Write code that is easy to understand six months later.
+
+Document important decisions.
+
+Prefer long-term maintainability over short-term speed.
+
+---
+
+# Code Quality
+
+All code should be:
+
+- Strongly typed
+- Modular
+- Reusable
+- Self-documenting
+- Consistent
+- Easy to test
+
+Avoid:
+
+- Large components
+- Duplicate logic
+- Magic numbers
+- Deep component nesting
+- Unnecessary complexity
+
+---
+
+# Component Design
+
+Components should follow a single responsibility.
+
+Whenever possible:
+
+- Keep components small.
+- Separate UI from business logic.
+- Reuse components.
+- Avoid page-specific implementations when reusable solutions exist.
+
+Every component should have a clear purpose.
+
+---
+
+# Folder Organization
+
+Organize code by feature rather than by file type whenever practical.
+
+Keep related files together.
+
+Examples include:
+
+- Components
+- Pages
+- Hooks
+- Services
+- Utilities
+- Types
+- Assets
+
+Maintain a predictable project structure.
+
+---
+
+# Naming Conventions
+
+Use descriptive names.
+
+Component names should clearly describe their purpose.
+
+Variable names should communicate intent.
+
+Avoid abbreviations unless they are widely understood.
+
+Consistency is more important than personal preference.
+
+---
+
+# State Management
+
+Keep state as local as possible.
+
+Avoid unnecessary global state.
+
+Favor simple solutions before introducing additional libraries.
+
+Shared state should only exist when it improves the overall architecture.
+
+---
+
+# API Design
+
+Backend APIs should be:
+
+- Predictable
+- RESTful
+- Well documented
+- Consistent
+
+Separate business logic from routing.
+
+Validate all inputs.
+
+Handle errors gracefully.
+
+---
+
+# Styling
+
+Styling should follow the design system.
+
+Avoid one-off styles.
+
+Favor reusable utility classes and shared design tokens.
+
+Spacing, typography, colors, and layout should remain consistent throughout the application.
+
+---
+
+# Responsive Design
+
+Every feature should work well on:
+
+- Desktop
+- Tablet
+- Mobile
+
+Mobile support should never be treated as an afterthought.
+
+---
+
+# Performance
+
+Optimize for:
+
+- Fast initial load
+- Efficient rendering
+- Minimal bundle size
+- Lazy loading
+- Image optimization
+
+Performance should be considered throughout development.
+
+---
+
+# Accessibility
+
+Accessibility is required.
+
+Ensure:
+
+- Semantic HTML
+- Keyboard navigation
+- Screen reader support
+- Proper color contrast
+- Visible focus states
+
+Accessibility improves usability for all users.
+
+---
+
+# AI Collaboration
+
+AI should accelerate development while preserving engineering quality.
+
+AI should assist with:
+
+- Boilerplate generation
+- Refactoring
+- Documentation
+- Testing
+- Debugging
+- Architecture discussions
+
+Michael remains responsible for:
+
+- Product vision
+- Business logic
+- User experience
+- Final implementation decisions
+- Code review
+
+AI suggestions should always be reviewed before acceptance.
+
+---
+
+# Git Workflow
+
+Commit frequently.
+
+Use meaningful commit messages.
+
+Keep commits focused on a single logical change.
+
+Maintain a clean commit history.
+
+Documentation should evolve alongside the implementation.
+
+---
+
+# Documentation Standards
+
+Significant architectural decisions should be documented.
+
+Reusable components should include clear descriptions.
+
+Future contributors should be able to understand the project without relying on tribal knowledge.
+
+---
+
+# Continuous Improvement
+
+This repository should evolve continuously.
+
+Refactoring is encouraged when it improves:
+
+- Readability
+- Maintainability
+- Reusability
+- Performance
+- Developer experience
+
+Technical debt should be minimized whenever practical.
+
+---
+
+# Definition of Done
+
+A feature is complete when:
+
+- Business requirements are satisfied.
+- Code is clean and maintainable.
+- Responsive behavior is verified.
+- Accessibility has been considered.
+- Documentation has been updated.
+- The implementation aligns with the project's design system and engineering standards.
+
+Shipping quality is more important than shipping quickly.

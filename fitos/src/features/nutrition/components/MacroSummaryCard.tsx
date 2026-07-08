@@ -142,8 +142,8 @@ function getMacroThemeColors(theme: ReturnType<typeof useActiveTheme>) {
   }
 
   return {
-    protein: theme.colors.status.info,
-    proteinMuted: 'rgba(94,173,217,0.16)',
+    protein: theme.colors.status.success,
+    proteinMuted: 'rgba(94,158,53,0.14)',
     carbs: theme.colors.persona.core,
     carbsMuted: theme.colors.persona.soft,
     fat: theme.colors.status.warning,

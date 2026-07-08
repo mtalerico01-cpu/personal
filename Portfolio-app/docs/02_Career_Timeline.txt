@@ -1,0 +1,201 @@
+# Career Timeline
+
+## Purpose
+
+This document provides a chronological overview of Michael Talerico's professional career.
+
+Unlike a traditional resume, this document exists to preserve context around major career decisions, professional growth, leadership opportunities, entrepreneurial experiences, and technical development.
+
+Its purpose is to help AI assistants understand how Michael's career evolved over time so future content accurately reflects his experience and professional progression.
+
+---
+
+# 2014–2018 | Troy University
+
+Michael attended Troy University where he earned a Bachelor of Science in Business Administration with a concentration in Global Business and Marketing.
+
+During college he developed a strong interest in entrepreneurship, marketing, customer behavior, and business strategy.
+
+Achievements included:
+
+- Sorrell College of Business Student Excellence Award
+- First Place Undergraduate Research Showcase (Empirical Paper)
+- Vice President of the Marketing Club
+- Chancellor's List
+
+---
+
+# 2016–2018 | Co-Founder | QuickFix Delivery LLC
+
+While attending Troy University, Michael co-founded QuickFix Delivery LLC in Troy, Alabama.
+
+The business was created after recognizing that students and members of the local community had limited access to food delivery services.
+
+Over approximately two years Michael helped:
+
+- Launch the business
+- Develop operational processes
+- Hire and manage college student delivery drivers
+- Coordinate daily operations
+- Build relationships with local restaurants
+- Improve customer experience
+- Scale operations while attending school full time
+
+Initially the business accepted cash payments before later implementing Square card readers.
+
+The company was successfully sold after graduation in 2018.
+
+Although relatively small, this experience established Michael's passion for entrepreneurship, customer experience, operations, and solving real business problems.
+
+---
+
+# 2018 | Insight Global | Recruiting & Sales
+
+Following graduation, Michael joined Insight Global in a recruiting and sales role.
+
+While he performed well, he quickly realized that his long-term interests aligned more closely with solving business problems than traditional sales.
+
+This realization became a major turning point in his career.
+
+Rather than remaining in sales, Michael intentionally pursued opportunities within analytics.
+
+---
+
+# 2019–2025 | Insight Global | Analytics Organization
+
+Michael transitioned into Insight Global's growing analytics organization during its early stages.
+
+Over approximately six years, he played an important role in helping the organization mature as it expanded from a small startup-style analytics team into an organization of roughly eighty analytics and data professionals.
+
+During this period he became:
+
+- Insight Global's first Tableau Developer
+- Insight Global's first Senior Business Intelligence Developer
+
+His responsibilities expanded far beyond dashboard development.
+
+Major areas of contribution included:
+
+- Enterprise dashboard development
+- Dashboard design standards
+- Tableau design system
+- Power BI templates
+- UX collaboration
+- Analytics governance
+- Dashboard QA process
+- Internal documentation
+- Tableau training
+- Product thinking
+- Executive reporting
+- Predictive analytics implementation
+- Cross-functional leadership
+
+He partnered extensively with:
+
+- Data Science
+- Analytics Engineering
+- Software Engineering
+- UX
+- QA
+- Automation
+- Executive Leadership
+- Revenue
+- Sales
+- Recruiting
+- Operations
+
+This experience gave him a comprehensive understanding of how enterprise analytics organizations function.
+
+---
+
+# Major Insight Global Accomplishments
+
+Notable accomplishments include:
+
+- Created the enterprise Tableau design framework.
+- Developed standardized dashboard templates.
+- Created Power BI dashboard templates.
+- Built and expanded the company's Data Portal.
+- Established dashboard design standards.
+- Developed dashboard QA and development processes.
+- Created Figma-based design system aligned with enterprise UX standards.
+- Led Tableau design workshops.
+- Partnered with Data Science on predictive analytics initiatives.
+- Built executive dashboards supporting strategic business decisions.
+- Delivered more than sixty enterprise dashboards.
+- Received the 2021 "Be The Light" award.
+
+---
+
+# 2025–Present | The Home Depot
+
+Michael joined The Home Depot as a Senior Data Analyst within the Customer Experience Data Science & Analytics organization.
+
+He currently supports the Pro Product business.
+
+His work focuses on Product Analytics, Customer Experience, Strategic Analytics, Executive Reporting, AI Measurement, and Decision Support.
+
+He regularly partners with:
+
+- Product Management
+- UX
+- Software Engineering
+- Data Science
+- Program Management
+- Executive Leadership
+
+His role has increasingly evolved beyond dashboard development into strategic product analytics and software-enabled analytics solutions.
+
+---
+
+# Major Home Depot Initiatives
+
+Significant initiatives include:
+
+- Executive OKR Dashboard
+- HD Supply Competitive Analysis
+- B2B Target Customer Placemat
+- AI Non-Stock Chatbot Measurement Framework
+- Executive KPI Reporting
+- Product Analytics Strategy
+- Contractor leadership and project management
+- Analytics web application development
+
+Michael also serves as project lead on several initiatives, coordinating consultants, defining requirements, validating business logic, designing analytics solutions, and presenting findings to stakeholders.
+
+---
+
+# Current Professional Focus
+
+Today Michael is intentionally expanding beyond traditional analytics.
+
+Current areas of focus include:
+
+- React
+- TypeScript
+- Python
+- FastAPI
+- AI-assisted software development
+- Internal analytics applications
+- Product thinking
+- Modern UX
+- Cloud-hosted software
+
+His portfolio website represents the next step in that journey and serves as both a professional portfolio and a demonstration of modern analytics application development.
+
+---
+
+# Long-Term Vision
+
+Michael's long-term vision is to become a leader who combines:
+
+- Product Analytics
+- Software Engineering
+- Artificial Intelligence
+- User Experience
+- Business Strategy
+- Executive Communication
+
+to design modern internal software products that transform how organizations make decisions.
+
+Every career move has intentionally built toward that goal.

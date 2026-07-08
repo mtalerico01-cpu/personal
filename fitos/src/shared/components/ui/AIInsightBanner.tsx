@@ -1,10 +1,11 @@
 /**
- * AIInsightBanner — inline AI coach callout.
+ * AIInsightBanner — inline Coach insight callout.
  * Reusable across Nutrition, Training, and Progress screens.
  */
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from './Text';
+import { SparklesIcon } from './NavIcon';
 import { colors } from '@/shared/theme/colors';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing, radius } from '@/shared/theme/spacing';
@@ -14,7 +15,7 @@ interface AIInsightBannerProps {
   label?: string;
 }
 
-export function AIInsightBanner({ text, label = 'AI INSIGHT' }: AIInsightBannerProps) {
+export function AIInsightBanner({ text, label = 'COACH INSIGHT' }: AIInsightBannerProps) {
   const theme = useActiveTheme();
 
   return (
@@ -25,12 +26,16 @@ export function AIInsightBanner({ text, label = 'AI INSIGHT' }: AIInsightBannerP
           backgroundColor: theme.colors.surface.default,
           borderColor: theme.colors.border.subtle,
           borderLeftColor: theme.colors.border.persona,
-          shadowOpacity: theme.mode === 'dark' ? 0.18 : 0.07,
+          borderWidth: theme.mode === 'dark' ? 1 : 2,
+          shadowOpacity: theme.mode === 'dark' ? 0.10 : 0,
+          shadowRadius: theme.mode === 'dark' ? 12 : 0,
+          elevation: theme.mode === 'dark' ? 1 : 0,
         },
       ]}
     >
       <View style={styles.labelRow}>
-        <View style={[styles.badge, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default }]}> 
+        <View style={[styles.badge, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default }]}>
+          <SparklesIcon color={theme.colors.persona.core} size={18} />
           <Text variant="labelMedium" color={theme.colors.persona.core}>
             {label}
           </Text>
@@ -53,9 +58,9 @@ const styles = StyleSheet.create({
     gap: spacing[2],
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.18,
-    shadowRadius: 18,
-    elevation: 2,
+    shadowOpacity: 0.10,
+    shadowRadius: 12,
+    elevation: 1,
   },
   labelRow: {
     flexDirection: 'row',
@@ -63,10 +68,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   badge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
     borderWidth: 1,
     paddingHorizontal: spacing[2],
     paddingVertical: 3,
-    borderRadius: radius.full,
+    borderRadius: radius.sm,
   },
   statusDot: {
     width: 7,

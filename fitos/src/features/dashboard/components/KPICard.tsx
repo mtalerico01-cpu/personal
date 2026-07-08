@@ -7,29 +7,43 @@ import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing } from '@/shared/theme/spacing';
 import type { KPICardData } from '../types';
 
+// Status derived from theme tokens at render time — see deriveStatusColor()
+type KPIStatus = 'empty' | 'inProgress' | 'complete';
+
+function deriveStatus(current?: number, progress?: number): KPIStatus {
+  if (current === undefined || current === null || current === 0) return 'empty';
+  if ((progress ?? 0) >= 1) return 'complete';
+  return 'inProgress';
+}
+
 interface KPICardProps {
   data: KPICardData;
 }
 
 export function KPICard({ data }: KPICardProps) {
   const theme = useActiveTheme();
-  const { label, value, unit, progress, trendLabel, trend } = data;
+  const { label, value, unit, progress, trendLabel, current } = data;
+
+  // Metrics without a goal (e.g. Weight) are tracking-only — no status dot, always primary text
+  const hasGoal = progress !== undefined;
+  const status = hasGoal ? deriveStatus(current, progress) : null;
+  const statusColor = status === 'complete' ? theme.colors.persona.core
+    : status === 'inProgress' ? theme.colors.status.warning
+    : theme.colors.text.disabled;
 
   return (
     <Card style={styles.card} padding={14}>
-      {/* Header row: label + trend indicator */}
+      {/* Header row: label + status dot (only when goal-based) */}
       <View style={styles.header}>
         <Text variant="labelMedium" color={colors.textTertiary}>
           {label.toUpperCase()}
         </Text>
-        {trend && (
-          <View style={[styles.trendDot, { backgroundColor: trendColor(trend, theme) }]} />
-        )}
+        {hasGoal && <View style={[styles.statusDot, { backgroundColor: statusColor }]} />}
       </View>
 
       {/* Primary value */}
       <View style={styles.valueRow}>
-        <Text variant="displaySmall" color={colors.textPrimary}>
+        <Text variant="displaySmall" color={status === 'empty' ? colors.textTertiary : colors.textPrimary}>
           {value}
         </Text>
         {unit && (
@@ -39,15 +53,15 @@ export function KPICard({ data }: KPICardProps) {
         )}
       </View>
 
-      {/* Progress bar */}
+      {/* Progress bar — colored by status */}
       {progress !== undefined && (
-        <View style={[styles.progressTrack, { backgroundColor: theme.colors.border.subtle }]}> 
+        <View style={[styles.progressTrack, { backgroundColor: theme.colors.border.subtle }]}>
           <View
             style={[
               styles.progressFill,
               {
                 width: `${Math.min(progress * 100, 100)}%`,
-                backgroundColor: theme.colors.persona.core,
+                backgroundColor: statusColor,
               },
             ]}
           />
@@ -80,7 +94,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: spacing[2],
   },
-  trendDot: {
+  statusDot: {
     width: 6,
     height: 6,
     borderRadius: 3,

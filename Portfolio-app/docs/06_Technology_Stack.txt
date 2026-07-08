@@ -1,0 +1,307 @@
+# Technology Stack
+
+## Purpose
+
+This document defines the technology stack, architectural standards, development philosophy, and engineering principles for this repository.
+
+Its purpose is to ensure consistency across the entire codebase.
+
+Whenever AI generates code, recommends libraries, or proposes architecture, it should align with the standards described in this document.
+
+Technology decisions should prioritize long-term maintainability, scalability, readability, developer experience, and performance over unnecessary complexity.
+
+---
+
+# Overall Architecture
+
+This application should follow a modern full-stack architecture built around TypeScript.
+
+The frontend should be highly interactive, responsive, and component-driven.
+
+The backend should expose a clean API that powers future AI features, authentication, analytics, and business logic.
+
+The application should be designed to grow over time rather than remain a simple portfolio website.
+
+---
+
+# Frontend
+
+Preferred technologies:
+
+- React
+- TypeScript
+- Vite
+- React Router
+- Tailwind CSS
+- shadcn/ui
+- Framer Motion
+- Lucide Icons
+- TanStack Query
+- React Hook Form
+- Zod
+
+The frontend should be:
+
+- Component-driven
+- Mobile-first
+- Fully responsive
+- Accessible
+- Fast
+- Highly reusable
+
+---
+
+# Backend
+
+Preferred technologies:
+
+- Python
+- FastAPI
+
+The backend should expose REST APIs that support:
+
+- Contact forms
+- Analytics
+- AI integrations
+- Future authentication
+- Dynamic portfolio content
+- Future SaaS products
+
+The backend should be modular and designed for future expansion.
+
+---
+
+# Database
+
+Preferred database:
+
+PostgreSQL
+
+Reasons:
+
+- Production-ready
+- Relational
+- Excellent ecosystem
+- Scalable
+- Strong compatibility with Python
+
+Use an ORM where appropriate.
+
+---
+
+# AI
+
+Artificial Intelligence is a first-class citizen within this repository.
+
+Primary AI tools include:
+
+- GitHub Copilot
+- ChatGPT
+- Claude
+- NotebookLM
+
+Future AI integrations may include:
+
+- OpenAI
+- Anthropic
+- Vercel AI SDK
+- MCP Servers
+- AI Agents
+
+AI should be used to accelerate development while maintaining engineering quality.
+
+---
+
+# Cloud
+
+Preferred cloud platform:
+
+Microsoft Azure
+
+Potential services include:
+
+- Azure App Service
+- Azure Static Web Apps
+- Azure PostgreSQL
+- Azure Storage
+- Azure Functions
+
+Cloud architecture should remain simple until additional complexity becomes necessary.
+
+---
+
+# Version Control
+
+Git should be used for all development.
+
+Repository hosted on GitHub.
+
+Every feature should be developed through clean commits.
+
+Meaningful commit messages should be used.
+
+Documentation should evolve alongside the codebase.
+
+---
+
+# Development Environment
+
+Preferred tools:
+
+- VS Code
+- GitHub Copilot
+- Claude
+- ChatGPT
+- Figma
+- Postman
+- Docker (future)
+
+The development environment should optimize productivity and maintain consistency.
+
+---
+
+# UI Development Standards
+
+Use reusable components.
+
+Avoid duplicate layouts.
+
+Create a consistent design system.
+
+Favor composition over repetition.
+
+Components should remain small and focused.
+
+Each component should have a single responsibility.
+
+---
+
+# Code Standards
+
+Always use TypeScript.
+
+Avoid using "any".
+
+Prefer strong typing.
+
+Write self-documenting code.
+
+Use meaningful variable names.
+
+Separate business logic from UI.
+
+Prefer composition over inheritance.
+
+Keep components focused and reusable.
+
+Write code that another engineer can easily understand six months later.
+
+---
+
+# Performance
+
+Prioritize:
+
+- Fast page loads
+- Lazy loading
+- Code splitting
+- Optimized images
+- Responsive rendering
+- Minimal unnecessary JavaScript
+
+Performance should be considered throughout development—not as a final optimization step.
+
+---
+
+# Accessibility
+
+Every feature should meet modern accessibility standards.
+
+Prioritize:
+
+- Semantic HTML
+- Keyboard navigation
+- Proper ARIA attributes
+- Color contrast
+- Screen reader compatibility
+- Focus management
+
+Accessibility should be built into the design rather than added later.
+
+---
+
+# Security
+
+Even though this is initially a portfolio application, code should be written as though it will eventually support authenticated users.
+
+Never expose secrets.
+
+Use environment variables.
+
+Validate all inputs.
+
+Sanitize user input.
+
+Follow modern web security best practices.
+
+---
+
+# Testing
+
+As the application grows, include:
+
+- Unit testing
+- Component testing
+- API testing
+
+Future additions may include end-to-end testing.
+
+Testing should focus on business logic and critical user workflows.
+
+---
+
+# Documentation
+
+Every major architectural decision should be documented.
+
+Every reusable component should be easy to understand.
+
+Documentation should evolve alongside the application.
+
+Future contributors—including AI assistants—should be able to quickly understand the project.
+
+---
+
+# Engineering Philosophy
+
+Technology is a tool—not the objective.
+
+Choose technologies because they solve problems well.
+
+Avoid unnecessary frameworks or dependencies.
+
+Favor simplicity.
+
+Favor maintainability.
+
+Favor readability.
+
+Build software that can evolve over many years.
+
+---
+
+# Long-Term Vision
+
+Although this repository begins as a professional portfolio, it should be architected to support future expansion into a collection of production-quality software products.
+
+The architecture should be flexible enough to support:
+
+- Additional applications
+- AI-powered experiences
+- Shared component libraries
+- Shared backend services
+- Authentication
+- Analytics
+- SaaS products
+
+Every architectural decision should consider future growth without introducing unnecessary complexity today.

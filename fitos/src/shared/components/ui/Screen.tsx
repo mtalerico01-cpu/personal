@@ -66,7 +66,6 @@ export function Screen({
 
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.colors.background.primary }]}>
-      <View style={[styles.depthGlow, { backgroundColor: theme.colors.persona.ambient }]} />
       {content}
     </SafeAreaView>
   );
@@ -77,20 +76,12 @@ const styles = StyleSheet.create({
     flex: 1,
     overflow: 'hidden',
   },
-  depthGlow: {
-    position: 'absolute',
-    top: 92,
-    left: '18%',
-    width: 240,
-    height: 240,
-    borderRadius: 120,
-    opacity: 0.026,
-  },
   scroll: {
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: spacing[10],
+    // Extra bottom padding so content is never hidden behind the floating tab bar (≈86px tall)
+    paddingBottom: 104,
   },
   staticContent: {
     flex: 1,

@@ -21,7 +21,7 @@ export function ActionPreview({ action, messageId, onConfirm, onCancel }: Action
       style={[
         styles.container,
         {
-          backgroundColor: theme.colors.surface.translucent,
+          backgroundColor: theme.colors.surface.default,
           borderColor: isDone ? theme.colors.status.success : theme.colors.border.persona,
           opacity: isCancelled ? 0.58 : 1,
         },
@@ -53,7 +53,7 @@ export function ActionPreview({ action, messageId, onConfirm, onCancel }: Action
             accessibilityLabel={`Cancel ${action.title}`}
             onPress={() => onCancel?.(action.id, messageId)}
             activeOpacity={0.75}
-            style={[styles.secondary, { borderColor: theme.colors.border.default, backgroundColor: theme.colors.surface.default }]}
+            style={[styles.secondary, { borderColor: theme.colors.border.default, backgroundColor: theme.colors.surface.subtle }]}
           >
             <Text variant="labelLarge" color={theme.colors.text.secondary}>Cancel</Text>
           </TouchableOpacity>
@@ -72,13 +72,13 @@ const styles = StyleSheet.create({
     maxWidth: 680,
     alignSelf: 'center',
     borderWidth: 1,
-    borderRadius: 16,
-    padding: 14,
-    gap: 7,
+    borderRadius: 14,
+    padding: 16,
+    gap: 8,
   },
-  eyebrow: { textTransform: 'uppercase', letterSpacing: 0.8 },
+  eyebrow: { textTransform: 'uppercase', letterSpacing: 1.2 },
   description: { lineHeight: 20 },
   actions: { flexDirection: 'row', gap: 10, marginTop: 6 },
-  primary: { flex: 1, minHeight: 44, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
-  secondary: { flex: 1, minHeight: 44, borderRadius: 12, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  primary: { flex: 1, minHeight: 44, borderRadius: 10, alignItems: 'center', justifyContent: 'center' },
+  secondary: { flex: 1, minHeight: 44, borderRadius: 10, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
 });

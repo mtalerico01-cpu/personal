@@ -57,13 +57,14 @@ export default function ProgressScreen() {
       <View style={styles.gap} />
       <View style={styles.liftGrid}>
         {strength.lifts.map((lift) => (
-          <StrengthMetricCard
-            key={lift.id}
-            name={lift.name}
-            estimated1RMLbs={lift.estimated1RMLbs}
-            ninetyDayChangeLbs={lift.ninetyDayChangeLbs}
-            relativeStrengthLabel={lift.relativeStrengthLabel}
-          />
+          <View key={lift.id} style={styles.liftGridItem}>
+            <StrengthMetricCard
+              name={lift.name}
+              estimated1RMLbs={lift.estimated1RMLbs}
+              ninetyDayChangeLbs={lift.ninetyDayChangeLbs}
+              relativeStrengthLabel={lift.relativeStrengthLabel}
+            />
+          </View>
         ))}
       </View>
 
@@ -87,5 +88,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: spacing[3],
+  },
+  liftGridItem: {
+    // Two columns: each item takes half the container minus half the gap
+    flexBasis: '47%',
+    flexGrow: 1,
+    flexShrink: 0,
+    minWidth: 140,
   },
 });

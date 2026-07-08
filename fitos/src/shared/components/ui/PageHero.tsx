@@ -20,8 +20,11 @@ export function PageHero({ eyebrow, title, detail }: PageHeroProps) {
         styles.container,
         {
           borderColor: theme.colors.border.subtle,
+          borderWidth: theme.mode === 'dark' ? 1 : 2,
           backgroundColor: theme.colors.surface.default,
-          shadowOpacity: theme.mode === 'dark' ? 0.2 : 0.07,
+          shadowOpacity: theme.mode === 'dark' ? 0.10 : 0,
+          shadowRadius: theme.mode === 'dark' ? 12 : 0,
+          elevation: theme.mode === 'dark' ? 1 : 0,
         },
       ]}
     >
@@ -50,10 +53,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing[5],
     paddingVertical: spacing[5],
     shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 18,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.10,
+    shadowRadius: 12,
+    elevation: 1,
   },
   topRow: {
     flexDirection: 'row',
@@ -62,8 +65,8 @@ const styles = StyleSheet.create({
     marginBottom: spacing[2],
   },
   rule: {
-    width: 18,
-    height: 1,
+    width: 22,
+    height: 2,
     borderRadius: 1,
   },
   eyebrow: {
@@ -71,8 +74,8 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   title: {
-    fontWeight: '300',
-    letterSpacing: 0.2,
+    fontWeight: '600',
+    letterSpacing: 0,
   },
   detail: {
     marginTop: spacing[2],

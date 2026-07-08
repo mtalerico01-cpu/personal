@@ -1,0 +1,209 @@
+# Case Studies
+
+## Purpose
+
+This document serves as the master index for all professional case studies featured throughout Michael Talerico's portfolio.
+
+The purpose of these case studies is not to showcase technical skills alone, but to demonstrate how Michael approaches business problems, product strategy, analytics, software development, leadership, and cross-functional collaboration.
+
+Each case study should emphasize:
+
+- Business context
+- Problem definition
+- Michael's role
+- Solution design
+- Collaboration
+- Business impact
+- Lessons learned
+
+Whenever possible, projects should focus on decision-making rather than technologies.
+
+Technologies support the story—they should never become the story.
+
+---
+
+# Portfolio Case Studies
+
+## 1. Dashboard Design Transformation
+
+**Organization:** Insight Global
+
+**Primary Themes**
+
+- Dashboard Design
+- UX
+- Design Systems
+- Business Intelligence
+- Analytics Governance
+
+**Summary**
+
+Led a multi-year initiative to modernize enterprise analytics by creating standardized dashboard templates, visualization standards, QA processes, Figma design systems, and a centralized analytics portal. The project established a scalable framework for delivering consistent, high-quality business intelligence across the organization.
+
+---
+
+## 2. Predictive Hiring Analytics Platform
+
+**Organization:** Insight Global
+
+**Primary Themes**
+
+- Predictive Analytics
+- Data Science Partnership
+- Executive Reporting
+- Product Thinking
+
+**Summary**
+
+Partnered closely with Data Science to operationalize a predictive model that identified high-quality job requisitions. Designed executive-facing measurement dashboards and monitoring capabilities that helped evaluate business impact during a pilot which generated approximately $5 million in incremental revenue within one sales organization over eight weeks.
+
+---
+
+## 3. B2B Target Customer Placemat
+
+**Organization:** The Home Depot
+
+**Primary Themes**
+
+- Product Analytics
+- Customer Segmentation
+- Contractor Leadership
+- Strategic Analytics
+
+**Summary**
+
+Led the delivery of a strategic analytics platform that enables Product, UX, Engineering, and B2B leadership to better understand The Home Depot's highest-value professional customers. Managed consulting resources, validated enterprise data, designed KPI frameworks, and delivered an interactive decision-support dashboard.
+
+---
+
+## 4. Non-Stock Quoting Agent Analytics Platform
+
+**Organization:** The Home Depot
+
+**Primary Themes**
+
+- Product Analytics
+- AI Measurement
+- Customer Experience
+- Analytics Applications
+- Experimentation
+
+**Summary**
+
+Served as the analytics lead for a B2B non-stock quoting agent embedded within Product Information Pages. Designed the measurement strategy across multiple pilot phases and developed a cloud-hosted internal analytics application that combined transcript analytics, customer behavior, conversation flow, topic analysis, experimentation metrics, and executive reporting into a centralized platform for evaluating product performance and business impact.
+
+---
+
+## 5. HD Supply Competitive Analysis
+
+**Organization:** The Home Depot
+
+**Primary Themes**
+
+- Competitive Intelligence
+- Strategic Analytics
+- Pricing
+- Margin Analysis
+
+**Summary**
+
+Led a strategic analysis evaluating pricing behavior, markdown patterns, and competitive overlap between The Home Depot and HD Supply. Delivered executive insights that helped leadership better understand competitive dynamics and opportunities to improve pricing strategy.
+
+---
+
+## 6. Executive OKR Reporting
+
+**Organization:** The Home Depot
+
+**Primary Themes**
+
+- Executive Reporting
+- KPI Governance
+- Product Measurement
+- Decision Support
+
+**Summary**
+
+Led executive KPI reporting across multiple Pro Product initiatives, establishing governance around metric definitions, targets, reporting cadence, and executive visibility. Built reporting solutions that helped leadership monitor strategic objectives and align priorities across product teams.
+
+---
+
+## 7. Modern Analytics Web Applications
+
+**Organization:** Personal Technical Development
+
+**Primary Themes**
+
+- React
+- Python
+- AI-Assisted Development
+- Analytics Engineering
+
+**Summary**
+
+Transitioned beyond traditional business intelligence by building modern analytics web applications using React, Python, and cloud technologies. These projects demonstrate a shift toward creating custom software experiences that provide greater flexibility and richer decision-support capabilities than conventional dashboards.
+
+---
+
+## 8. QuickFix Delivery
+
+**Organization:** QuickFix Delivery LLC
+
+**Primary Themes**
+
+- Entrepreneurship
+- Operations
+- Customer Experience
+- Business Strategy
+
+**Summary**
+
+Co-founded and operated a local food delivery business while attending Troy University. Helped launch, operate, and grow the business over two years by hiring delivery drivers, managing day-to-day operations, improving customer experience, and building relationships with local restaurants before successfully selling the company after graduation.
+
+---
+
+# Case Study Standards
+
+Every case study should follow a consistent structure:
+
+1. Business Context
+2. Problem Statement
+3. Why It Mattered
+4. Michael's Role
+5. Stakeholders
+6. Challenges
+7. Solution
+8. Technical Approach
+9. Business Impact
+10. Lessons Learned
+11. Visual Artifacts
+
+---
+
+# Portfolio Prioritization
+
+The portfolio homepage should highlight four featured case studies:
+
+1. Dashboard Design Transformation
+2. Non-Stock Quoting Agent Analytics Platform
+3. B2B Target Customer Placemat
+4. Predictive Hiring Analytics Platform
+
+Supporting case studies should appear below these, allowing visitors to explore additional work based on their interests.
+
+---
+
+# Confidentiality
+
+All public-facing case studies should respect employer confidentiality.
+
+Do not publish:
+
+- Proprietary dashboards
+- Internal SQL
+- Sensitive customer data
+- Confidential financial metrics
+- Internal roadmaps
+- Non-public product details
+
+Whenever necessary, recreate visuals using mock data, generalized metrics, or conceptual diagrams while preserving the overall business story.

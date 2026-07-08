@@ -2,9 +2,8 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from '@/shared/components/ui/Text';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
+import { brand } from '@/branding/brand';
 import type { ChatMessage } from '../store/coachStore';
-import { PERSONAS } from '../../ai/personas/personas';
-import { CoachIdentityMark } from './CoachIdentityMark';
 import { ActionPreview } from './ActionPreview';
 
 interface CoachMessageProps {
@@ -22,16 +21,14 @@ export function CoachMessage({ message, onConfirm, onCancel }: CoachMessageProps
 
   const aiMessage = message.aiMessage;
   if (!aiMessage) return null;
-  const persona = PERSONAS[aiMessage.personaId];
-  const activePersona = theme.mode === 'dark' ? 'cedric' : 'elara';
   const actions = aiMessage.proposedActions ?? [];
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.headerRow}>
-        <CoachIdentityMark persona={aiMessage.personaId} size={28} active={aiMessage.personaId === activePersona} />
+        <View style={[styles.messageRule, { backgroundColor: theme.colors.persona.core }]} />
         <Text variant="labelMedium" color={theme.colors.text.muted} style={styles.name}>
-          {persona.name}
+          {brand.shortCoachName}
         </Text>
       </View>
       <View style={styles.content}>
@@ -81,7 +78,7 @@ export function CoachThinkingState() {
   return (
     <View style={styles.wrapper}>
       <View style={styles.headerRow}>
-        <CoachIdentityMark persona={theme.mode === 'dark' ? 'cedric' : 'elara'} size={28} />
+        <View style={[styles.messageRule, { backgroundColor: theme.colors.persona.core }]} />
         <Text variant="labelMedium" color={theme.colors.text.muted}>Reviewing your data</Text>
       </View>
       <View style={styles.thinkingRow}>
@@ -102,15 +99,16 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   headerRow: { flexDirection: 'row', alignItems: 'center', gap: 9 },
-  name: { letterSpacing: 0.4 },
-  content: { gap: 8, paddingLeft: 37 },
+  messageRule: { width: 18, height: 2, borderRadius: 1 },
+  name: { letterSpacing: 1.2, textTransform: 'uppercase' },
+  content: { gap: 8, paddingLeft: 27 },
   title: { lineHeight: 25 },
   summary: { lineHeight: 25 },
   details: { gap: 6, marginTop: 2 },
   detailRow: { flexDirection: 'row', gap: 9, alignItems: 'flex-start' },
   dot: { width: 5, height: 5, borderRadius: 3, marginTop: 8 },
   detailText: { flex: 1, lineHeight: 21 },
-  recommendation: { marginTop: 3, borderWidth: 1, borderRadius: 14, padding: 12 },
-  thinkingRow: { flexDirection: 'row', gap: 6, paddingLeft: 37, paddingTop: 4 },
+  recommendation: { marginTop: 3, borderWidth: 1, borderRadius: 10, padding: 12 },
+  thinkingRow: { flexDirection: 'row', gap: 6, paddingLeft: 27, paddingTop: 4 },
   thinkingDot: { width: 7, height: 7, borderRadius: 4 },
 });

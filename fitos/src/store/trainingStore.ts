@@ -31,7 +31,7 @@ interface TrainingState {
   setTodayWorkout: (workout: WorkoutSession) => void;
   markWorkoutComplete: () => void;
   updateCardioGoal: (minutes: number) => void;
-  updateCardioPlan: (plan: Partial<Pick<CardioData, 'cardioMinutesGoal' | 'activity' | 'intensity'>>) => void;
+  updateCardioPlan: (plan: Partial<Pick<CardioData, 'cardioMinutesGoal' | 'activity' | 'intensity' | 'stepsGoal'>>) => void;
   addCardioMinutes: (minutes: number) => void;
   markCardioComplete: () => void;
   resetToMock: () => void;

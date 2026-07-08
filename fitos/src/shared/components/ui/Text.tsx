@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text as RNText, TextStyle, StyleProp } from 'react-native';
-import { cedricTheme, colors } from '@/shared/theme/colors';
-import { typography } from '@/shared/theme/typography';
+import { darkTheme, colors } from '@/shared/theme/colors';
+import { fontFamilies, typography } from '@/shared/theme/typography';
 import type { TypographyToken } from '@/shared/theme/typography';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 
@@ -25,7 +25,7 @@ export function Text({
 
   return (
     <RNText
-      style={[typography[variant], { color: resolvedColor }, style]}
+      style={[{ fontFamily: fontFamilies.sans }, typography[variant], { color: resolvedColor }, style]}
       numberOfLines={numberOfLines}
     >
       {children}
@@ -36,7 +36,7 @@ export function Text({
 function resolveThemeColor(color: string | undefined, fallback: string, theme: ReturnType<typeof useActiveTheme>) {
   if (!color) return fallback;
 
-  const cedric = cedricTheme.colors;
+  const base = darkTheme.colors;
   const tokenMap: Record<string, string> = {
     [colors.textPrimary]: theme.colors.text.primary,
     [colors.textSecondary]: theme.colors.text.secondary,
@@ -48,17 +48,17 @@ function resolveThemeColor(color: string | undefined, fallback: string, theme: R
     [colors.success]: theme.colors.status.success,
     [colors.warning]: theme.colors.status.warning,
     [colors.error]: theme.colors.status.error,
-    [cedric.text.primary]: theme.colors.text.primary,
-    [cedric.text.secondary]: theme.colors.text.secondary,
-    [cedric.text.muted]: theme.colors.text.muted,
-    [cedric.text.disabled]: theme.colors.text.disabled,
-    [cedric.text.inverse]: theme.colors.text.inverse,
-    [cedric.accent.primary]: theme.colors.persona.core,
-    [cedric.accent.soft]: theme.colors.persona.core,
-    [cedric.status.success]: theme.colors.status.success,
-    [cedric.status.warning]: theme.colors.status.warning,
-    [cedric.status.error]: theme.colors.status.error,
-    [cedric.status.info]: theme.colors.status.info,
+    [base.text.primary]: theme.colors.text.primary,
+    [base.text.secondary]: theme.colors.text.secondary,
+    [base.text.muted]: theme.colors.text.muted,
+    [base.text.disabled]: theme.colors.text.disabled,
+    [base.text.inverse]: theme.colors.text.inverse,
+    [base.accent.primary]: theme.colors.persona.core,
+    [base.accent.soft]: theme.colors.persona.core,
+    [base.status.success]: theme.colors.status.success,
+    [base.status.warning]: theme.colors.status.warning,
+    [base.status.error]: theme.colors.status.error,
+    [base.status.info]: theme.colors.status.info,
   };
 
   return tokenMap[color] ?? color;

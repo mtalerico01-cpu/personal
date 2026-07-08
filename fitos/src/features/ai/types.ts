@@ -1,4 +1,5 @@
 // ─── Confidence ─────────────────────────────────────────────────────────────
+import type { CoachingStyle } from '../coach/styles/coachingStyles';
 
 export type ConfidenceLevel = 'low' | 'medium' | 'high';
 
@@ -30,7 +31,7 @@ export interface AIActionProposal {
 
 export interface AIMessage {
   id: string;
-  personaId: 'cedric' | 'elara';
+  coachingStyle?: CoachingStyle;
   createdAt: string;
   topic?: CoachTopic;
   intent?: IntentType;
@@ -82,7 +83,7 @@ export interface AIContext {
   };
 
   persona: {
-    id: 'cedric' | 'elara';
+    id: CoachingStyle;
     name: string;
     role: string;
     tone: string;

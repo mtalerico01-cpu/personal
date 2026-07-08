@@ -26,11 +26,11 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 import { useCoachStore } from '../store/coachStore';
 import { useTrainingStore } from '../../../store/trainingStore';
 
-describe('coach persona state', () => {
+describe('coach experience preferences', () => {
   beforeEach(() => {
     useCoachStore.setState({
-      personaId: 'cedric',
-      hasSelectedPersona: false,
+      coachingStyle: 'balanced',
+      appearance: 'system',
       messages: [],
       inputText: '',
       isLoading: false,
@@ -41,14 +41,21 @@ describe('coach persona state', () => {
     });
   });
 
-  it('marks first-time persona selection complete', () => {
-    useCoachStore.getState().completePersonaSelection('elara');
+  it('updates coaching style without changing appearance', () => {
+    useCoachStore.getState().setCoachingStyle('encouraging');
 
-    expect(useCoachStore.getState().personaId).toBe('elara');
-    expect(useCoachStore.getState().hasSelectedPersona).toBe(true);
+    expect(useCoachStore.getState().coachingStyle).toBe('encouraging');
+    expect(useCoachStore.getState().appearance).toBe('system');
   });
 
-  it('switching persona does not erase conversation', () => {
+  it('updates appearance without changing coaching style', () => {
+    useCoachStore.getState().setAppearance('light');
+
+    expect(useCoachStore.getState().appearance).toBe('light');
+    expect(useCoachStore.getState().coachingStyle).toBe('balanced');
+  });
+
+  it('switching coaching style does not erase conversation', () => {
     useCoachStore.setState({
       messages: [
         {
@@ -60,9 +67,9 @@ describe('coach persona state', () => {
       ],
     });
 
-    useCoachStore.getState().setPersona('elara');
+    useCoachStore.getState().setCoachingStyle('direct');
 
-    expect(useCoachStore.getState().personaId).toBe('elara');
+    expect(useCoachStore.getState().coachingStyle).toBe('direct');
     expect(useCoachStore.getState().messages).toHaveLength(1);
   });
 });

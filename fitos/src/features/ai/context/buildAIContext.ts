@@ -1,6 +1,7 @@
 import type { AIContext } from '../types';
 import { getDayPartForTimezone, getLocalTimeString, getLocalDateString, getDayOfWeek } from './getDayPart';
-import { PERSONAS } from '../personas/personas';
+import { brand } from '../../../branding/brand';
+import { coachingStyles, type CoachingStyle } from '../../coach/styles/coachingStyles';
 import { useUserStore } from '../../../store/userStore';
 import { useNutritionStore } from '../../../store/nutritionStore';
 import { useTrainingStore } from '../../../store/trainingStore';
@@ -11,7 +12,7 @@ import { useProgressStore } from '../../../store/progressStore';
  * This is the single source of truth for all AI functions.
  * Call this before any AI operation to get a fresh snapshot.
  */
-export function buildAIContext(personaId: 'cedric' | 'elara'): AIContext {
+export function buildAIContext(coachingStyle: CoachingStyle): AIContext {
   const userState = useUserStore.getState();
   const nutritionState = useNutritionStore.getState();
   const trainingState = useTrainingStore.getState();
@@ -20,7 +21,7 @@ export function buildAIContext(personaId: 'cedric' | 'elara'): AIContext {
   const profile = userState.profile;
   const timezone = 'America/New_York';
   const dayPart = getDayPartForTimezone(timezone);
-  const persona = PERSONAS[personaId];
+  const style = coachingStyles[coachingStyle];
 
   const nutritionGoals = nutritionState.goals;
   const nutritionLog = nutritionState.log;
@@ -33,21 +34,21 @@ export function buildAIContext(personaId: 'cedric' | 'elara'): AIContext {
     user: {
       id: profile?.id ?? 'user-1',
       name: profile?.name ?? 'Alex',
-      age: 28,
-      heightInches: 70,
+      age: profile?.identity.age ?? 28,
+      heightInches: profile?.body.heightCm ? Math.round(profile.body.heightCm / 2.54) : 70,
       currentWeight: progressState.currentWeightLbs,
       goalWeight: progressState.goalWeightLbs,
-      primaryGoal: 'gain',
-      trainingExperience: 'intermediate',
-      timezone,
-      preferredDiet: 'standard',
+      primaryGoal: mapGoalToAIContext(profile?.planGoals.primaryGoal),
+      trainingExperience: mapTrainingExperience(profile?.training.experience),
+      timezone: profile?.identity.timezone ?? timezone,
+      preferredDiet: profile?.nutrition.eatingStyles[0] ?? 'standard',
     },
 
     persona: {
-      id: personaId,
-      name: persona.name,
-      role: persona.role,
-      tone: persona.tone,
+      id: coachingStyle,
+      name: brand.coachName,
+      role: brand.subtitle,
+      tone: style.toneInstructions,
     },
 
     time: {
@@ -110,4 +111,18 @@ export function buildAIContext(personaId: 'cedric' | 'elara'): AIContext {
       targetDate: '2026-09-01',
     },
   };
+}
+
+function mapGoalToAIContext(goal: string | undefined): AIContext['user']['primaryGoal'] {
+  if (goal === 'fat_loss') return 'lose';
+  if (goal === 'muscle_gain' || goal === 'strength' || goal === 'athletic_performance') return 'gain';
+  if (goal === 'recomposition') return 'recomp';
+  if (goal === 'cardiovascular_fitness' || goal === 'endurance' || goal === 'event_preparation') return 'maintain';
+  return 'maintain';
+}
+
+function mapTrainingExperience(experience: string | undefined): AIContext['user']['trainingExperience'] {
+  if (experience === 'advanced' || experience === 'athlete') return 'advanced';
+  if (experience === 'intermediate') return 'intermediate';
+  return 'beginner';
 }

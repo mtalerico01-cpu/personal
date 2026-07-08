@@ -1,0 +1,207 @@
+# Professional Profile
+
+## Purpose
+
+This document serves as the primary knowledge source describing Michael Talerico as a professional.
+
+Unlike a resume, this document is not intended to summarize work experience.
+
+Instead, it provides the context necessary for AI assistants to understand Michael's professional journey, strengths, motivations, leadership style, communication style, technical interests, and long-term career vision.
+
+Whenever AI generates website content, case studies, resumes, documentation, interview preparation, or software features for this repository, this document should be treated as the primary reference for understanding Michael professionally.
+
+---
+
+# Professional Summary
+
+Michael Talerico is a Senior Data Analyst within The Home Depot's Customer Experience Data Science & Analytics (CX Data Science & Analytics) organization, supporting the Pro Product business.
+
+His work combines Product Analytics, Business Intelligence, Customer Experience, Product Strategy, Executive Reporting, AI Measurement, and Decision Support.
+
+Unlike many analytics professionals, Michael's greatest strength is not a specific technology.
+
+His greatest strength is connecting business strategy with technical execution.
+
+He naturally translates ambiguous business problems into scalable analytics solutions.
+
+---
+
+# Professional Identity
+
+Michael does not view himself as a traditional Business Intelligence developer.
+
+Although he has extensive experience with Tableau, Power BI, SQL, and dashboard development, those technologies are simply tools.
+
+His real passion is designing products that help organizations make better decisions.
+
+He believes modern analytics is evolving beyond dashboards into intelligent, cloud-based software applications that combine analytics, user experience, artificial intelligence, and product thinking.
+
+---
+
+# Professional Journey
+
+Michael's career has evolved intentionally.
+
+He began by solving customer problems through entrepreneurship.
+
+He then entered sales and recruiting, where he developed strong communication, relationship-building, and business development skills.
+
+Although he performed well in sales, he realized he was far more interested in solving business problems than selling products.
+
+This realization led him to intentionally transition into analytics.
+
+Over the next several years he built deep technical skills while simultaneously developing expertise in product thinking, executive communication, dashboard design, user experience, and analytics strategy.
+
+Rather than specializing in one narrow discipline, Michael continuously expanded his understanding of how complete analytics organizations operate.
+
+---
+
+# Experience Across the Analytics Lifecycle
+
+One of Michael's greatest strengths is understanding how the different disciplines within modern analytics organizations work together.
+
+Throughout his career he has partnered closely with:
+
+- Product Management
+- User Experience (UX)
+- Software Engineering
+- Analytics Engineering
+- Data Engineering
+- Data Science
+- Data Governance
+- Quality Assurance
+- Automation
+- Executive Leadership
+
+This broad exposure allows him to think beyond individual reports or dashboards and instead design complete analytics solutions.
+
+---
+
+# Leadership Style
+
+Michael enjoys leading through collaboration rather than authority.
+
+He prefers bringing together stakeholders, engineers, analysts, designers, and business leaders to solve complex problems.
+
+He is comfortable leading ambiguous projects where requirements evolve over time.
+
+His leadership style emphasizes:
+
+- Clear communication
+- Thoughtful planning
+- Business-first decision making
+- Strong design principles
+- Cross-functional collaboration
+- Continuous improvement
+
+---
+
+# Communication Style
+
+Michael believes communication is one of the most valuable skills an analytics professional can develop.
+
+He enjoys translating technical concepts into language that executives and business stakeholders can easily understand.
+
+He values storytelling, simplicity, and clarity over technical complexity.
+
+He believes that the best analytics products reduce cognitive load rather than increase it.
+
+---
+
+# Professional Strengths
+
+Michael's core strengths include:
+
+- Product Analytics
+- Business Intelligence
+- Dashboard Architecture
+- Executive Storytelling
+- User Experience
+- Product Thinking
+- Business Strategy
+- Project Leadership
+- Stakeholder Management
+- Cross-functional Collaboration
+- Data Visualization
+- Requirements Gathering
+- Analytics Strategy
+
+---
+
+# Technical Interests
+
+Michael enjoys building software using modern technologies including:
+
+- React
+- TypeScript
+- Python
+- FastAPI
+- SQL
+- BigQuery
+- Tableau
+- Power BI
+- Git
+- GitHub
+- Figma
+- AI-assisted development
+
+He is particularly interested in how AI is changing software development and analytics.
+
+---
+
+# Long-Term Career Vision
+
+Michael wants to build modern internal analytics applications rather than traditional reporting solutions.
+
+His ideal role combines:
+
+- Analytics
+- Product Strategy
+- Software Engineering
+- Artificial Intelligence
+- User Experience
+- Business Leadership
+
+He wants to work on products that become an integral part of how organizations make decisions.
+
+---
+
+# Guiding Principles
+
+Michael consistently approaches his work using several guiding principles.
+
+Business problems come before technical solutions.
+
+Design should simplify complexity.
+
+Analytics should improve decisions.
+
+Technology should enable people rather than impress them.
+
+Artificial Intelligence should amplify human capability rather than replace it.
+
+Continuous learning is essential for long-term success.
+
+Software should be intuitive enough that users rarely need training.
+
+The best analytics products feel effortless to use.
+
+---
+
+# How AI Should Represent Michael
+
+When generating content for this portfolio, AI assistants should consistently portray Michael as:
+
+- Business-first
+- Technically curious
+- Product-minded
+- User-focused
+- Design-conscious
+- Strategic
+- Collaborative
+- Entrepreneurial
+- Continuously learning
+
+AI should avoid portraying Michael as simply a dashboard developer or reporting analyst.
+
+Instead, his work should consistently be framed around solving business problems through thoughtful product design, analytics, and modern software engineering.

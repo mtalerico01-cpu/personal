@@ -1,21 +1,18 @@
 import React from 'react';
-import { View, StyleSheet, SafeAreaView, StatusBar, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Text } from '@/shared/components/ui/Text';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { CoachBackground } from '@/features/coach/components/CoachBackground';
 import { CoachTopBar } from '@/features/coach/components/CoachTopBar';
-import { CoachIdentityMark } from '@/features/coach/components/CoachIdentityMark';
+import { CoachNavigationRail } from '@/features/coach/components/CoachNavigationRail';
 import { EmptyConversationState } from '@/features/coach/components/EmptyConversationState';
 import { ConversationList } from '@/features/coach/components/ConversationList';
 import { CoachComposer } from '@/features/coach/components/CoachComposer';
 import { useCoach } from '@/features/coach/hooks/useCoach';
-import type { PersonaId } from '@/features/coach/store/coachStore';
+import { useUserStore } from '@/store/userStore';
 
 export default function CoachScreen() {
   const {
-    persona,
-    setPersona,
     messages,
     inputText,
     setInputText,
@@ -27,24 +24,26 @@ export default function CoachScreen() {
     proactiveBrief,
     clearChat,
     currentPersona,
-    hasSelectedPersona,
-    completePersonaSelection,
+    coachingStyle,
+    setCoachingStyle,
+    appearance,
+    setAppearance,
   } = useCoach();
 
   const theme = useActiveTheme();
   const router = useRouter();
+  const profile = useUserStore((state) => state.profile);
+  const [isNavigationRailOpen, setIsNavigationRailOpen] = React.useState(false);
   const params = useLocalSearchParams<{ returnTo?: string; returnLabel?: string }>();
   const hasMessages = messages.length > 0;
   const returnTo = typeof params.returnTo === 'string' ? params.returnTo : undefined;
   const returnLabel = typeof params.returnLabel === 'string' ? params.returnLabel : undefined;
+  const displayName = profile?.identity.firstName ?? profile?.name ?? 'Member';
+  const username = profile?.identity.username ? `@${profile.identity.username}` : displayName;
 
   const handleSend = (text: string) => {
     if (!text.trim() || isThinking) return;
     sendMessage(text);
-  };
-
-  const handleSwitchCoach = () => {
-    setPersona(persona === 'cedric' ? 'elara' : 'cedric');
   };
 
   const handleReturn = () => {
@@ -72,14 +71,11 @@ export default function CoachScreen() {
       <CoachBackground />
 
       <SafeAreaView style={styles.safeArea}>
-        {!hasSelectedPersona && <CoachSelectionOverlay onSelect={completePersonaSelection} />}
-
         <CoachTopBar
-          personaId={persona}
           name={currentPersona.name}
           role={currentPersona.role}
           onNewConversation={clearChat}
-          onSwitchCoach={handleSwitchCoach}
+          onMenuPress={() => setIsNavigationRailOpen(true)}
           returnLabel={returnLabel}
           onReturn={returnTo ? handleReturn : undefined}
         />
@@ -95,8 +91,6 @@ export default function CoachScreen() {
             />
           ) : (
             <EmptyConversationState
-              personaId={persona}
-              coachName={currentPersona.name}
               brief={proactiveBrief}
               prompts={suggestedPrompts}
               onPromptPress={handleSend}
@@ -108,77 +102,24 @@ export default function CoachScreen() {
           value={inputText}
           onChange={setInputText}
           onSend={handleSend}
-          personaId={persona}
           disabled={isThinking}
         />
+        {/* Spacer so the floating tab bar never covers the composer */}
+        <View style={styles.tabBarSpacer} />
       </SafeAreaView>
+
+      <CoachNavigationRail
+        visible={isNavigationRailOpen}
+        displayName={displayName}
+        username={username}
+        avatarUrl={profile?.avatarUrl}
+        coachingStyle={coachingStyle}
+        appearance={appearance}
+        onCoachingStyleChange={setCoachingStyle}
+        onAppearanceChange={setAppearance}
+        onClose={() => setIsNavigationRailOpen(false)}
+      />
     </View>
-  );
-}
-
-function CoachSelectionOverlay({ onSelect }: { onSelect: (id: PersonaId) => void }) {
-  const theme = useActiveTheme();
-
-  return (
-    <View style={[styles.selectionOverlay, { backgroundColor: theme.colors.background.overlay }]}> 
-      <View style={[styles.selectionPanel, { borderColor: theme.colors.border.default, backgroundColor: theme.colors.surface.raised }]}> 
-        <Text variant="labelMedium" color={theme.colors.text.muted} style={styles.selectionEyebrow}>
-          Choose your coach
-        </Text>
-        <Text variant="headingLarge" color={theme.colors.text.primary} style={styles.selectionTitle}>
-          How should FitOS coach you?
-        </Text>
-        <View style={styles.selectionCards}>
-          <CoachChoice
-            persona="cedric"
-            name="Cedric"
-            role="Performance intelligence"
-            description="Direct, analytical, and precise. Dark appearance with restrained green light."
-            onPress={() => onSelect('cedric')}
-          />
-          <CoachChoice
-            persona="elara"
-            name="Elara"
-            role="Wellness intelligence"
-            description="Supportive, thoughtful, and adaptive. Light appearance with luminous pale-blue atmosphere."
-            onPress={() => onSelect('elara')}
-          />
-        </View>
-      </View>
-    </View>
-  );
-}
-
-function CoachChoice({
-  persona,
-  name,
-  role,
-  description,
-  onPress,
-}: {
-  persona: PersonaId;
-  name: string;
-  role: string;
-  description: string;
-  onPress: () => void;
-}) {
-  const theme = useActiveTheme();
-
-  return (
-    <TouchableOpacity
-      accessibilityRole="button"
-      accessibilityLabel={`Choose ${name}`}
-      style={[styles.selectionCard, { borderColor: theme.colors.border.subtle, backgroundColor: theme.colors.surface.subtle }]}
-      onPress={onPress}
-      activeOpacity={0.82}
-    >
-      <CoachIdentityMark persona={persona} size={58} />
-      <Text variant="headingSmall" color={theme.colors.text.primary}>{name}</Text>
-      <Text variant="labelMedium" color={theme.colors.text.secondary}>{role}</Text>
-      <Text variant="caption" color={theme.colors.text.muted} style={styles.selectionDescription}>
-        {description}
-      </Text>
-    </TouchableOpacity>
   );
 }
 
@@ -186,34 +127,6 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safeArea: { flex: 1 },
   conversationShell: { flex: 1, minHeight: 0 },
-  selectionOverlay: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    zIndex: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 22,
-  },
-  selectionPanel: {
-    width: '100%',
-    maxWidth: 540,
-    borderRadius: 24,
-    borderWidth: 1,
-    padding: 20,
-    gap: 14,
-  },
-  selectionEyebrow: { letterSpacing: 1, textTransform: 'uppercase' },
-  selectionTitle: { lineHeight: 34 },
-  selectionCards: { flexDirection: 'row', gap: 12 },
-  selectionCard: {
-    flex: 1,
-    borderRadius: 18,
-    borderWidth: 1,
-    padding: 14,
-    gap: 7,
-  },
-  selectionDescription: { lineHeight: 17 },
+  // Height matches GlassTabBar shell: bar height 78 + bottom padding 8
+  tabBarSpacer: { height: 86 },
 });

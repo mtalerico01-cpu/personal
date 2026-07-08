@@ -1,7 +1,10 @@
 import { useCoachStore } from '../../features/coach/store/coachStore';
-import { getThemeForPersona } from './colors';
+import { useColorScheme } from 'react-native';
+import { getThemeForAppearance } from './colors';
 
 export function useActiveTheme() {
-  const personaId = useCoachStore((state) => state.personaId);
-  return getThemeForPersona(personaId);
+  const appearance = useCoachStore((state) => state.appearance);
+  const colorScheme = useColorScheme();
+  const resolvedColorScheme = colorScheme === 'light' || colorScheme === 'dark' ? colorScheme : null;
+  return getThemeForAppearance(appearance, resolvedColorScheme);
 }

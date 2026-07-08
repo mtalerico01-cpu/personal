@@ -1,4 +1,6 @@
 import { useNutritionStore } from '../../../store/nutritionStore';
+import { calculateMacroRecommendation } from '../../../domain/nutrition/macros/calculateMacroRecommendation';
+import type { PrimaryGoal } from '../../../types';
 
 export interface CreateFitnessPlanPayload {
   mode: 'cut' | 'bulk' | 'maintain';
@@ -9,6 +11,8 @@ export interface CreateFitnessPlanResult {
   success: boolean;
   mode: string;
   newCalorieGoal: number;
+  sourceReferences: string[];
+  confidence: string;
 }
 
 export function createFitnessPlanTool(payload: Record<string, unknown>): CreateFitnessPlanResult {
@@ -23,18 +27,30 @@ export function createFitnessPlanTool(payload: Record<string, unknown>): CreateF
 
   const store = useNutritionStore.getState();
   const current = store.goals;
-
-  // Derive new macros from calorie goal (rough split: 30% P / 45% C / 25% F)
-  const proteinGoal = Math.round((calorieGoal * 0.30) / 4);
-  const carbGoal = Math.round((calorieGoal * 0.45) / 4);
-  const fatGoal = Math.round((calorieGoal * 0.25) / 9);
+  const recommendation = calculateMacroRecommendation({
+    calorieGoal,
+    bodyWeightKg: inferBodyWeightKg(current.proteinGrams),
+    primaryGoal: mapModeToGoal(mode),
+    macroPreference: mode === 'cut' ? 'higher_protein' : 'balanced',
+  });
 
   store.setGoals({
     calories: calorieGoal,
-    proteinGrams: proteinGoal,
-    carbsGrams: carbGoal,
-    fatGrams: fatGoal,
+    proteinGrams: recommendation.active.proteinGrams,
+    carbsGrams: recommendation.active.carbsGrams,
+    fatGrams: recommendation.active.fatGrams,
   });
 
-  return { success: true, mode, newCalorieGoal: calorieGoal };
+  return { success: true, mode, newCalorieGoal: calorieGoal, sourceReferences: recommendation.metadata.sourceIds, confidence: recommendation.metadata.confidence };
+}
+
+function mapModeToGoal(mode: CreateFitnessPlanPayload['mode']): PrimaryGoal {
+  if (mode === 'cut') return 'fat_loss';
+  if (mode === 'bulk') return 'muscle_gain';
+  return 'maintenance';
+}
+
+function inferBodyWeightKg(proteinGrams: number | undefined) {
+  if (!proteinGrams) return 80;
+  return Math.min(140, Math.max(45, Math.round(proteinGrams / 1.8)));
 }

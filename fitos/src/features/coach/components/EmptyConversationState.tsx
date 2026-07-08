@@ -3,34 +3,29 @@ import { View, StyleSheet } from 'react-native';
 import { Text } from '@/shared/components/ui/Text';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import type { AIMessage, SuggestedPrompt } from '../../ai/types';
-import type { PersonaId } from '../store/coachStore';
-import { CoachIdentityMark } from './CoachIdentityMark';
 import { SuggestedPromptsRail } from './SuggestedPromptsRail';
 
 interface EmptyConversationStateProps {
-  personaId: PersonaId;
-  coachName: string;
   brief: AIMessage | null;
   prompts: SuggestedPrompt[];
   onPromptPress: (prompt: string) => void;
 }
 
-export function EmptyConversationState({ personaId, coachName, brief, prompts, onPromptPress }: EmptyConversationStateProps) {
+export function EmptyConversationState({ brief, prompts, onPromptPress }: EmptyConversationStateProps) {
   const theme = useActiveTheme();
-  const opening = brief?.details?.[1] ?? brief?.summary ?? `${coachName} has your training, nutrition, cardio, and progress context ready.`;
+  const starterPrompts = prompts.slice(0, 2);
 
   return (
     <View style={styles.container}>
-      <CoachIdentityMark persona={personaId} size={72} />
       <View style={styles.copy}>
         <Text variant="headingLarge" color={theme.colors.text.primary} style={styles.greeting}>
-          {brief?.title ?? `Good ${coachName === 'Cedric' ? 'morning' : 'morning'}, Alex.`}
+          How can I help?
         </Text>
-        <Text variant="bodyLarge" color={theme.colors.text.secondary} style={styles.opening}>
-          {opening}
+        <Text variant="bodyMedium" color={theme.colors.text.muted} style={styles.opening}>
+          Ask about training, nutrition, recovery, or your plan.
         </Text>
       </View>
-      <SuggestedPromptsRail prompts={prompts} onPress={onPromptPress} />
+      <SuggestedPromptsRail prompts={starterPrompts} onPress={onPromptPress} />
     </View>
   );
 }
@@ -41,21 +36,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 22,
-    gap: 24,
+    gap: 18,
   },
   copy: {
     width: '100%',
-    maxWidth: 680,
+    maxWidth: 420,
     alignItems: 'center',
-    gap: 10,
+    gap: 8,
   },
   greeting: {
     textAlign: 'center',
-    fontWeight: '300',
-    lineHeight: 38,
+    fontSize: 24,
+    fontWeight: '600',
+    lineHeight: 30,
+    letterSpacing: 0,
   },
   opening: {
     textAlign: 'center',
-    lineHeight: 25,
+    fontSize: 14,
+    lineHeight: 20,
   },
 });

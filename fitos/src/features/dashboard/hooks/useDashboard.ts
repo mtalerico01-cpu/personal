@@ -6,7 +6,6 @@
  */
 
 import {
-  mockUser,
   mockWeightTrend,
   mockTodayWorkout,
   mockAIDailyBrief,
@@ -14,10 +13,12 @@ import {
 import { useNutritionStore } from '../../../store/nutritionStore';
 import { useProgressStore } from '../../../store/progressStore';
 import { useTrainingStore } from '../../../store/trainingStore';
+import { fallbackUserProfile, useUserStore } from '../../../store/userStore';
 import { colors } from '../../../shared/theme';
 import type { KPICardData } from '../types';
 
 export function useDashboard() {
+  const profile = useUserStore((state) => state.profile) ?? fallbackUserProfile;
   const { goals, log } = useNutritionStore();
   const { currentWeightLbs, weeklyChangeLbs } = useProgressStore();
   const { todayWorkout, cardio } = useTrainingStore();
@@ -102,7 +103,7 @@ export function useDashboard() {
   ];
 
   return {
-    user: mockUser,
+    user: profile,
     kpiCards,
     workout,
     aiDailyBrief: mockAIDailyBrief,

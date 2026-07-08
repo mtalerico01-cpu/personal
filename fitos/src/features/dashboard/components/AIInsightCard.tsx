@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text } from '../../../shared/components/ui/Text';
+import { SparklesIcon } from '../../../shared/components/ui/NavIcon';
 import { colors } from '@/shared/theme/colors';
 import { useActiveTheme } from '@/shared/theme/useActiveTheme';
 import { spacing, radius } from '@/shared/theme/spacing';
@@ -25,23 +26,25 @@ export function AIInsightCard({ brief }: AIInsightCardProps) {
           {
             backgroundColor: theme.colors.surface.default,
             borderColor: theme.colors.border.subtle,
-            shadowOpacity: theme.mode === 'dark' ? 0.2 : 0.07,
+            borderWidth: theme.mode === 'dark' ? 1 : 2,
+            shadowOpacity: theme.mode === 'dark' ? 0.12 : 0,
+            shadowRadius: theme.mode === 'dark' ? 12 : 0,
+            elevation: theme.mode === 'dark' ? 1 : 0,
           },
         ]}
       >
-        {/* Top accent bar */}
         <View style={[styles.accentBar, { backgroundColor: theme.colors.persona.core }]} />
 
         <View style={styles.content}>
-          {/* AI label */}
           <View style={styles.labelRow}>
-            <View style={[styles.aiBadge, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default }]}> 
+            <View style={[styles.aiBadge, { backgroundColor: theme.colors.surface.subtle, borderColor: theme.colors.border.default }]}>
+              <SparklesIcon color={theme.colors.persona.core} size={18} />
               <Text variant="labelMedium" color={theme.colors.persona.core}>
-                AI COACH
+                COACH
               </Text>
             </View>
             <Text variant="caption" color={colors.textTertiary}>
-              Daily Brief
+              Daily brief
             </Text>
           </View>
 
@@ -74,13 +77,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 18,
-    elevation: 2,
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 1,
   },
   accentBar: {
     height: 2,
-    opacity: 0.44,
+    opacity: 0.82,
   },
   content: {
     padding: spacing[4],
@@ -92,10 +95,13 @@ const styles = StyleSheet.create({
     marginBottom: spacing[3],
   },
   aiBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
     borderWidth: 1,
     paddingHorizontal: spacing[2],
     paddingVertical: 3,
-    borderRadius: radius.full,
+    borderRadius: radius.sm,
   },
   headline: {
     marginBottom: spacing[2],
