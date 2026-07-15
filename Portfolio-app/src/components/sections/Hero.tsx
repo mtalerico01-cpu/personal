@@ -113,9 +113,9 @@ export function Hero() {
             </Button>
 
             <Button asChild variant="outline" size="lg">
-              <a href={siteConfig.resumeUrl} download>
+              <a href={siteConfig.resumeUrl} target="_blank" rel="noopener noreferrer">
                 <Download size={18} className="mr-1" aria-hidden="true" />
-                Download Resume
+                View Resume
               </a>
             </Button>
           </motion.div>

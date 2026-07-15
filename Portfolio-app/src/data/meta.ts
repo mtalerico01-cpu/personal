@@ -16,7 +16,7 @@ export const siteConfig = {
     github: "https://github.com/michaeltalerico",
   },
   openToWork: true,
-  resumeUrl: "/resume.pdf",
+  resumeUrl: "/resume.html",
 } as const;
 
 export type SiteConfig = typeof siteConfig;
