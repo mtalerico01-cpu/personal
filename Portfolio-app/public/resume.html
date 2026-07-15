@@ -1,0 +1,505 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Michael Talerico — Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #0f172a;
+      --blue:      #1d4ed8;
+      --blue-mid:  #2563eb;
+      --blue-lt:   #3b82f6;
+      --s50:       #f8fafc;
+      --s100:      #f1f5f9;
+      --s200:      #e2e8f0;
+      --s300:      #cbd5e1;
+      --s400:      #94a3b8;
+      --s500:      #64748b;
+      --s600:      #475569;
+      --s700:      #334155;
+      --s800:      #1e293b;
+      --s900:      #0f172a;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 8.8pt;
+      line-height: 1.5;
+      color: var(--s800);
+      background: #c8cdd4;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: 8.5in;
+      background: #fff;
+      margin: 28px auto;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      background: var(--navy);
+      padding: 26px 36px 22px;
+    }
+
+    .name {
+      font-size: 24pt;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .title {
+      font-size: 10pt;
+      font-weight: 500;
+      color: #93c5fd;
+      margin-bottom: 12px;
+    }
+
+    .contact {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      white-space: nowrap;
+    }
+
+    .contact a, .contact span.ci {
+      font-size: 7.8pt;
+      color: #94a3b8;
+      text-decoration: none;
+    }
+
+    .contact a:hover { color: #93c5fd; }
+
+    .dot { color: #334155; margin: 0 9px; font-size: 10pt; }
+
+    /* ─── BODY ─── */
+    .body {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      background: var(--s50);
+      border-right: 1px solid var(--s200);
+      padding: 20px 16px;
+    }
+
+    .sb { margin-bottom: 20px; }
+
+    .sb-h {
+      font-size: 6.2pt;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--s500);
+      border-bottom: 1px solid var(--s200);
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
+
+    .sg { margin-top: 10px; }
+    .sg:first-child { margin-top: 0; }
+
+    .sg-t {
+      font-size: 7.5pt;
+      font-weight: 600;
+      color: var(--s700);
+      margin-bottom: 3px;
+    }
+
+    .sg-v {
+      font-size: 7.8pt;
+      color: var(--s600);
+      line-height: 1.6;
+    }
+
+    .edu-deg {
+      font-size: 8.2pt;
+      font-weight: 600;
+      color: var(--s800);
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+
+    .edu-sch {
+      font-size: 7.8pt;
+      font-weight: 500;
+      color: var(--blue-mid);
+      margin-bottom: 1px;
+    }
+
+    .edu-yr { font-size: 7.5pt; color: var(--s400); }
+
+    .honor {
+      font-size: 7.8pt;
+      color: var(--s600);
+      line-height: 1.45;
+      padding-left: 9px;
+      border-left: 2px solid var(--s200);
+      margin-bottom: 6px;
+    }
+
+    .honor-star {
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-left: 3px solid #f59e0b;
+      border-radius: 4px;
+      padding: 7px 9px;
+      margin-bottom: 10px;
+    }
+
+    .honor-star-name {
+      font-size: 7.8pt;
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 2px;
+    }
+
+    .honor-star-org {
+      font-size: 7.2pt;
+      font-weight: 600;
+      color: #b45309;
+      margin-bottom: 2px;
+    }
+
+    .honor-star-desc {
+      font-size: 7.2pt;
+      color: #78350f;
+      line-height: 1.4;
+    }
+
+    /* ─── MAIN ─── */
+    .main { padding: 20px 28px; }
+
+    .section { margin-bottom: 16px; }
+
+    .sec-lbl {
+      font-size: 6.2pt;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue-mid);
+      border-bottom: 1.5px solid var(--blue-lt);
+      padding-bottom: 4px;
+      margin-bottom: 11px;
+    }
+
+    .summary {
+      font-size: 8.8pt;
+      color: var(--s700);
+      line-height: 1.65;
+    }
+
+    /* Experience */
+    .exp { margin-bottom: 13px; }
+    .exp:last-child { margin-bottom: 0; }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .role {
+      font-size: 9.5pt;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .dates {
+      font-size: 7.8pt;
+      color: var(--s500);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .company {
+      font-size: 8.2pt;
+      font-weight: 600;
+      color: var(--blue-mid);
+      margin-bottom: 6px;
+    }
+
+    .company .loc {
+      font-weight: 400;
+      color: var(--s400);
+      margin-left: 5px;
+    }
+
+    .ul { list-style: none; padding: 0; margin: 0; }
+
+    .ul li {
+      font-size: 8.5pt;
+      color: var(--s700);
+      line-height: 1.5;
+      margin-bottom: 4px;
+      padding-left: 13px;
+      position: relative;
+    }
+
+    .ul li::before {
+      content: "\25B8";
+      position: absolute;
+      left: 0;
+      color: var(--blue-lt);
+      font-size: 7pt;
+      top: 2px;
+    }
+
+    .ul li b { color: var(--s900); font-weight: 600; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--s100);
+      margin: 12px 0;
+    }
+
+    .emp-hdr {
+      font-size: 9pt;
+      font-weight: 700;
+      color: var(--navy);
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--s200);
+      margin-bottom: 10px;
+    }
+
+    .emp-hdr .loc { font-weight: 400; color: var(--s400); font-size: 8pt; }
+
+    .sub { margin-bottom: 11px; }
+    .sub:last-child { margin-bottom: 0; }
+
+    .sub-t {
+      font-size: 8.5pt;
+      font-weight: 600;
+      color: var(--s800);
+    }
+
+    .promo {
+      font-size: 6pt;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #16a34a;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 3px;
+      padding: 1px 5px;
+      margin-left: 5px;
+      vertical-align: middle;
+    }
+
+    .sub-dates {
+      font-size: 7.5pt;
+      color: var(--s400);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ─── PRINT ─── */
+    @media print {
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      body { background: white; margin: 0; padding: 0; }
+      .page { margin: 0; width: 100%; box-shadow: none; }
+      .print-btn { display: none !important; }
+      @page { size: letter; margin: 0; }
+    }
+
+    @media screen {
+      .page { box-shadow: 0 6px 40px rgba(0,0,0,0.2); }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="name">Michael Talerico</div>
+    <div class="title">Senior Data Analyst &amp; Analytics Product Builder</div>
+    <div class="contact">
+      <span class="ci">Atlanta, GA</span>
+      <span class="dot">&middot;</span>
+      <a href="mailto:hello@michaeltalerico.com">hello@michaeltalerico.com</a>
+      <span class="dot">&middot;</span>
+      <a href="https://linkedin.com/in/michaeltalerico" target="_blank">linkedin.com/in/michaeltalerico</a>
+      <span class="dot">&middot;</span>
+      <a href="https://michaeltalerico.com" target="_blank">michaeltalerico.com</a>
+      <span class="dot">&middot;</span>
+      <a href="https://github.com/michaeltalerico" target="_blank">github.com/michaeltalerico</a>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <aside class="sidebar">
+
+      <div class="sb">
+        <div class="sb-h">Skills</div>
+
+        <div class="sg">
+          <div class="sg-t">Analytics &amp; BI</div>
+          <div class="sg-v">Product Analytics &middot; Executive Reporting &middot; Dashboard Design &middot; KPI Frameworks &middot; Tableau &middot; Power BI &middot; SQL &middot; BigQuery</div>
+        </div>
+
+        <div class="sg">
+          <div class="sg-t">Software Dev</div>
+          <div class="sg-v">React &middot; TypeScript &middot; Python &middot; FastAPI &middot; REST APIs &middot; Vite</div>
+        </div>
+
+        <div class="sg">
+          <div class="sg-t">AI &amp; Measurement</div>
+          <div class="sg-v">AI Product Measurement &middot; Experimentation &middot; Predictive Analytics &middot; Transcript Analytics &middot; A/B Testing</div>
+        </div>
+
+        <div class="sg">
+          <div class="sg-t">Cloud &amp; Tools</div>
+          <div class="sg-v">Azure &middot; GCP &middot; GitHub &middot; Figma &middot; Looker Studio</div>
+        </div>
+
+        <div class="sg">
+          <div class="sg-t">Leadership</div>
+          <div class="sg-v">Cross-functional Leadership &middot; Analytics Governance &middot; Product Strategy &middot; UX Collaboration &middot; Executive Communication</div>
+        </div>
+      </div>
+
+      <div class="sb">
+        <div class="sb-h">Education</div>
+        <div class="edu-deg">B.S.B.A., Global Business &amp; Marketing</div>
+        <div class="edu-sch">Troy University &mdash; Sorrell College of Business</div>
+        <div class="edu-yr">2013 &ndash; 2018</div>
+      </div>
+
+      <div class="sb">
+        <div class="sb-h">Honors &amp; Recognition</div>
+        <div class="honor-star">
+          <div class="honor-star-name">&#9733; Executive Homer Award</div>
+          <div class="honor-star-org">The Home Depot &middot; 2026</div>
+          <div class="honor-star-desc">Entrepreneurial Spirit &mdash; AI-powered B2B non-stock quoting experience</div>
+        </div>
+        <div class="honor">Sorrell College of Business Student Excellence Award in Marketing</div>
+        <div class="honor">1st Place, Undergraduate Research Showcase &mdash; Empirical Paper</div>
+        <div class="honor">Troy University Chancellor&rsquo;s List (multiple semesters)</div>
+        <div class="honor">VP, Troy University Marketing Club</div>
+      </div>
+
+    </aside>
+
+    <main class="main">
+
+      <div class="section">
+        <div class="sec-lbl">Professional Summary</div>
+        <p class="summary">
+          Senior analytics professional with 6+ years of enterprise experience building products that help business, product, and executive teams make better decisions. Combines product analytics, AI measurement, business intelligence, and software engineering to deliver solutions beyond traditional dashboards. Proven track record across predictive analytics, AI product measurement, enterprise BI transformation, and cloud-hosted analytics applications. Targeting Lead Analytics, Staff Analyst, and AI Analytics roles.
+        </p>
+      </div>
+
+      <div class="section">
+        <div class="sec-lbl">Experience</div>
+
+        <!-- The Home Depot -->
+        <div class="exp">
+          <div class="row">
+            <div class="role">Senior Data Analyst, CX Data Science &amp; Analytics</div>
+            <div class="dates">2025 &ndash; Present</div>
+          </div>
+          <div class="company">The Home Depot<span class="loc">Atlanta, GA &mdash; Pro Product</span></div>
+          <ul class="ul">
+            <li>Owned analytics strategy across <b>7 strategic Pro Product capabilities</b> &mdash; order management, pricing, trade credit, quoting, projects, e-procurement, online/B2B, and sales enablement.</li>
+            <li>Led measurement infrastructure and a live <b>Cloud Run reporting application</b> for an AI-powered B2B non-stock quoting agent, surfacing conversion and revenue uplift from A/B experiments; recognized with the <b>Executive Homer Award</b> (Entrepreneurial Spirit, 2026).</li>
+            <li>Built the <b>B2B Target Customer Placemat</b>, a strategic customer segmentation platform used by Product and UX teams to <b>inform design decisions</b> for The Home Depot&rsquo;s online Pro experience and prioritize capabilities around highest-value segments.</li>
+            <li>Developed comprehensive <b>Tableau executive reporting</b> for Pro Product leadership, establishing OKR governance, metric definitions, and reporting cadence across all Pro Product capabilities.</li>
+            <li>Facilitated <b>bi-weekly analytics stand-ups</b> with Pro Product Management to align analytics priorities with strategic product initiatives.</li>
+            <li>Championed <b>AI-assisted development</b> for internal analytics applications across CX Data Science &amp; Analytics, leveraging Claude Code and GitHub Copilot to accelerate delivery.</li>
+            <li>Conducted <b>HD Supply competitive analysis</b> on pricing behavior and market overlap; surfaced executive insights to inform pricing strategy decisions.</li>
+          </ul>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- Insight Global -->
+        <div>
+          <div class="emp-hdr">Insight Global<span class="loc">&nbsp;&middot;&nbsp;Atlanta, GA</span></div>
+
+          <div class="sub">
+            <div class="row">
+              <div class="sub-t">Senior Business Intelligence Developer, Data Insights &amp; Analytics</div>
+              <div class="sub-dates">2022 &ndash; 2025</div>
+            </div>
+            <ul class="ul" style="margin-top:5px">
+              <li>Partnered with Data Science to operationalize a <b>predictive hiring model</b>; measurement dashboards tracked a pilot generating <b>~$5M in incremental revenue</b> within one sales division over 8 weeks.</li>
+              <li>Established the company&rsquo;s <b>enterprise dashboard design system</b> &mdash; Tableau templates, visualization standards, QA peer-review, and Figma references scaling governance across an 80+ person analytics org.</li>
+              <li>Launched a <b>centralized analytics portal</b> improving self-service discoverability and usability for business and analytics stakeholders.</li>
+              <li>Served as cross-functional analytics lead on <b>strategic, revenue-generating initiatives</b> &mdash; partnering with Data Science, UX, Analytics Engineering, and business leadership to move projects from ambiguous problems to measurable outcomes.</li>
+            </ul>
+          </div>
+
+          <div class="sub">
+            <div class="row">
+              <div class="sub-t">Tableau Developer, Business Analytics <span class="promo">Promoted</span></div>
+              <div class="sub-dates">2021 &ndash; 2022</div>
+            </div>
+            <ul class="ul" style="margin-top:5px">
+              <li>Became the company&rsquo;s <b>first Tableau Developer</b>; established visualization standards and dashboard governance still used across the org.</li>
+              <li>Built executive-facing Tableau and Power BI dashboards supporting C-suite operational reviews and business unit reporting.</li>
+            </ul>
+          </div>
+
+          <div class="sub">
+            <div class="row">
+              <div class="sub-t">Sales Analyst <span class="promo">Promoted</span></div>
+              <div class="sub-dates">2019 &ndash; 2021</div>
+            </div>
+            <ul class="ul" style="margin-top:5px">
+              <li>Transitioned from recruiting into the analytics org during its foundational growth phase; built operational dashboards and supported data-driven decision-making across business teams.</li>
+            </ul>
+          </div>
+
+          <div class="sub">
+            <div class="row">
+              <div class="sub-t">IT Recruiter</div>
+              <div class="sub-dates">2018 &ndash; 2019</div>
+            </div>
+            <ul class="ul" style="margin-top:5px">
+              <li>Talent acquisition and business development; identified long-term alignment with analytics and made an intentional transition into the data organization.</li>
+            </ul>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- QuickFix -->
+        <div class="exp">
+          <div class="row">
+            <div class="role">Co-Founder &amp; Owner</div>
+            <div class="dates">2016 &ndash; 2018</div>
+          </div>
+          <div class="company">QuickFix Delivery LLC<span class="loc">Troy, AL</span></div>
+          <ul class="ul">
+            <li>Co-founded a local food delivery business serving Troy University students and the community &mdash; hired drivers, managed operations, built restaurant partnerships, and scaled payment processing.</li>
+            <li>Successfully sold the business upon graduation; first experience launching, growing, and exiting a company.</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div class="print-btn" style="text-align:center;padding:14px 0 30px">
+  <button onclick="window.print()" style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#fff;background:#1d4ed8;border:none;padding:11px 28px;border-radius:7px;cursor:pointer">
+    Print / Save as PDF
+  </button>
+</div>
+</body>
+</html>

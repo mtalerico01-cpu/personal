@@ -139,10 +139,11 @@ export function Footer() {
               <li>
                 <a
                   href={siteConfig.resumeUrl}
-                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Download Resume
+                  View Resume
                 </a>
               </li>
             </ul>
